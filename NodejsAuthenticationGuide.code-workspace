@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../Enigma v1.0.5/Source/dist"
+		},
+		{
+			"path": "../../Enigma v1.0.5/Source/src"
+		}
+	],
+	"settings": {}
+}
