@@ -24,7 +24,7 @@
     formData.append('database', '<%= database %>');
   
     // Use Fetch API to send a POST request to the server
-    fetch('/saved-project', {
+    fetch('/desc-project', {
       method: 'POST',
       body: formData
     })
@@ -277,11 +277,11 @@ The Hive Hub  </title>
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bolder">backend : <%= backend %></p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bolder">backend <%= backend %></p>
                     <h5 class="text-sm mb-0 text-uppercase font-weight-bolder">
                       frontend : <%= frontend %>                    </h5>
                     <p class="mb-0">
-                      database : <%= database %></p>
+                      database : $<%= database %></p>
                     </p>
                   </div>
                 </div>
@@ -294,7 +294,6 @@ The Hive Hub  </title>
             </div>
           </div>
         </div>
-        <button class="btn btn-dark btn-sm w-30 mb-3" onclick="window.location.href='/prelist-project'"> list of your Projects </button>
 
       </div>
      </div>

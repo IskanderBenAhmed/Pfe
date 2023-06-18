@@ -1,27 +1,17 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-// Define the schema for the Project model
 const projectSchema = new mongoose.Schema({
-  projectName: {
+  backend: String,
+  frontend: String,
+  database: String,
+  category: String,
+  projectType: String,
+  status: {
     type: String,
-    required: true
-  },
-  projectDescription: {
-    type: String,
-    required: true
-  },
-  price: {
-    type: Number,
-    required: true
-  },
-  createdBy: {
-    type: String,
-    required: true,
-  },
-  
-});
+    default: 'pending'
+  }
+}, { collection: 'projects' });
 
-// Create the Project model from the schema
-const project = mongoose.model('project', projectSchema);
+const project = mongoose.model('Project', projectSchema);
 
 module.exports = project;

@@ -16,6 +16,12 @@
 <html lang="en">
 
 <head>
+  <style>
+    #projectType {
+      width: inherit;
+    }
+  </style>
+  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -86,138 +92,77 @@ The Hive Hub  </title>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">Welcome!</h1>
-            <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
+            <h2 class="text-white mb-2 mt-5">Select Project Type!</h2>
           </div>
         </div>
       </div>
     </div>
+    
+
     <div class="container">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-        <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+        <div class="card-body custom-form-width">
           <div class="card z-index-0">
             
             <div class="row px-xl-5 px-sm-4 px-3">
-             
               
-            
-          
+              
+              
+              <div class="mt-2 position-relative text-center">
+                
+              </div>
             </div>
-            <div class="card-body">
-              <form role="form">
-                <div class="error" style="background-color: red;"></div>
-                
-                <div class="mb-3">
-                  <input type="text" class="form-control" id="username"placeholder="type your username here" required/>
-                </div>
-                
-                
-                <div class="mb-3">
-                  <input type="text" class="form-control" id="email"placeholder="type your email here" required/>
-                </div>
-                <div class="mb-3">
-                  <label for="role">Role</label>
-                  <select id="role" class="form-control"required>
-                    <option value="client">Client</option>
-                    <option value="freelancer">Freelancer</option>
+            <div class="card-body custom-form-width" >
+              <div style="text-align: center;">
+
+
+              <form role="form"action="/tech-selection" method="POST">
+  
+                <div class="form-group">
+                  <label  
+                  for="projectType">Select Project Type:</label>
+                  <select class="form-control" id="projectType" name="projectType" required style="width: inherit; text-align: center;" >
+                   
+                    <option  style="text-align: center;" value="">-- Select Project Type -- </option>
+                        <option value="web-application">Web Application</option>
+                        <option value="cross-platform-application">Cross-Platform Application</option>
+                        <option value="android-application">Android Application</option>
+                        <option value="ios-application">iOS Application</option>
                   </select>
+                  <input type="hidden" name="category" value="<%= category %>">
+                  <input type="hidden" name="projectType" value="<%= projectType %>">
                 </div>
-                <div class="mb-3">
-                  <input type="password" class="form-control" id="password" placeholder="type your password here"required>
+                
+                <div class="text-center" style="margin-top: 45px;">
+                  <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
+                  <button type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
+
+
+                  
                 </div>
-                <div class="text-center">
-                  <input type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2"  value="Register">
-                </div>
-                <p class="text-sm mt-3 mb-0">Already have an account? <a href="/login" class="text-dark font-weight-bolder">Sign in</a></p>
               </form>
-              
+             
               <script>
-                const form = document.querySelector('form');
-                const username = document.querySelector('#username');
-                const email = document.querySelector('#email');
-                const password = document.querySelector('#password');
-                const role = document.querySelector('#role');
-                const display = document.querySelector('.error');
-              
-                form.addEventListener('submit', async (e) => {
-                  e.preventDefault();
-                  display.textContent = '';
-                  try {
-                    const res = await fetch('/api/auth/register', {
-                      method: 'POST',
-                      body: JSON.stringify({username: username.value, email: email.value, password: password.value ,role: role.value}),
-                      headers: { 'Content-Type': 'application/json' }
-                    });
-                    const data = await res.json();
-                    if (res.status === 400 || res.status === 401) {
-                      return display.textContent = `${data.message}. ${data.error ? data.error : ''}`;
-                    }
-                    data.role === "admin" ? location.assign('/admin') : location.assign('/');
-                  } catch (err) {
-                    console.log(err.message);
-                  }
-                });
+          
+          
+              document.getElementById("cancelButtonTech").addEventListener("click", function() {
+                window.history.back(); // Go back to the previous page
+              });
               </script>
+              </div>
               
+    
             </div>
           </div>
         </div>
       </div>
     </div>
+
+
+
   </main>
   <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-  <footer class="footer py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mb-4 mx-auto text-center">
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Company
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            About Us
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Team
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Products
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Blog
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Pricing
-          </a>
-        </div>
-        <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-dribbble"></span>
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-twitter"></span>
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-instagram"></span>
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-pinterest"></span>
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-github"></span>
-          </a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-8 mx-auto text-center mt-1">
-          <p class="mb-0 text-secondary">
-            Copyright © <script>
-              document.write(new Date().getFullYear())
-            </script> Soft by Creative Tim.
-          </p>
-        </div>
-      </div>
-    </div>
-  </footer>
+
   <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
