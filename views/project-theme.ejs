@@ -182,8 +182,11 @@ The Hive Hub  </title>
     </div>
     <div style="margin-top: 300px;">
       <input type="hidden" name="category" value="<%= category %>">
+
   
-      <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
+      <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>      
+      <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
+
       <button href="'/project-type" type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
     </div>
   </form>
@@ -192,10 +195,8 @@ The Hive Hub  </title>
       const category = '<%= category %>'; // Retrieve the category value from the server-side rendering
 
 
-    document.getElementById("cancelButtonTech").addEventListener("click", function() {
-      window.history.back(); // Go back to the previous page
-    });
-  
+   
+    
     const menu = document.querySelector('.menu');
     const menuList = document.querySelector('.menu-list');
     const menuItems = document.querySelectorAll('.menu-item');
@@ -205,6 +206,15 @@ The Hive Hub  </title>
     menu.addEventListener('click', function () {
       menu.classList.toggle('open');
     });
+  
+  
+    // Handle the "Reset" button click event
+
+    const resetButton = document.getElementById('resetButton');
+  resetButton.addEventListener('click', function() {
+    const form = document.getElementById('categoryForm');
+    form.reset(); // Reset the form to its initial state
+  });
   
     // Set value and close menu when a menu item is clicked
     menuItems.forEach(function (item) {

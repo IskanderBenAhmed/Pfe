@@ -22,6 +22,28 @@ The Hive Hub  </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome Page</title>
   <style>
+ .custom-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 200px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: transparent;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .custom-button:hover {
+    background-color: #0b0b0b;
+    color: #fff;
+  }
     .transparent-card {
   background-color: transparent;
 }
@@ -52,6 +74,13 @@ The Hive Hub  </title>
       padding: 20px;
       text-align: center;
     }
+    .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    flex-direction: column; /* Added property to align buttons vertically */
+  }
   </style>
 </head>
 <body>
@@ -60,13 +89,18 @@ The Hive Hub  </title>
       <source src="../assets/wlc_background.mp4" type="video/mp4">
     </video>
   </div>
-            
-            <a href="javascript:;" class="btn  btn-white-text d-flex justify-content-center align-items-center" style="height:200px;width:200px">Choose a professionally designed website template</a>
-            <a href="/project-theme" class="btn  btn-white-text d-flex justify-content-center align-items-center" style="height:200px;width:200px">Fill in a form with detailed site information</a>
 
-          
-          
-        
+
+  <div class="button-container">
+    <div>
+      <a href="javascript:;" class="custom-button">
+        Choose a professionally designed website template
+      </a>
+      <a href="/project-theme" class="custom-button">
+        Fill in a form with detailed site information
+      </a>
+    </div>
+  </div>
           
         
         

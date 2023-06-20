@@ -204,15 +204,22 @@ app.get('/project-theme', (req, res) => {
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/tech-selection', (req, res) => {
-  const category = req.body.category;
-  const projectType = req.body.projectType;
-  const backend = req.body.backend;
-  const frontend = req.body.frontend;
-  const database = req.body.database;
-  
+  // Retrieve the values from the request body
+  const  backend = req.body.backend;
+  const  frontend = req.body.frontend;
+  const  database = req.body.database;
+  const  category = req.body.category;
+  const  projectType = req.body.projectType;
 
-  // Redirect to the "success" page or any other desired page
-  res.render('tech-selection', { category, projectType });
+  // Render the payment.ejs view
+  res.render('tech-selection', {
+    backend,
+    frontend,
+    database,
+    category,
+    projectType,
+    
+  });
 });
 
 
@@ -220,31 +227,179 @@ app.post('/tech-selection', (req, res) => {
 
 app.get('/tech-selection', (req, res) => {
   const category = req.session.category; // Retrieve the category from the session
-  const projectType = req.session.projectType; // Retrieve the project type from the session
+  const projectType = req.session.projectType;
+
   res.render('tech-selection', { category, projectType });
 });
 
-app.post('/saved-project', (req, res) => {
-  const { backend, frontend, database, category , projectType,status} = req.body;
 
+
+
+
+
+
+app.post('/saved-project',  userAuth, async(req, res) => {
+  const { backend, frontend, database, category, projectType, status, paymentMethod, startDate, endDate,Estimated_price,maxBudget,...pack } = req.body;
+
+ 
+  const coding = req.body.coding === 'on';
+  const Testing = req.body.Testing === 'on';
+  const deployment = req.body.deployment === 'on';
 
   // Save the form data to the database using your preferred method
+
+  let totalPrice = 0;
+  if (coding) {
+    totalPrice += 2000;
+  }
+  if (Testing) {
+    totalPrice += 1700;
+  }
+  if (deployment) {
+    totalPrice += 1200;
+  }
   const newProject = new project({
     backend,
     frontend,
     database,
     category,
     projectType,
-    status 
+    status,
+    paymentMethod,
+    startDate,
+    endDate,
+    Estimated_price: totalPrice,
+    maxBudget,
+    createdBy: req.user.username,
+
+
+    pack: Object.keys(pack).filter(key => pack[key] === 'on') // Extract checked pack
+
   });
 
   // Save the project document
-  newProject.save()
+  newProject
+    .save()
     .then(savedProject => {
       console.log('Project saved:', savedProject);
-      res.redirect('/attached-file');    })
+      res.redirect('/attached-file');
+    })
     .catch(error => {
       console.error('Error saving project:', error);
       res.status(500).json({ error: 'An error occurred while saving the project.' });
     });
+});
+
+
+
+
+
+
+app.get('/payment', (req, res) => {
+  const { backend, frontend, database, category, projectType } = req.query;
+
+  res.render('payment', {
+    backend,
+    frontend,
+    database,
+    category,
+    projectType
+  });
+});
+
+
+app.post('/payment', (req, res) => {
+  const { backend, frontend, database, category, projectType,status, paymentMethod } = req.body;
+
+  // Update the payment method in the project document using your preferred method
+  res.render('payment', {
+    backend,
+    frontend,
+    database,
+    category,
+    projectType,
+    status,
+    paymentMethod
+  });
+
+
+
+});
+
+app.get('/duration', (req, res) => {
+  // Retrieve the values passed from the previous route (payment)
+  const { backend, frontend, database, category, projectType, paymentMethod } = req.query;
+
+  // Render the duration.ejs view and pass the values as local variables
+  res.render('duration', {
+    backend,
+    frontend,
+    database,
+    category,
+    projectType,
+    paymentMethod
+  });
+});
+
+app.post('/duration', (req, res) => {
+  // Retrieve the values from the request body
+  const { backend, frontend, database, category, projectType, paymentMethod ,startDate,endDate} = req.body;
+
+  // Perform any necessary processing or validation with the values
+
+  // Save the form data to the database using your preferred method
+  res.render('duration', {
+    backend,
+    frontend,
+    database,
+    category,
+    projectType,
+    paymentMethod,
+    startDate,
+    endDate
+    
+  });
+
+});
+
+
+  app.get('/project-pack', (req, res) => {
+    const { backend, frontend, database, category, projectType, paymentMethod,startDate, endDate } = req.query;
+
+    res.render('project-pack', {
+      backend,
+      frontend,
+      database,
+      category,
+      projectType,
+      paymentMethod,
+      startDate,
+      endDate,
+
+      
+    });
+  });
+
+app.post('/project-pack', (req, res) => {
+  // Retrieve the values from the request body
+  const { backend, frontend, database, category, projectType, paymentMethod ,startDate,endDate,Estimated_price,maxBudget,...pack} = req.body;
+
+  // Perform any necessary processing or validation with the values
+
+  // Save the form data to the database using your preferred method
+  res.render('project-pack', {
+    backend,
+    frontend,
+    database,
+    category,
+    projectType,
+    paymentMethod,
+    startDate,
+    endDate,
+    Estimated_price,
+    maxBudget,
+    ...pack
+    
+  });
+
 });

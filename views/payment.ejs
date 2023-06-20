@@ -1,4 +1,7 @@
-<!--
+<!-- payment.ejs -->
+
+
+  <!--
 =========================================================
 * Argon Dashboard 2 - v2.0.4
 =========================================================
@@ -17,10 +20,6 @@
 
 <head>
   <style>
-      .centered-select {
-    display: flex;
-    justify-content: center;
-  }
     #projectType {
       width: inherit;
     }
@@ -120,39 +119,57 @@ The Hive Hub  </title>
               <div style="text-align: center;">
 
 
-                <form role="form" action="/tech-selection" method="POST">
+
+
+                <form action="/duration" method="POST">
                   <div class="form-group">
-                    <div class="centered-select">
-                      <select class="form-control" id="projectType" name="projectType" required>
-                        <option value="">-- Select Project Type --</option>
-                        <option value="web-application">Web Application</option>
-                        <option value="cross-platform-application">Cross-Platform Application</option>
-                        <option value="android-application">Android Application</option>
-                        <option value="ios-application">iOS Application</option>
-                      </select>
-                    </div>
-                    <input type="hidden" name="category" value="<%= category %>">
-                    <input type="hidden" name="projectType" value="<%= projectType %>">
+                    <label for="paymentMethod">Select Payment Method:</label>
+                    <select class="form-control" id="paymentMethod" name="paymentMethod" required>
+                      <option value="">-- Select Payment Method --</option>
+                      <option value="Cash">Cash</option>
+                      <option value="Personal Cheque">Personal Cheque</option>
+                      <option value="Debit Card">Debit Card</option>
+                      <option value="Credit Card">Credit Card</option>
+                      <option value="Other">Other</option>
+                    </select>
                   </div>
+                  <input type="hidden" name="backend" value="<%= backend %>">
+                  <input type="hidden" name="frontend" value="<%= frontend %>">
+                  <input type="hidden" name="database" value="<%= database %>">
+                  <input type="hidden" name="category" value="<%= category %>">
+                  <input type="hidden" name="projectType" value="<%= projectType %>">
+                  <div style="margin-top: 45px;">
+              
                 
-                  <div class="text-center" style="margin-top: 60px;">
-                    <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
+                    <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>      
                     <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
-                    <button type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
+              
+                    <button  type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
                   </div>
                 </form>
+
                 
-                <script>
-                  // Your existing script code here
-                
-                  // Handle the "Reset" button click event
+              
+              </form>
+             
+              <script>
                   const resetButton = document.getElementById('resetButton');
-                  resetButton.addEventListener('click', function() {
-                    const form = document.querySelector('form[role="form"]');
-                    form.reset(); // Reset the form to its initial state
-                  });
-                </script>
-                
+  resetButton.addEventListener('click', function() {
+    const form = document.querySelector('form');
+    form.reset(); 
+  });
+  const cancelButtonTech = document.getElementById('cancelButtonTech');
+    cancelButtonTech.addEventListener('click', goBack);
+  
+    function goBack() {
+      history.back(); // Go back to the previous page
+    }
+          
+          
+              document.getElementById("cancelButtonTech").addEventListener("click", function() {
+                window.history.back(); // Go back to the previous page
+              });
+              </script>
               </div>
               
     

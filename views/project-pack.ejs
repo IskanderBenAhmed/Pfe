@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <style>
+     .button-space {
+    margin: 0 10px; /* Adjust the margin value to create the desired space */
+  }
+     .button-container {
+    display: flex;
+    justify-content: center;
+  }
+    
+    .custom-form-width {
+      max-width: 100%; /* Adjust the value as per your requirement */
+      margin: 0 auto;
+    }
+    
+    /* Additional styles to override existing CSS */
+    .card-body {
+      padding: 80px; /* Increase the padding to give more space around the form */
+    }
+    
+    /* Optional: Adjust the label width for better alignment */
+    .card-body label {
+      display: inline-block;
+      width: 300px;
+      margin-bottom: 20px;
+    }
+    .project-name-input {
+    font-size: 17px; /* Adjust the font size as desired */
+  }
+  </style>
+ 
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+The Hive Hub  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+</head>
+
+<body class="">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
+    <div class="container">
+      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="../pages/dashboard.html">
+        The Hive Hub
+      </a>
+      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mt-2">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </span>
+      </button>
+      <div class="collapse navbar-collapse" id="navigation">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="../pages/dashboard.html">
+              <i class="fa fa-chart-pie opacity-6  me-1"></i>
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2" href="../pages/profile.html">
+              <i class="fa fa-user opacity-6  me-1"></i>
+              Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2" href="../pages/sign-up.html">
+              <i class="fas fa-user-circle opacity-6  me-1"></i>
+              Sign Up
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2" href="../pages/sign-in.html">
+              <i class="fas fa-key opacity-6  me-1"></i>
+              Sign In
+            </a>
+          </li>
+        </ul>
+        x
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+  <main class="main-content  mt-0">
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signup-cover.jpg'); background-position: top;">
+      <span class="mask bg-gradient-dark opacity-6"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 text-center mx-auto">
+           
+
+            <h4 class="text-white mb-2 mt-5">To proceed, please indicate your project Pack.</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="height: 400px;">
+      <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
+        <div class="card-body custom-form-width"  >
+          <div class="card z-index-0">
+            
+            <div class="row px-xl-5 px-sm-4 px-3">
+              
+              
+              
+              <div class="mt-2 position-relative text-center">
+                
+              </div>
+            </div>
+            <div class="card-body custom-form-width">
+
+<!-- Display other user information as needed -->
+              <form id="createProjectForm" action="/saved-project" method="POST">
+                
+               
+                <div>
+                  
+                  <label style="margin-top: 20px; margin-left: 50px;" for="firstcoding" class="form-check">
+                    <input class="form-check-input" type="checkbox" name="coding" id="coding" data-price="100">
+                    <span style="font-size: 15px; margin-top: 5px;">coding</span>
+                  </label>
+                  <label style="margin-top: 20px;" for="Testing" class="form-check">
+                    <input class="form-check-input" type="checkbox" name="Testing" id="Testing" data-price="120">
+                    <span style="font-size: 15px; margin-top: 5px;">Testing</span>
+                  </label>
+                  <label style="margin-top: 20px;" for="deployment" class="form-check">
+                    <input class="form-check-input" type="checkbox" name="deployment" id="deployment" data-price="50">
+                    <span style="font-size: 15px; margin-top: 5px;"> deployment</span>
+                  </label>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                  <h4>Prix</h4>
+                  <p id="priceLabel">Prix : $0</p>
+                </div>
+                <input type="hidden" name="backend" value="<%= backend %>">
+                <input type="hidden" name="frontend" value="<%= frontend %>">
+                <input type="hidden" name="database" value="<%= database %>">
+                <input type="hidden" name="category" value="<%= category %>">
+                <input type="hidden" name="projectType" value="<%= projectType %>">
+                <input type="hidden" name="paymentMethod" value="<%= paymentMethod %>">
+                <input type="hidden" name="startDate" value="<%= startDate %>">
+                <input type="hidden" name="endDate" value="<%= endDate %>">
+
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <label for="maxBudget">Maximum Budget:</label>
+                    <input type="number" id="maxBudget" name="maxBudget" placeholder="Enter your max budget">
+                  </div>
+                
+                  <div style="margin-top: 45px;">
+              
+                
+                    <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>      
+                    <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
+              
+                    <button  type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
+                  </div>
+
+              </form>
+              
+              <script>
+                function updatePrice() {
+                  // Get the project details and calculate the total price
+                  const coding = document.getElementById('coding').checked;
+                  const Testing = document.getElementById('Testing').checked;
+                  const deployment = document.getElementById('deployment').checked;
+              
+                  let totalPrice = 0;
+                  if (coding) {
+                    totalPrice += 2000;
+                  }
+                  if (Testing) {
+                    totalPrice += 1700;
+                  }
+                  if (deployment) {
+                    totalPrice += 1200;
+                  }
+              
+                  // Update the price label
+                  const priceLabel = document.getElementById('priceLabel');
+                  priceLabel.textContent = `Prix : $${totalPrice}`;
+                }
+              
+                // Attach event listeners to the checkboxes
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                  checkbox.addEventListener('change', updatePrice);
+                });
+
+                  // Handle the "NEXT" button click event
+                  const nextButton = document.querySelector('form#createProjectForm button[type="submit"]');
+  nextButton.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+                         const priceLabel = document.getElementById('priceLabel');
+                         const finalPrice = priceLabel.textContent;
+                         const maxBudgetInput = document.getElementById('maxBudget');
+                         const maxBudget = maxBudgetInput.value;
+                            if (maxBudget < 300) {
+                               alert('Please enter a budget of at least $300.');
+                              return;
+                                                    }
+                            const form = document.getElementById('createProjectForm');
+                            form.submit();
+
+    
+  });
+  const resetButton = document.getElementById('resetButton');
+  resetButton.addEventListener('click', function() {
+    const form = document.querySelector('form');
+    form.reset(); 
+  });
+  const cancelButtonTech = document.getElementById('cancelButtonTech');
+    cancelButtonTech.addEventListener('click', goBack);
+  
+    function goBack() {
+      history.back(); // Go back to the previous page
+    }
+          
+          
+              document.getElementById("cancelButtonTech").addEventListener("click", function() {
+                window.history.back(); // Go back to the previous page
+              });
+              </script>
+              
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+</body>
+
+</html>

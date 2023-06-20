@@ -86,8 +86,9 @@ The Hive Hub  </title>
               </div>
             </div>
             <div class="card-body custom-form-width">
+
               
-              <form id="techProjectForm" action="/saved-project" method="POST">
+              <form id="techProjectForm" action="/payment" method="POST">
                 <div class="form-group">
                   <label for="backend">Backend:</label>
                   <input type="text" class="form-control project-tech-input" name="backend" id="backend" required>
@@ -101,12 +102,28 @@ The Hive Hub  </title>
                   <input type="text" class="form-control project-tech-input" name="database" id="database" required>
                 </div>
                 <!-- Add hidden input fields for category and projectType -->
+                <input type="hidden" name="backend" value="<%= backend %>">
+                <input type="hidden" name="frontend" value="<%= frontend %>">
+                <input type="hidden" name="database" value="<%= database %>">
                 <input type="hidden" name="category" value="<%= category %>">
-  <input type="hidden" name="projectType" value="<%= projectType %>">
-  <button type="submit" class="btn btn-primary">Next</button>
-              </form>
+                <input type="hidden" name="projectType" value="<%= projectType %>">
+              
+                <div class="text-center" style="margin-top: 40px;">
+                  <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
+                  <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
+                  <button type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
+                </div>
+              
+              </form> 
               
               <script>
+                // Reset the form to its initial state
+                const resetButton = document.getElementById('resetButton');
+                resetButton.addEventListener('click', function() {
+                  const form = document.getElementById('techProjectForm');
+                  form.reset(); 
+                });
+              
                 function displayNotification(event) {
                   event.preventDefault(); // Prevent the form submission
               
@@ -115,21 +132,9 @@ The Hive Hub  </title>
                   const frontend = document.getElementById('frontend').value;
                   const database = document.getElementById('database').value;
               
-                  // Display the confirmation dialog as a notification
-                  const proceed = window.confirm('Would you like to proceed?');
-                  if (proceed) {
-                    // Submit the form
-                    const techProjectForm = document.getElementById('techProjectForm');
-                    techProjectForm.submit();
-                  } else {
-                    // User clicked "Cancel" - perform any necessary actions or show a message to the user
-                    console.log('Saving project canceled.');
-              
-                    // Reset the form fields
-                    document.getElementById('backend').value = '';
-                    document.getElementById('frontend').value = '';
-                    document.getElementById('database').value = '';
-                  }
+                  // Submit the form
+                  const techProjectForm = document.getElementById('techProjectForm');
+                  techProjectForm.submit();
                 }
               
                 // Bind event listener to the "Next" button's click event
@@ -144,6 +149,8 @@ The Hive Hub  </title>
                   history.back(); // Go back to the previous page
                 }
               </script>
+              
+              
               
             </div>
           </div>

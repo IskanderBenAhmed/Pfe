@@ -1,30 +1,10 @@
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
+<!-- duration.ejs -->
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <style>
-      .centered-select {
-    display: flex;
-    justify-content: center;
-  }
-    #projectType {
-      width: inherit;
-    }
-  </style>
+  
   
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -96,7 +76,7 @@ The Hive Hub  </title>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
-            <h2 class="text-white mb-2 mt-5">Select Project Type!</h2>
+            <h4 class="text-white mb-2 mt-5">To proceed, please indicate the date for your project.</h4>
           </div>
         </div>
       </div>
@@ -120,39 +100,98 @@ The Hive Hub  </title>
               <div style="text-align: center;">
 
 
-                <form role="form" action="/tech-selection" method="POST">
-                  <div class="form-group">
-                    <div class="centered-select">
-                      <select class="form-control" id="projectType" name="projectType" required>
-                        <option value="">-- Select Project Type --</option>
-                        <option value="web-application">Web Application</option>
-                        <option value="cross-platform-application">Cross-Platform Application</option>
-                        <option value="android-application">Android Application</option>
-                        <option value="ios-application">iOS Application</option>
-                      </select>
-                    </div>
-                    <input type="hidden" name="category" value="<%= category %>">
-                    <input type="hidden" name="projectType" value="<%= projectType %>">
+                <form id="durationForm" action="/project-pack" method="POST">
+              
+                  <!-- Display the calendar inputs -->
+                  <div>
+                    <label for="startDate">Start Date:</label>
+                    <input type="text" id="startDate" name="startDate" placeholder="Select start date">
                   </div>
+                  <div>
+                    <label for="endDate">End Date:</label>
+                    <input type="text" id="endDate" name="endDate" placeholder="Select end date">
+                  </div>
+              
+                  <input type="hidden" name="backend" value="<%= backend %>">
+                  <input type="hidden" name="frontend" value="<%= frontend %>">
+                  <input type="hidden" name="database" value="<%= database %>">
+                  <input type="hidden" name="category" value="<%= category %>">
+                  <input type="hidden" name="projectType" value="<%= projectType %>">
+                  <input type="hidden" name="paymentMethod" value="<%= paymentMethod %>">
+              
+
+                  <div style="margin-top: 45px;">
+              
                 
-                  <div class="text-center" style="margin-top: 60px;">
-                    <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
+                    <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>      
                     <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
-                    <button type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
+              
+                    <button  type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
                   </div>
                 </form>
-                
-                <script>
-                  // Your existing script code here
-                
-                  // Handle the "Reset" button click event
-                  const resetButton = document.getElementById('resetButton');
-                  resetButton.addEventListener('click', function() {
-                    const form = document.querySelector('form[role="form"]');
-                    form.reset(); // Reset the form to its initial state
-                  });
-                </script>
-                
+
+
+
+                <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+      var startDateInput = document.getElementById('startDate');
+      var endDateInput = document.getElementById('endDate');
+
+      // Initialize Flatpickr on the date inputs
+      var startDatePicker = flatpickr(startDateInput, {
+        dateFormat: 'Y-m-d',
+        // Additional configuration options
+      });
+
+      var endDatePicker = flatpickr(endDateInput, {
+        dateFormat: 'Y-m-d',
+        // Additional configuration options
+      });
+
+      // Handle form submission
+      document.getElementById('durationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var startDate = startDatePicker.selectedDates[0];
+        var endDate = endDatePicker.selectedDates[0];
+
+        // Get the current date
+        var currentDate = new Date();
+
+        // Perform validation
+        if (startDate < currentDate || endDate < currentDate) {
+          alert('Please select a date in the future.');
+          return;
+        }
+
+        if (startDate > endDate) {
+          alert('End date should be greater than start date.');
+          return;
+        }
+
+        this.submit(); // Submit the form with the id "durationForm"
+      });
+    });
+          
+    const resetButton = document.getElementById('resetButton');
+  resetButton.addEventListener('click', function() {
+    const form = document.querySelector('form');
+    form.reset(); 
+  });
+  const cancelButtonTech = document.getElementById('cancelButtonTech');
+    cancelButtonTech.addEventListener('click', goBack);
+  
+    function goBack() {
+      history.back(); // Go back to the previous page
+    }
+          
+          
+              document.getElementById("cancelButtonTech").addEventListener("click", function() {
+                window.history.back(); // Go back to the previous page
+              });
+              </script>
               </div>
               
     
