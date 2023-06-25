@@ -492,6 +492,15 @@ app.get('/get-username', userAuth, (req, res) => {
 });
   
 
+app.get('/client-profile', userAuth, async (req, res) => {
+  const username = req.user.username;
+
+  // Perform any necessary logic or data retrieval here
+  // Render the freelancer-profile.ejs template and pass the 'username' variable
+  res.render('client-profile', { username: username });
+});
+
+
 app.get('/freelancer-profile', userAuth, async (req, res) => {
   const username = req.user.username;
 
@@ -550,6 +559,57 @@ app.post('/propositions/:propositionId/status', userAuth, async (req, res) => {
     res.redirect('/proposition-approval'); // Redirect to the proposition approval page after updating the status
   } catch (error) {
     console.error('Error updating proposition status:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+app.get('/select-proposition', userAuth, async (req, res) => {
+  try {
+    // Fetch approved propositions from the database
+    const username = req.user.username;
+
+    // Fetch projects created by the logged-in user
+    const createdProjects = await project.find({ createdBy: username });
+
+    // Extract the project names from the created projects
+    const projectNames = createdProjects.map(project => project.projectName);
+
+    // Fetch approved propositions that belong to the created projects
+    const fetchedPropositions = await propositions.find({ projectName: { $in: projectNames }, status: 'approved' });
+
+    // Render the select-proposition.ejs template with the fetched approved propositions
+    res.render('select-proposition', { propositions: fetchedPropositions });
+  } catch (error) {
+    // Handle any errors that occur
+    console.error('Error fetching propositions:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+app.post('/select-proposition', userAuth, async (req, res) => {
+  try {
+    const propositionId = req.body.propositionId;
+
+    // Find the proposition in the database
+    const proposition = await propositions.findById(propositionId);
+
+    if (!proposition) {
+      // Proposition not found
+      return res.status(404).send('Proposition not found');
+    }
+
+    // Toggle the value of the 'selected' field
+    proposition.selected = !proposition.selected;
+
+    // Save the updated proposition in the database
+    await proposition.save();
+
+    res.sendStatus(200);
+  } catch (error) {
+    // Handle any errors that occur
+    console.error('Error updating proposition selection:', error);
     res.status(500).send('Internal Server Error');
   }
 });

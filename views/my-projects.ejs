@@ -50,13 +50,13 @@ The Hive Hub      </a>
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/">
+            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/suggestion">
               <i class="fa fa-chart-pie opacity-6  me-1"></i>
-              Dashboard
+              home
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-2" href="/profile">
+            <a class="nav-link me-2" href="/client-profile">
               <i class="fa fa-user opacity-6  me-1"></i>
               Profile
             </a>
@@ -112,8 +112,7 @@ The Hive Hub      </a>
                       <th class="font-weight-bold">Max Budget</th>
                       <th class="font-weight-bold">Pack</th>
                       <th class="font-weight-bold">Created By</th>
-                      <th class="font-weight-bold">Change Status</th>
-                    </tr>
+                      </tr>
                   </thead>
                   <tbody id="project-table-body">
                     <% projects.forEach(project => { %>
@@ -145,20 +144,7 @@ The Hive Hub      </a>
                         <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.maxBudget %></td>
                         <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.pack.join(', ') %></td>
                         <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.createdBy %></td>
-                        <td>
-                          <form action="/projects/<%= project._id %>/status" method="POST">
-                            <button class="btn btn-link text-dark px-3 mb-0" type="submit">
-                              <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Change Status
-                            </button>
-                            <select class="form-control" name="status">
-                              <option value="pending" <% if (project.status === 'pending') { %>selected<% } %>>Pending</option>
-                              <option value="in-progress" <% if (project.status === 'approved') { %>selected<% } %>>approved</option>
-                              <option value="approved" <% if (project.status === 'in-progress') { %>selected<% } %>>In Progress</option>
-                              <option value="rejected" <% if (project.status === 'rejected') { %>selected<% } %>>Rejected</option>
-                              <option value="completed" <% if (project.status === 'completed') { %>selected<% } %>>Completed</option>
-                            </select>
-                          </form>
-                        </td>
+                      
                       </tr>
                     <% }); %>
                   </tbody>

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>
-The Hive Hub  </title>
-  <!--     Fonts and icons     -->
+  <title>The Hive Hub</title>
+  <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
@@ -22,39 +20,39 @@ The Hive Hub  </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome Page</title>
   <style>
-    
+    .custom-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      width: 200px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: transparent;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s, color 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
- .custom-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    width: 200px;
-    margin-bottom: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: transparent;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: background-color 0.3s, color 0.3s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
+    .custom-button:hover {
+      background-color: #0b0b0b;
+      color: #fff;
+    }
 
-  .custom-button:hover {
-    background-color: #0b0b0b;
-    color: #fff;
-  }
     .transparent-card {
-  background-color: transparent;
-}
+      background-color: transparent;
+      height: 90px;
+    }
 
     .body {
       margin: 0;
       padding: 0;
     }
-    
+
     .video-background {
       position: fixed;
       top: 0;
@@ -64,66 +62,90 @@ The Hive Hub  </title>
       overflow: hidden;
       z-index: -1;
     }
-    
+
     .video-background video {
       min-width: 30%; /* Adjust the size as per your preference */
       min-height: 30%; /* Adjust the size as per your preference */
     }
-    
+
     .content {
       position: relative;
       z-index: 1;
       padding: 20px;
       text-align: center;
     }
+
     .button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 400px;
-    flex-direction: column; /* Added property to align buttons vertically */
-  }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 400px;
+      flex-direction: column; /* Added property to align buttons vertically */
+    }
   </style>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
     <div class="container">
-      
-      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon mt-2">
-          <span class="navbar-toggler-bar bar1"></span>
-          <span class="navbar-toggler-bar bar2"></span>
-          <span class="navbar-toggler-bar bar3"></span>
-        </span>
-      </button>
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="javascript;">
-              <i class="fa fa-chart-pie opacity-6  me-1"></i>
-             website Builder
-
+              <div class="card transparent-card custom-button">
+                <div class="card-body">
+                  <i class="fa fa-chart-pie opacity-6  me-1"></i>
+                  <h5 class="card-title text-white">Website Builder</h5>
+                </div>
+              </div>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-2" href="../pages/profile.html">
-              <i class="fa fa-user opacity-6  me-1"></i>
-              Profile
+            <a class="nav-link me-2" href="/client-profile">
+              <div class="card transparent-card custom-button">
+                <div class="card-body">
+                  <i class="fa fa-user opacity-6  me-1"></i>
+                  <h5 class="card-title text-white">Profile</h5>
+                </div>
+              </div>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link me-2" href="/project-theme">
-              <i class="fas fa-user-circle opacity-6  me-1"></i>
-              form            </a>
+              <div class="card transparent-card custom-button">
+                <div class="card-body">
+                  <i class="fas fa-tasks opacity-6  me-1"></i>
+
+                  <h5 class="card-title text-white">Form</h5>
+                </div>
+              </div>
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link me-2" href="/my-projects">
-              <i class="fas fa-key opacity-6  me-1"></i>
-              My Projects
+              <div class="card transparent-card custom-button">
+                <div class="card-body">
+                  <i class="fas fa-file-alt opacity-6  me-1"></i>
+                  <h5 class="card-title text-white">My Projects</h5>
+                </div>
+              </div>
             </a>
           </li>
+
+
+
+
+          <li class="nav-item">
+            <a class="nav-link me-2" href="/select-proposition">
+              <div class="card transparent-card custom-button">
+                <div class="card-body">
+                  <i class="fas fa-file-alt opacity-6  me-1"></i>
+                  <h5 class="card-title text-white">Propositions</h5>
+                </div>
+              </div>
+            </a>
+          </li>
+          
         </ul>
-      
       </div>
     </div>
   </nav>
@@ -132,11 +154,5 @@ The Hive Hub  </title>
       <source src="../assets/wlc_background.mp4" type="video/mp4">
     </video>
   </div>
-
-
-  
-
-        
-        
 </body>
 </html>

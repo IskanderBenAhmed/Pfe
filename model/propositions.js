@@ -13,6 +13,10 @@ const propositionSchema = new mongoose.Schema({
     type: String,
     default: 'pending'
   },
+  selected: {
+    type: Boolean,
+    default: false,
+  },
   // Add any additional fields as needed
 });
 
