@@ -22,6 +22,8 @@ The Hive Hub  </title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome Page</title>
   <style>
+    
+
  .custom-button {
     display: flex;
     justify-content: center;
@@ -84,6 +86,47 @@ The Hive Hub  </title>
   </style>
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
+    <div class="container">
+      
+      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mt-2">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </span>
+      </button>
+      <div class="collapse navbar-collapse" id="navigation">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="javascript;">
+              <i class="fa fa-chart-pie opacity-6  me-1"></i>
+             website Builder
+
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2" href="../pages/profile.html">
+              <i class="fa fa-user opacity-6  me-1"></i>
+              Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2" href="/project-theme">
+              <i class="fas fa-user-circle opacity-6  me-1"></i>
+              form            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2" href="/my-projects">
+              <i class="fas fa-key opacity-6  me-1"></i>
+              My Projects
+            </a>
+          </li>
+        </ul>
+      
+      </div>
+    </div>
+  </nav>
   <div class="video-background">
     <video autoplay loop muted>
       <source src="../assets/wlc_background.mp4" type="video/mp4">
@@ -91,17 +134,8 @@ The Hive Hub  </title>
   </div>
 
 
-  <div class="button-container">
-    <div>
-      <a href="javascript:;" class="custom-button">
-        Choose a professionally designed website template
-      </a>
-      <a href="/project-theme" class="custom-button">
-        Fill in a form with detailed site information
-      </a>
-    </div>
-  </div>
-          
+  
+
         
         
 </body>

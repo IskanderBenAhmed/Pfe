@@ -132,6 +132,10 @@
     .menu.open .menu-list {
       display: block;
     }
+    .form-control-lg {
+  height: 50px;
+  font-size: 18px;
+}
   </style>
  
   <meta charset="utf-8" />
@@ -159,11 +163,10 @@ The Hive Hub  </title>
   <!-- techProjectForm.ejs -->
   <form id="categoryForm" action="/project-type" method="POST">
     <div class="menu" style="margin-top: 80px;">
+      
+     
       <div class="label-container">
         <label for="category" class="bigger-label">What kind of website do you want?</label>
-      </div>
-      <div class="label-container">
-        <label for="category" class="bigger-label">We use this information to provide photo and content recommendations.</label>
       </div>
       <div class="input-group">
         <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
@@ -179,9 +182,20 @@ The Hive Hub  </title>
         <li class="menu-item" data-value="Portfolio">Portfolio</li>
         <li class="menu-item" data-value="Personal Website">Personal Website</li>
       </ul>
+
+      
     </div>
-    <div style="margin-top: 300px;">
+    <div style="margin-top: 190px;">
+      <label for="category" class="bigger-label">what should we call your website?</label>
+      <div class="form-group">
+        <input type="text" class="form-control form-control-lg project-tech-input" name="projectName" id="projectName" required onfocus="focused(this)" onfocusout="defocused(this)">
+      </div>
+      </div>
+      <div style="margin-top: 150px;">
+
       <input type="hidden" name="category" value="<%= category %>">
+      <input type="hidden" name="projectName" value="<%= projectName %>">
+
 
   
       <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>      
@@ -201,6 +215,8 @@ The Hive Hub  </title>
     const menuList = document.querySelector('.menu-list');
     const menuItems = document.querySelectorAll('.menu-item');
     const verticalPicker = document.getElementById('category');
+    const projectName = document.getElementById('projectName');
+
   
     // Toggle menu open/closed
     menu.addEventListener('click', function () {

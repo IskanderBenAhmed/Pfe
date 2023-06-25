@@ -5,6 +5,8 @@ const projectSchema = new mongoose.Schema({
   frontend: String,
   database: String,
   category: String,
+  projectName: String,
+
   projectType: String,
   status: {
     type: String,

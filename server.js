@@ -4,6 +4,10 @@ const authRoutes = require("./Auth/auth");
 const project = require("./model/project");
 const file = require('./model/file');
 const session = require('express-session');
+const propositions = require('./model/propositions');
+const flash = require('connect-flash');
+
+
 
 
 const multer = require('multer');
@@ -69,20 +73,25 @@ app.use("/api/auth", require("./Auth/route"));
 
 app.get("/api/auth/verify/:token", authRoutes.verifyEmail);
 
-app.get('/prelist-project', userAuth, async (req, res) => {
-  try {
-    const projects = await project.find({ createdBy: req.user.username });
-    res.render('prelist-project', { projects, currentUser: req.user });
-  } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
-  }
+app.get('/prelist-project',userAuth, async (req, res) => {
+  const username = req.user.username;
+
+  project.find({ status: 'approved' }, (err, projects) => {
+    if (err) {
+      console.error('Error fetching projects:', err);
+      res.sendStatus(500);
+    } else {
+      res.render('prelist-project', { projects, username });
+    }
+  });
 });
+
+
 
 app.get('/projects', userAuth, async (req, res) => {
   try {
     const projects = await project.find({ createdBy: req.user.username });
-    res.render('prelist-project', { projects });
+    res.render('projects', { projects });
   } catch (error) {
     console.error(error);
     res.sendStatus(500);
@@ -158,14 +167,15 @@ app.post('/project-theme', (req, res) => {
 
 // Handle GET request for the "project-type" page
 app.get('/project-type', (req, res) => {
-  const category = req.query.category; // Retrieve the category from the query parameters
+  const category = req.query.category;
+  const projectName = req.query.projectName; // Retrieve the category from the query parameters
 
-  if (!category) {
+  if (!category ||!projectName) {
     // If the category is missing, redirect back to the "project-theme" page
     return res.redirect('/project-theme');
   }
 
-  res.render('project-type', { category, projectType: req.query.projectType });
+  res.render('project-type', { category, projectName , projectType: req.query.projectType });
 });
 
 
@@ -174,9 +184,11 @@ app.get('/project-type', (req, res) => {
 app.post('/project-type', (req, res) => {
   const category = req.body.category;
   const projectType = req.body.projectType;
+  const projectName = req.body.projectName;
+
 
   // Render the project-type page with the category and projectType values
-  res.render('project-type', { category, projectType });
+  res.render('project-type', { category,projectName, projectType });
 });
 
 
@@ -194,9 +206,10 @@ app.post('/project-theme', (req, res) => {
 });
 
 app.get('/project-theme', (req, res) => {
-  const category = req.session.category; // Retrieve the category from the session
+  const category = req.session.category;
+  const projectName = req.session.projectName; // Retrieve the category from the session
   
-  res.render('project-theme', { category });
+  res.render('project-theme', { category,projectName });
 });
 
 
@@ -209,6 +222,8 @@ app.post('/tech-selection', (req, res) => {
   const  frontend = req.body.frontend;
   const  database = req.body.database;
   const  category = req.body.category;
+  const  projectName = req.body.projectName;
+
   const  projectType = req.body.projectType;
 
   // Render the payment.ejs view
@@ -217,6 +232,7 @@ app.post('/tech-selection', (req, res) => {
     frontend,
     database,
     category,
+    projectName ,
     projectType,
     
   });
@@ -226,10 +242,11 @@ app.post('/tech-selection', (req, res) => {
 
 
 app.get('/tech-selection', (req, res) => {
-  const category = req.session.category; // Retrieve the category from the session
+  const category = req.session.category;
+  const projectName = req.session.projectName; // Retrieve the category from the session
   const projectType = req.session.projectType;
 
-  res.render('tech-selection', { category, projectType });
+  res.render('tech-selection', { category,projectName, projectType });
 });
 
 
@@ -239,7 +256,7 @@ app.get('/tech-selection', (req, res) => {
 
 
 app.post('/saved-project',  userAuth, async(req, res) => {
-  const { backend, frontend, database, category, projectType, status, paymentMethod, startDate, endDate,Estimated_price,maxBudget,...pack } = req.body;
+  const { projectName , backend , frontend , database , category , projectType , status , paymentMethod , startDate , endDate ,Estimated_price,maxBudget,...pack } = req.body;
 
  
   const coding = req.body.coding === 'on';
@@ -259,6 +276,7 @@ app.post('/saved-project',  userAuth, async(req, res) => {
     totalPrice += 1200;
   }
   const newProject = new project({
+    projectName ,
     backend,
     frontend,
     database,
@@ -296,20 +314,21 @@ app.post('/saved-project',  userAuth, async(req, res) => {
 
 
 app.get('/payment', (req, res) => {
-  const { backend, frontend, database, category, projectType } = req.query;
+  const { backend, frontend, database, category,projectName, projectType } = req.query;
 
   res.render('payment', {
     backend,
     frontend,
     database,
     category,
+    projectName ,
     projectType
   });
 });
 
 
 app.post('/payment', (req, res) => {
-  const { backend, frontend, database, category, projectType,status, paymentMethod } = req.body;
+  const { backend, frontend, database, category,projectName, projectType,status, paymentMethod } = req.body;
 
   // Update the payment method in the project document using your preferred method
   res.render('payment', {
@@ -317,6 +336,7 @@ app.post('/payment', (req, res) => {
     frontend,
     database,
     category,
+    projectName ,
     projectType,
     status,
     paymentMethod
@@ -328,7 +348,7 @@ app.post('/payment', (req, res) => {
 
 app.get('/duration', (req, res) => {
   // Retrieve the values passed from the previous route (payment)
-  const { backend, frontend, database, category, projectType, paymentMethod } = req.query;
+  const { backend, frontend, database, category,projectName, projectType, paymentMethod } = req.query;
 
   // Render the duration.ejs view and pass the values as local variables
   res.render('duration', {
@@ -336,6 +356,7 @@ app.get('/duration', (req, res) => {
     frontend,
     database,
     category,
+    projectName ,
     projectType,
     paymentMethod
   });
@@ -343,7 +364,7 @@ app.get('/duration', (req, res) => {
 
 app.post('/duration', (req, res) => {
   // Retrieve the values from the request body
-  const { backend, frontend, database, category, projectType, paymentMethod ,startDate,endDate} = req.body;
+  const { backend, frontend, database, category,projectName, projectType, paymentMethod ,startDate,endDate} = req.body;
 
   // Perform any necessary processing or validation with the values
 
@@ -353,6 +374,7 @@ app.post('/duration', (req, res) => {
     frontend,
     database,
     category,
+    projectName ,
     projectType,
     paymentMethod,
     startDate,
@@ -364,13 +386,14 @@ app.post('/duration', (req, res) => {
 
 
   app.get('/project-pack', (req, res) => {
-    const { backend, frontend, database, category, projectType, paymentMethod,startDate, endDate } = req.query;
+    const { backend, frontend, database, category,projectName, projectType, paymentMethod,startDate, endDate } = req.query;
 
     res.render('project-pack', {
       backend,
       frontend,
       database,
       category,
+      projectName ,
       projectType,
       paymentMethod,
       startDate,
@@ -382,7 +405,7 @@ app.post('/duration', (req, res) => {
 
 app.post('/project-pack', (req, res) => {
   // Retrieve the values from the request body
-  const { backend, frontend, database, category, projectType, paymentMethod ,startDate,endDate,Estimated_price,maxBudget,...pack} = req.body;
+  const { backend, frontend, database, category,projectName, projectType, paymentMethod ,startDate,endDate,Estimated_price,maxBudget,...pack} = req.body;
 
   // Perform any necessary processing or validation with the values
 
@@ -392,6 +415,7 @@ app.post('/project-pack', (req, res) => {
     frontend,
     database,
     category,
+    projectName ,
     projectType,
     paymentMethod,
     startDate,
@@ -402,4 +426,130 @@ app.post('/project-pack', (req, res) => {
     
   });
 
+});
+
+app.get('/my-projects', userAuth, async (req, res) => {
+  try {
+    const projects = await project.find({ createdBy: req.user.username });
+    res.render('my-projects', { projects });
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
+// Assuming you have the necessary imports and setup
+
+// Update the status of a project
+app.post('/projects/:projectId/status', adminAuth, async (req, res) => {
+  const { projectId } = req.params;
+  const { status } = req.body;
+
+  try {
+    const updatedProject = await project.findByIdAndUpdate(projectId, { status }, { new: true });
+    res.redirect('/all-projects');
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(500);
+  }
+});
+app.get('/freelancer-home', (req, res) => {
+  // Perform any necessary logic or data retrieval here
+  // Render the freelancer-home.ejs template
+  res.render('freelancer-home');
+});
+
+
+
+app.post('/save-proposition', (req, res) => {
+  const { projectName, username } = req.body;
+
+  // Validate the required fields
+  if (!projectName || !username) {
+    return res.status(400).json({ error: 'Missing required fields.' });
+  }
+
+  // Save the proposition to the database
+  const proposition = new propositions({
+    projectName,
+    freelancerUsername: username,
+  });
+
+  proposition.save()
+    .then(() => {
+      res.status(200).json({ message: 'Proposition added successfully!' });
+    })
+    .catch(error => {
+      console.error('Error saving proposition:', error);
+      res.status(500).json({ error: 'Failed to save proposition.' });
+    });
+});
+
+
+app.get('/get-username', userAuth, (req, res) => {
+  // Assuming the authenticated user's username is available in the req.user object
+  const username = req.user.username;
+  res.json({ username });
+});
+  
+
+app.get('/freelancer-profile', userAuth, async (req, res) => {
+  const username = req.user.username;
+
+  // Perform any necessary logic or data retrieval here
+  // Render the freelancer-profile.ejs template and pass the 'username' variable
+  res.render('freelancer-profile', { username: username });
+});
+
+app.get('/freelancer-requests', userAuth, async (req, res) => {
+  try {
+    // Get the logged-in user's ID from the session or token
+    const username = req.user.username;
+
+    // Fetch propositions for the logged-in user from the database
+    const fetchedPropositions = await propositions.find({ freelancerUsername: username });
+
+
+    // Render the freelancer-requests.ejs template with the fetched propositions
+    res.render('freelancer-requests', { propositions: fetchedPropositions });
+  } catch (error) {
+    // Handle any errors that occur
+    console.error('Error fetching propositions:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+
+
+app.get('/proposition-approval', userAuth, async (req, res) => {
+  try {
+    // Fetch all propositions from the database
+    const fetchedPropositions = await propositions.find({});
+
+    // Render the proposition-approval.ejs template with the fetched propositions
+    res.render('proposition-approval', { propositions: fetchedPropositions });
+  } catch (error) {
+    // Handle any errors that occur
+    console.error('Error fetching propositions:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+app.use(flash());
+
+app.post('/propositions/:propositionId/status', userAuth, async (req, res) => {
+  try {
+    const propositionId = req.params.propositionId;
+    const { status } = req.body;
+
+    // Update the proposition status in the database
+    await propositions.findByIdAndUpdate(propositionId, { status });
+    req.flash('success', 'Proposition status changed successfully.');
+
+    res.redirect('/proposition-approval'); // Redirect to the proposition approval page after updating the status
+  } catch (error) {
+    console.error('Error updating proposition status:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });

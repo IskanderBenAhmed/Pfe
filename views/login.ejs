@@ -24,44 +24,7 @@
     <div class="row">
       <div class="col-12">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
-          <div class="container-fluid">
-            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3" href="">The Hive Hub</a>
-            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon mt-2">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </span>
-            </button>
-            <div class="collapse navbar-collapse" id="navigation">
-              <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/">
-                    <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
-                    Dashboard
-                  </a>
-                </li>
-                
-                <li class="nav-item">
-                  <a class="nav-link me-2" href="/register">
-                    <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                    Sign Up
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link me-2" href="/login">
-                    <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                    Sign In
-                  </a>
-                </li>
-              </ul>
-              <ul class="navbar-nav d-lg-block d-none">
-                
-              </ul>
-            </div>
-          </div>
-        </nav>
+  
         <!-- End Navbar -->
       </div>
     </div>
@@ -90,7 +53,7 @@
                     <input type="text" id="email" class="form-control form-control-lg"  required/><br>
                     <label for="password">Password</label><br>
                     <input type="password" id="password" class="form-control form-control-lg" required><br>
-                    <input type="submit" value="login" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0" ><br>
+                    <input type="submit" value="login" class="btn bg-gradient-dark w-100 my-4 mb-2" ><br>
                   </form>
                   <a href="/login"></a>
 
@@ -114,29 +77,37 @@
                         if (res.status === 400 || res.status === 401) {
                           return display.textContent = `${data.message}. ${data.error ? data.error : ''}`
                         }
-                        data.role === "admin" ? location.assign('/admin') : location.assign('/suggestion')
-                      } catch (err) {
-                        console.log(err.message)
-                      }
+                        if (data.role === 'admin') {
+        location.assign('/admin');
+      } else if (data.role === 'freelancer') {
+        location.assign('/freelancer-home');
+      } else {
+        location.assign('/suggestion');
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
                 
                     })
+
+                    
                   </script>
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">
                     Don't have an account?
-                    <a href="/register" class="text-primary text-gradient font-weight-bold">Sign up</a>
+                    <a href="/register" class="text-dark font-weight-bolder">Sign up</a>
                   </p>
                 </div>
               </div>
             </div>
             <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg'); background-size: cover;">
-                <span class="mask bg-gradient-primary opacity-6"></span>
-                <h2 class="mt-5 text-white font-weight-bolder position-relative">"Create your free webproject."</h2>
-                <p class="text-white position-relative">Bring your business online.</p>
+              <div class="position-relative h-100 m-3 px-7 py-11  border-radius-lg d-flex flex-column justify-content-start overflow-hidden" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signup-cover.jpg'); background-position: top;">
+                <h2 class="mt-0 text-white font-weight-bolder">"Create your free webproject."</h2>
+                <p class="text-white">Bring your business online.</p>
               </div>
             </div>
+            
           </div>
         </div>
       </div>

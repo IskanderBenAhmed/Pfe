@@ -17,15 +17,34 @@
 
 <head>
   <style>
-      .centered-select {
-    display: flex;
-    justify-content: center;
-  }
-    #projectType {
-      width: inherit;
-    }
-  </style>
-  
+    .button-space {
+   margin: 0 10px; /* Adjust the margin value to create the desired space */
+ }
+    .button-container {
+   display: flex;
+   justify-content: center;
+ }
+   
+   .custom-form-width {
+     max-width: 100%; /* Adjust the value as per your requirement */
+     margin: 0 auto;
+   }
+   
+   /* Additional styles to override existing CSS */
+   .card-body {
+     padding: 80px; /* Increase the padding to give more space around the form */
+   }
+   
+   /* Optional: Adjust the label width for better alignment */
+   .card-body label {
+     display: inline-block;
+     width: 300px;
+     margin-bottom: 20px;
+   }
+   .project-name-input {
+   font-size: 17px; /* Adjust the font size as desired */
+ }
+ </style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -48,8 +67,8 @@ The Hive Hub  </title>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
     <div class="container">
-      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="../pages/dashboard.html">
-        Argon Dashboard 2
+      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="/">
+        The Hive Hub
       </a>
       <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon mt-2">
@@ -60,26 +79,16 @@ The Hive Hub  </title>
       </button>
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav mx-auto">
+          
+          
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="../pages/dashboard.html">
-              <i class="fa fa-chart-pie opacity-6  me-1"></i>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link me-2" href="../pages/profile.html">
-              <i class="fa fa-user opacity-6  me-1"></i>
-              Profile
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link me-2" href="../pages/sign-up.html">
+            <a class="nav-link me-2" href="/register">
               <i class="fas fa-user-circle opacity-6  me-1"></i>
               Sign Up
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-2" href="../pages/sign-in.html">
+            <a class="nav-link me-2" href="/login">
               <i class="fas fa-key opacity-6  me-1"></i>
               Sign In
             </a>
@@ -96,80 +105,33 @@ The Hive Hub  </title>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
-            <h2 class="text-white mb-2 mt-5">Select Project Type!</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-    
+            <h1 class="text-white mb-2 mt-5">We are Sorry!</h1>
+            <p class="text-lead text-white" style="font-size: 30px;">The Page you're trying to access has restricted access</p>
 
-    <div class="container">
-      <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-        <div class="card-body custom-form-width">
-          <div class="card z-index-0">
+            <div class="text-lead text-white" style="margin-top: 90px;">
+              <button id="cancelButtonTech" type="button" class="btn btn-white btn-lg mx-2 float-right">Go Back</button>      
+            </div>
             
-            <div class="row px-xl-5 px-sm-4 px-3">
               
-              
-              
-              <div class="mt-2 position-relative text-center">
-                
-              </div>
-            </div>
-            <div class="card-body custom-form-width" >
-              <div style="text-align: center;">
-
-
-                <form role="form" action="/tech-selection" method="POST">
-                  <div class="form-group">
-                    <div class="centered-select">
-                      <select class="form-control" id="projectType" name="projectType" required>
-                        <option value="">-- Select Project Type --</option>
-                        <option value="web-application">Web Application</option>
-                        <option value="cross-platform-application">Cross-Platform Application</option>
-                        <option value="android-application">Android Application</option>
-                        <option value="ios-application">iOS Application</option>
-                      </select>
-                    </div>
-                    <input type="hidden" name="category" value="<%= category %>">
-
-                    <input type="hidden" name="projectName" value="<%= projectName %>">
-                    <input type="hidden" name="projectType" value="<%= projectType %>">
-                  </div>
-                
-                  <div class="text-center" style="margin-top: 60px;">
-                    <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
-                    <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
-                    <button type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
-                  </div>
-                </form>
-                
-                <script>
-                  // Your existing script code here
-                
-                  // Handle the "Reset" button click event
-                  const resetButton = document.getElementById('resetButton');
-                  resetButton.addEventListener('click', function() {
-                    const form = document.querySelector('form[role="form"]');
-                    form.reset(); // Reset the form to its initial state
-                  });
-                </script>
-                
-              </div>
-              
-    
-            </div>
-          </div>
+          </div>  
+          
         </div>
       </div>
+      
     </div>
-
-
-
+    
+   <script>
+       function goBack() {
+      history.back(); // Go back to the previous page
+    }
+          
+          
+              document.getElementById("cancelButtonTech").addEventListener("click", function() {
+                window.history.back(); // Go back to the previous page
+              });
+   </script>
   </main>
-  <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-
-  <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>

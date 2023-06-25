@@ -1,28 +1,43 @@
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  <style>
+    .button-space {
+   margin: 0 10px; /* Adjust the margin value to create the desired space */
+ }
+    .button-container {
+   display: flex;
+   justify-content: center;
+ }
+   
+   .custom-form-width {
+     max-width: 100%; /* Adjust the value as per your requirement */
+     margin: 0 auto;
+   }
+   
+   /* Additional styles to override existing CSS */
+   .card-body {
+     padding: 80px; /* Increase the padding to give more space around the form */
+   }
+   
+   /* Optional: Adjust the label width for better alignment */
+   .card-body label {
+     display: inline-block;
+     width: 300px;
+     margin-bottom: 20px;
+   }
+   .project-name-input {
+   font-size: 17px; /* Adjust the font size as desired */
+ }
+ </style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
-    Argon Dashboard 2 by Creative Tim
-  </title>
+The Hive Hub  </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -46,10 +61,23 @@
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto " style="margin-top :-60px">
             <h1 class="text-white mb-2 mt-5">Welcome to admin Dashboard!</h1>
-          </div>
+        
+
+         
+        <div class="text-lead text-white" style="margin-top: 180px;">
+          <a href="/listUsers" class="btn btn-white btn-lg mx-2 float-right">Go to Users List</a>
+          <a href="/all-projects" class="btn btn-white btn-lg mx-2 float-right">Go to Projects List</a>
+          <a href="/proposition-approval" class="btn btn-white btn-lg mx-2 float-right">Go to propositions list</a>
+
         </div>
       </div>
+        </div>  
+      </div>
     </div>
+
+    
+
+   
     <div class="container">
         <div class="container py-4" style="margin-top :-10px">
             <div class="row justify-content-center">
@@ -63,21 +91,9 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-                    <div class="d-flex justify-content-between">
-                      <a  href="/listUsers" class="btn btn-outline-dark d-flex justify-content-center align-items-center" style="height:200px;width:200px">go to users list</a>
-                      <a  href="/all-projects" class="btn btn-outline-dark d-flex justify-content-center align-items-center" style="height:200px;width:200px">go to projects list</a>
-                    </div>
-                    
-                  </div>
-                  <div class="card-body pt-0">
-                    <div class="row">
-                      <div class="col">
-                      
-                      </div>
-                    </div>
-                    
-                  </div>
+                 
+                  
+                
                 </div>
               </div>
               
@@ -86,58 +102,7 @@
           </div>    
   </main>
   <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-  <footer class="footer py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mb-4 mx-auto text-center">
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Company
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            About Us
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Team
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Products
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Blog
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-            Pricing
-          </a>
-        </div>
-        <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-dribbble"></span>
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-twitter"></span>
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-instagram"></span>
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-pinterest"></span>
-          </a>
-          <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-            <span class="text-lg fab fa-github"></span>
-          </a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-8 mx-auto text-center mt-1">
-          <p class="mb-0 text-secondary">
-            Copyright © <script>
-              document.write(new Date().getFullYear())
-            </script> Soft by Creative Tim.
-          </p>
-        </div>
-      </div>
-    </div>
-  </footer>
+  
   <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>

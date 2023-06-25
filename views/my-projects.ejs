@@ -1,12 +1,28 @@
+<!--
+=========================================================
+* Argon Dashboard 2 - v2.0.4
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>The Hive Hub</title>
-  <!-- Fonts and icons -->
+  <title>
+The Hive Hub  </title>
+  <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
@@ -34,31 +50,30 @@ The Hive Hub      </a>
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/freelancer-home">
+            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/">
               <i class="fa fa-chart-pie opacity-6  me-1"></i>
-              Home
+              Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link me-2" href="/freelancer-profile">
+            <a class="nav-link me-2" href="/profile">
               <i class="fa fa-user opacity-6  me-1"></i>
               Profile
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link me-2" href="/register">
-              <i class="fas fa-user-circle opacity-6  me-1"></i>
-              Sign Up
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link me-2" href="/login">
-              <i class="fas fa-key opacity-6  me-1"></i>
-              Sign In
-            </a>
-          </li>
+      
+       
         </ul>
-         
+        <ul class="navbar-nav d-lg-block d-none">
+            <label  class="nav-link me-2"  for="status-filter">Status:</label>
+            <select class="form-control" id="status-filter" onchange="filterProjects()">
+              <option value="all">All</option>
+              <option value="pending">Pending</option>
+              <option value="in-progress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="rejected">Rejected</option>
+            </select>
+        </ul>
       </div>
     </div>
   </nav>
@@ -69,7 +84,7 @@ The Hive Hub      </a>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">All Projects</h1>
+            <h1 class="text-white mb-2 mt-5">Your Projects</h1>
           </div>
         </div>
       </div>
@@ -77,9 +92,7 @@ The Hive Hub      </a>
     <div class="container">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
         <div class="card mb-4">
-         
           <!-- Add the filter dropdown -->
-        
           <div class="card-body px-3 pt-3 pb-2">
             <div class="table-responsive p-0">
               <% if (projects.length > 0) { %>
@@ -99,7 +112,7 @@ The Hive Hub      </a>
                       <th class="font-weight-bold">Max Budget</th>
                       <th class="font-weight-bold">Pack</th>
                       <th class="font-weight-bold">Created By</th>
-                      <th class="font-weight-bold">Actions</th>
+                      <th class="font-weight-bold">Change Status</th>
                     </tr>
                   </thead>
                   <tbody id="project-table-body">
@@ -133,16 +146,40 @@ The Hive Hub      </a>
                         <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.pack.join(', ') %></td>
                         <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.createdBy %></td>
                         <td>
-                          <button class="btn bg-gradient-dark mb-0 view-project-btn" data-project="<%= project.projectName %>" data-username="<%= username %>">
-                            <i class="fas fa-plus"></i>
-                            submit proposition
-                          </button>
-                          
+                          <form action="/projects/<%= project._id %>/status" method="POST">
+                            <button class="btn btn-link text-dark px-3 mb-0" type="submit">
+                              <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Change Status
+                            </button>
+                            <select class="form-control" name="status">
+                              <option value="pending" <% if (project.status === 'pending') { %>selected<% } %>>Pending</option>
+                              <option value="in-progress" <% if (project.status === 'approved') { %>selected<% } %>>approved</option>
+                              <option value="approved" <% if (project.status === 'in-progress') { %>selected<% } %>>In Progress</option>
+                              <option value="rejected" <% if (project.status === 'rejected') { %>selected<% } %>>Rejected</option>
+                              <option value="completed" <% if (project.status === 'completed') { %>selected<% } %>>Completed</option>
+                            </select>
+                          </form>
                         </td>
                       </tr>
                     <% }); %>
                   </tbody>
                 </table>
+                <script>
+                  function filterProjects() {
+                    const filterValue = document.getElementById('status-filter').value;
+                    const projects = document.getElementsByClassName('project');
+  
+                    for (let i = 0; i < projects.length; i++) {
+                      const project = projects[i];
+                      const status = project.querySelector('td:nth-child(7)').innerText;
+  
+                      if (filterValue === 'all' || status === filterValue) {
+                        project.style.display = 'table-row';
+                      } else {
+                        project.style.display = 'none';
+                      }
+                    }
+                  }
+                </script>
               <% } else { %>
                 <p>No projects found.</p>
               <% } %>
@@ -152,32 +189,28 @@ The Hive Hub      </a>
       </div>
     </div>
   </main>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var viewProjectButtons = document.querySelectorAll('.view-project-btn');
-    
-      viewProjectButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-          var projectName = this.getAttribute('data-project');
-          var username = this.getAttribute('data-username');
-          
-          // Send AJAX request to save the proposition
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST', '/save-proposition');
-          xhr.setRequestHeader('Content-Type', 'application/json');
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              alert('Proposition saved successfully!');
-            } else {
-              alert('Failed to save proposition.');
-            }
-          };
-          xhr.send(JSON.stringify({ projectName, username }));
-        });
-      });
-    });
-  </script>
   
+  <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+ 
+  <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  <!--   Core JS Files   -->
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
 </body>
+
 </html>
