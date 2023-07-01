@@ -1,40 +1,27 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
+// Define the schema for the Project model
 const projectSchema = new mongoose.Schema({
-  backend: String,
-  frontend: String,
-  database: String,
-  category: String,
-  projectName: String,
-
-  projectType: String,
-  status: {
+  projectName: {
     type: String,
-    default: 'pending'
+    required: true
   },
-  paymentMethod: {
+  projectDescription: {
     type: String,
-    enum: ['Cash', 'Personal Cheque', 'Debit Card', 'Credit Card', 'Other'],
-    default: ''
+    required: true
   },
-  startDate: Date,             
-  endDate: Date  ,
-  
-  Estimated_price:Number,
-  maxBudget: {
+  price: {
     type: Number,
-    min: 300
+    required: true
   },
-  pack: [String],
   createdBy: {
-    type: String
-  }, // Array of checked pack
+    type: String,
+    required: true,
+  },
+  
+});
 
-},
-
-
-{ collection: 'projects' });
-
-const project = mongoose.model('Project', projectSchema);
+// Create the Project model from the schema
+const project = mongoose.model('project', projectSchema);
 
 module.exports = project;

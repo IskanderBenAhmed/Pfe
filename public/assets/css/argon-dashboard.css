@@ -4640,8 +4640,8 @@ fieldset:disabled .btn {
 }
 
 .navbar {
-  --bs-navbar-padding-x: 3rem;
-  --bs-navbar-padding-y: 1.5rem;
+  --bs-navbar-padding-x: 1rem;
+  --bs-navbar-padding-y: 0.5rem;
   --bs-navbar-color: #344767;
   --bs-navbar-hover-color: rgba(52, 71, 103, 0.7);
   --bs-navbar-disabled-color: rgba(52, 71, 103, 0.3);
@@ -4894,7 +4894,6 @@ fieldset:disabled .btn {
 
 @media (min-width: 992px) {
   .navbar-expand-lg {
-    
     flex-wrap: nowrap;
     justify-content: flex-start;
   }
@@ -5043,8 +5042,8 @@ fieldset:disabled .btn {
     position: static;
     z-index: auto;
     flex-grow: 1;
-    width: 100px !important;
-    height: 100px !important;
+    width: auto !important;
+    height: auto !important;
     visibility: visible !important;
     background-color: transparent !important;
     border: 0 !important;

@@ -10,7 +10,7 @@ exports.adminAuth = (req, res, next) => {
         return res.status(401).json({ message: "Not authorized" });
       } else {
         if (decodedToken.role !== "admin") {
-          return res.render('error', { message: 'Not authorized' });
+          return res.status(401).json({ message: "Not authorized" });
         } else {
           next();
         }

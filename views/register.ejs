@@ -38,8 +38,9 @@ The Hive Hub  </title>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
     <div class="container">
-      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="/">
-The Hive Hub      </a>
+      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="../pages/dashboard.html">
+        Argon Dashboard 2
+      </a>
       <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon mt-2">
           <span class="navbar-toggler-bar bar1"></span>
@@ -48,17 +49,34 @@ The Hive Hub      </a>
         </span>
       </button>
       <div class="collapse navbar-collapse" id="navigation">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav mx-auto">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center me-2 active fs-5" aria-current="page" href="/">
-              <i class="fa fa-chart-pie opacity-6 me-1"></i>
-              Home
+            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="../pages/dashboard.html">
+              <i class="fa fa-chart-pie opacity-6  me-1"></i>
+              Dashboard
             </a>
           </li>
-          <!-- Add other navigation items here -->
+          <li class="nav-item">
+            <a class="nav-link me-2" href="../pages/profile.html">
+              <i class="fa fa-user opacity-6  me-1"></i>
+              Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2" href="../pages/sign-up.html">
+              <i class="fas fa-user-circle opacity-6  me-1"></i>
+              Sign Up
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2" href="../pages/sign-in.html">
+              <i class="fas fa-key opacity-6  me-1"></i>
+              Sign In
+            </a>
+          </li>
         </ul>
+        x
       </div>
-      
     </div>
   </nav>
   <!-- End Navbar -->
@@ -134,7 +152,7 @@ The Hive Hub      </a>
                     if (res.status === 400 || res.status === 401) {
                       return display.textContent = `${data.message}. ${data.error ? data.error : ''}`;
                     }
-                    data.role === "admin" ? location.assign('/admin') : location.assign('/');
+                    data.role === "admin" ? location.assign('/admin') : location.assign('/suggestion');
                   } catch (err) {
                     console.log(err.message);
                   }

@@ -1,0 +1,40 @@
+
+.form-builder__represent {
+  max-height: 820px;
+  // border: 1px solid rgb(121, 52, 52);
+  overflow-y: auto;
+  margin-left: 305px;
+  transition: all .5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  min-height: 100vh;
+  padding: 20px 20px 100px;
+  &__body {
+    // border: 1px solid #cccccc3b;
+    min-height: 400px;
+    padding: 30px 30px 100px;
+    position: relative;
+    z-index: 3;
+    max-height: 95vh;
+    overflow: auto;
+    &__items {
+      &__placeholder {
+        border: 2px dotted rgba(7, 25, 187, 0.514);
+        height: 50px;
+        background-color: #F4F6FA;
+        margin-left: 3px;
+        margin-right: 3px;
+      }
+    }
+  }
+}
+
+.field-props-open {
+  margin-right: 255px;
+}
+
+.field-placeholder {
+  border: 2px dotted rgb(7, 25, 187);
+  height: 50px;
+  background-color: #F4F6FA;
+  margin-left: 3px;
+  margin-right: 3px;
+}

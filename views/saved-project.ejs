@@ -19,9 +19,9 @@
   <script>
     // Create the FormData object and populate it with your form data
     const formData = new FormData();
-    formData.append('backend', '<%= backend %>');
-    formData.append('frontend', '<%= frontend %>');
-    formData.append('database', '<%= database %>');
+    formData.append('projectName', '<%= projectName %>');
+    formData.append('projectDescription', '<%= projectDescription %>');
+    formData.append('totalPrice', '<%= totalPrice %>');
   
     // Use Fetch API to send a POST request to the server
     fetch('/saved-project', {
@@ -277,11 +277,11 @@ The Hive Hub  </title>
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bolder">backend : <%= backend %></p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bolder">Nom du project : <%= projectName %></p>
                     <h5 class="text-sm mb-0 text-uppercase font-weight-bolder">
-                      frontend : <%= frontend %>                    </h5>
+                      Description du projet : <%= projectDescription %>                    </h5>
                     <p class="mb-0">
-                      database : <%= database %></p>
+                      Prix : $<%= totalPrice %></p>
                     </p>
                   </div>
                 </div>
