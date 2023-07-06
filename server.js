@@ -501,7 +501,6 @@ app.get('/client-profile', userAuth, async (req, res) => {
   const username = req.user.username;
   const role = req.user.role;
 
-  console.log('Username:', username); // Add this line
 
   try {
     // Retrieve the user profile data from the database
@@ -524,11 +523,18 @@ app.get('/freelancer-profile', userAuth, async (req, res) => {
   const role = req.user.role;
 
 
-  // Perform any necessary logic or data retrieval here
-  // Render the freelancer-profile.ejs template and pass the 'username' variable
-  res.render('freelancer-profile', { username: username, role: role });
-});
+  try {
+    // Retrieve the user profile data from the database
+    const userProfile = await profile.findOne({ username: username });
 
+      // Render the freelancer-profile.ejs template and pass the userProfile, username, and role variables
+      res.render('freelancer-profile', { userProfile: userProfile, username: username, role: role });
+      // Handle the case when the user profile is not found
+  } catch (error) {
+    // Handle any errors that occur during profile retrieval
+    res.status(500).json({ error: 'Failed to retrieve user profile' });
+  }
+});
 app.get('/freelancer-requests', userAuth, async (req, res) => {
   try {
     // Get the logged-in user's ID from the session or token

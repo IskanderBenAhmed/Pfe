@@ -18,6 +18,54 @@
 .text-xxl {
   font-size: 13px; /* Adjust the font size as needed */
 }
+
+.btn {
+  width: 170px;
+  height: 50px;
+  background: linear-gradient(to top, #000000, #000000, #000000);
+  color: #ffffff;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.btn span {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: top 0.5s;
+}
+
+.btn-text-one {
+  color: #ffffff;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.btn-text-two {
+  color: #ffffff;
+  position: absolute;
+  width: 100%;
+  top: 150%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.btn:hover .btn-text-one {
+  top: -100%;
+}
+
+.btn:hover .btn-text-two {
+  top: 50%;
+}
+
   </style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -149,10 +197,13 @@
                         <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.pack.join(', ') %></td>
                         <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.createdBy %></td>
                         <td>
-                          <button class="btn bg-gradient-dark mb-0 view-project-btn" data-project="<%= project.projectName %>" data-username="<%= username %>">
-                            <i class="fas fa-plus"></i>
-                            submit proposition
-                          </button>
+                       
+
+
+                          <button data-project="<%= project.projectName %>" data-username="<%= username %>" class="btn">
+                            <span class="btn-text-one">submit proposition</span>
+                            <span class="btn-text-two">press to submit</span>
+                        </button>
                           
                         </td>
                         
@@ -173,7 +224,7 @@
 
   <script>
    document.addEventListener('DOMContentLoaded', function() {
-  var viewProjectButtons = document.querySelectorAll('.view-project-btn');
+  var viewProjectButtons = document.querySelectorAll('.btn');
 
   viewProjectButtons.forEach(function(button) {
     button.addEventListener('click', function() {
