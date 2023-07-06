@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+        .typing {
+    width: 550px;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 1.5s steps(12, end), cursor .2s steps(12, end) infinite;
+    color: #ffffff;
+}
+@keyframes typing {
+    from { width: 0 }
+}
+@keyframes cursor {
+    50% { border-color: transparent }
+}
+.text-xxl {
+  font-size: 13px; /* Adjust the font size as needed */
+}
+  </style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -23,7 +41,8 @@
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
     <div class="container">
       <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="/">
-The Hive Hub      </a>
+        The Hive Hub
+      </a>
       <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon mt-2">
           <span class="navbar-toggler-bar bar1"></span>
@@ -58,7 +77,6 @@ The Hive Hub      </a>
             </a>
           </li>
         </ul>
-         
       </div>
     </div>
   </nav>
@@ -68,8 +86,8 @@ The Hive Hub      </a>
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">All Projects</h1>
+          <div class="col-lg-5 text-center mx-auto"><br><br><br>
+            <h2 class="cssanimation typing"> list of projects</h2>
           </div>
         </div>
       </div>
@@ -77,9 +95,7 @@ The Hive Hub      </a>
     <div class="container">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
         <div class="card mb-4">
-         
           <!-- Add the filter dropdown -->
-        
           <div class="card-body px-3 pt-3 pb-2">
             <div class="table-responsive p-0">
               <% if (projects.length > 0) { %>
@@ -105,14 +121,14 @@ The Hive Hub      </a>
                   <tbody id="project-table-body">
                     <% projects.forEach(project => { %>
                       <tr class="project">
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.projectName %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.backend %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.frontend %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.database %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.category %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.projectType %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.status %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15">
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.projectName %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.backend %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.frontend %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.database %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.category %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.projectType %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.status %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15">
                           <%= project.startDate.toLocaleDateString(undefined, {
                             weekday: 'short',
                             year: 'numeric',
@@ -120,7 +136,7 @@ The Hive Hub      </a>
                             day: 'numeric'
                           }) %>
                         </td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15">
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15">
                           <%= project.endDate.toLocaleDateString(undefined, {
                             weekday: 'short',
                             year: 'numeric',
@@ -128,10 +144,10 @@ The Hive Hub      </a>
                             day: 'numeric'
                           }) %>
                         </td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.Estimated_price %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.maxBudget %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.pack.join(', ') %></td>
-                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.createdBy %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.Estimated_price %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.maxBudget %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.pack.join(', ') %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.createdBy %></td>
                         <td>
                           <button class="btn bg-gradient-dark mb-0 view-project-btn" data-project="<%= project.projectName %>" data-username="<%= username %>">
                             <i class="fas fa-plus"></i>
@@ -139,6 +155,7 @@ The Hive Hub      </a>
                           </button>
                           
                         </td>
+                        
                       </tr>
                     <% }); %>
                   </tbody>
@@ -149,34 +166,43 @@ The Hive Hub      </a>
             </div>
           </div>
         </div>
+        
       </div>
     </div>
   </main>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      var viewProjectButtons = document.querySelectorAll('.view-project-btn');
-    
-      viewProjectButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-          var projectName = this.getAttribute('data-project');
-          var username = this.getAttribute('data-username');
-          
-          // Send AJAX request to save the proposition
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST', '/save-proposition');
-          xhr.setRequestHeader('Content-Type', 'application/json');
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              alert('Proposition saved successfully!');
-            } else {
-              alert('Failed to save proposition.');
-            }
-          };
-          xhr.send(JSON.stringify({ projectName, username }));
-        });
-      });
+   document.addEventListener('DOMContentLoaded', function() {
+  var viewProjectButtons = document.querySelectorAll('.view-project-btn');
+
+  viewProjectButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var projectName = this.getAttribute('data-project');
+      var username = this.getAttribute('data-username');
+      var price = parseInt(prompt('Enter the price for your proposition:'));
+
+      // Check if the price is a valid number
+      if (isNaN(price)) {
+        alert('Invalid price. Please enter a valid number.');
+        return;
+      }
+
+      // Send AJAX request to save the proposition
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/save-proposition');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          alert('Proposition saved successfully!');
+        } else {
+          alert('Failed to save proposition.');
+        }
+      };
+      xhr.send(JSON.stringify({ projectName, username, price }));
     });
+  });
+});
+
   </script>
   
 </body>

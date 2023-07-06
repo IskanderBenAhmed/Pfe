@@ -134,25 +134,45 @@ The Hive Hub  </title>
                     <input type="hidden" name="category" value="<%= category %>">
 
                     <input type="hidden" name="projectName" value="<%= projectName %>">
-                    <input type="hidden" name="projectType" value="<%= projectType %>">
-                  </div>
+
+
                 
                   <div class="text-center" style="margin-top: 60px;">
                     <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
                     <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
-                    <button type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
+                    <button href='/tech-selection'type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
                   </div>
                 </form>
                 
                 <script>
-                  // Your existing script code here
+const cancelButtonTech = document.getElementById('cancelButtonTech');
+    cancelButtonTech.addEventListener('click', goBack);
+function goBack() {
+      history.back(); // Go back to the previous page
+    }
+
+
+// Set the selected template value in the project type select dropdown
+var projectTypeSelect = document.getElementById('projectType');
+var options = projectTypeSelect.options;
+for (var i = 0; i < options.length; i++) {
+  if (options[i].value === selectedTemplate) {
+    options[i].selected = true;
+    break;
+  }
+}
+
+
                 
                   // Handle the "Reset" button click event
                   const resetButton = document.getElementById('resetButton');
-                  resetButton.addEventListener('click', function() {
-                    const form = document.querySelector('form[role="form"]');
-                    form.reset(); // Reset the form to its initial state
-                  });
+  resetButton.addEventListener('click', function() {
+    const form = document.querySelector('form[role="form"]');
+    form.reset(); // Reset the form to its initial state
+  });
+
+                  
+    
                 </script>
                 
               </div>

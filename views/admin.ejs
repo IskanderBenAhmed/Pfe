@@ -16,6 +16,91 @@
 <html lang="en">
 
 <head>
+  <style>
+    .card {
+  width: 190px;
+  height: 254px;
+  border-radius: 20px;
+  background: #f5f5f5;
+  position: relative;
+  padding: 1.8rem;
+  border: 2px solid #c3c6ce;
+  -webkit-transition: 0.5s ease-out;
+  transition: 0.5s ease-out;
+  overflow: visible;
+}
+
+.card-details {
+  color: rgb(162, 0, 255);
+  height: 100%;
+  gap: .5em;
+  display: grid;
+  place-content: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.card-button {
+  text-decoration: none;
+  text-align: center;
+  -webkit-transform: translate(-50%, 125%);
+  -ms-transform: translate(-50%, 125%);
+  transform: translate(-50%, 125%);
+  width: 70%;
+  border-radius: 1rem;
+  border: none;
+  background-color: #6c00f8;
+  color: #fff;
+  font-size: 1rem;
+  padding: .5rem 1rem;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  opacity: 0;
+  -webkit-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.text-body {
+  color: rgb(134, 134, 134);
+}
+
+/*Text*/
+.text-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/*Hover*/
+.card:hover {
+  border-color: #6c00f8;
+  -webkit-box-shadow: 10px 5px 18px 0 rgba(255, 255, 255, 0.877);
+  box-shadow: 10px 5px 18px 0 rgba(255, 255, 255, 0.877);
+}
+
+.card:hover .card-button {
+  -webkit-transform: translate(-50%, 50%);
+  -ms-transform: translate(-50%, 50%);
+  transform: translate(-50%, 50%);
+  opacity: 1;
+  color: #fff; /* Set the desired color for the text */
+
+}
+.typing {
+    width: 550px;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 1.5s steps(12, end), cursor .2s steps(12, end) infinite;
+    color: #ffffff;
+}
+@keyframes typing {
+    from { width: 0 }
+}
+@keyframes cursor {
+    50% { border-color: transparent }
+}
+  </style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -58,76 +143,41 @@ The Hive Hub      </a>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">  
-            <h2 class="text-white mb-2 mt-5">Welcome to Admin Dashboard!</h2>
+            <h2 class="cssanimation typing">Welcome to Admin Dashboard!</h2>
+
+
           </div>
-          <div class="container-fluid py-4" style="margin-top: 40px;">
-            <div class="row">
+          <div class="container-fluid py-4" style="margin-top: 100px;">
+            <div class="row" style="margin-left: 120px;">
               <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                  <div class="card-body p-4"onclick="handleCardClick2()" >
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="numbers">
-                          <h5 class="font-weight-bolder">
-                            Go to Users List
-                          </h5>
-                          <p class="mb-0">
-                            <span class="text-success text-sm font-weight-bolder">positive addition here</span>
-                          </p>
-                        </div>
-                      </div>
-                      <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                          <i class="ni ni-badge text-lg opacity-10" aria-hidden="true"></i>
-                        </div>
-                      </div>
+                  <div class="card " onclick="handleCardClick2()">
+                    <div class="card-details ni ni-circle-08">
+                      <p class="text-title">Users list</p>
+                      <p class="text-body">here u can find all the users</p>
+
                     </div>
-                  </div>
+                    <a class="card-button" >click to go</a>
                 </div>
               </div>
               <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                  <div class="card-body p-4" onclick="handleCardClick()">
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="numbers">
-                          <h5 class="font-weight-bolder">
-                            Go to Projects List                          </h5>
-                          <p class="mb-0">
-                            <span class="text-success text-sm font-weight-bolder">positive</span>
-                          </p>
-                        </div>
-                      </div>
-                      <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                          <i class="ni ni-folder-17 text-lg opacity-10" aria-hidden="true"></i>
-                        </div>
-                      </div>
-                    </div>
+                <div class="card " onclick="handleCardClick()">
+                  <div class="card-details ni ni-folder-17">
+                    <p class="text-title">projects list</p>
+                    <p class="text-body">here u can find the list of all the projects</p>
+
                   </div>
-                </div>
+                  <a class="card-button" >click to go</a>
               </div>
-              <div class="col-xl-4 col-sm-6">
-                <div class="card">
-                  <div class="card-body p-4" onclick="handleCardClick3()">
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="numbers">
-                          <h5 class="font-weight-bolder">
-                            Go to propositions list                          </h5>
-                          <p class="mb-0">
-                            <span class="text-danger text-sm font-weight-bolder">negative addition here </span>
-</p>
-                        </div>
-                      </div>
-                      <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                          <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
-                        </div>
-                      </div>
-                    </div>
+              </div>
+              <div class="col-xl-4 col-md-6 offset-xl-0 offset-md-3" >
+                <div class="card " onclick="handleCardClick3()">
+                  <div class="card-details fas fa-list">
+                    <p class="text-title">propositions list</p>
+                    <p class="text-body">here u can find the propositions of the workforce</p>
+
                   </div>
-                </div>
+                  <a class="card-button" >click to go</a>
+              </div>
               </div>
             </div>
           </div>

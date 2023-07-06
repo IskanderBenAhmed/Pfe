@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+
+        .card {
+            width: 400px;
+            height: 600px;
+            color: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 5px;
+            overflow: visible;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .card .item {
+            border-radius: 10px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item:hover {
+            transform: scale(0.95);
+            transition: all 0.3s;
+        }
+
+        .item svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 7px;
+        }
+
+        .item--1 {
+            background: #c7c7ff;
+        }
+
+        .item--2 {
+            background: #ffd8be;
+        }
+
+        .item--3 {
+            background: #a9ecbf;
+        }
+
+        .item--4 {
+            background: #f3bbe1;
+        }
+
+        .quantity {
+            font-size: 25px;
+            font-weight: 600;
+        }
+
+        .text {
+            font-size: 12px;
+            font-family: inherit;
+            font-weight: 600;
+        }
+        .heading {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-right: 50px;
+        }
+
+        .text--1 {
+            color: rgba(149,149,255,1);
+        }
+        .item.selected {
+            border: 2px solid blue; /* Update the style to indicate selection */
+        }
+
+        .text--2 {
+            color: rgba(252,161,71,1);
+        }
+
+        .text--3 {
+            color: rgba(66,193,110,1);
+        }
+
+        .text--4 {
+            color: rgba(220,91,183,1);
+        }
+        .template-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hu__hu__ { animation: hu__hu__ infinite 2s ease-in-out }
+@keyframes hu__hu__ {
+    50% { transform: translateY(30px) }
+}
+    </style>
+    <title>Template Upload</title>
+</head>
+<body>
+    <h2 style="margin-left: -150px; margin-right: 20px;" class="cssanimation hu__hu__"> Please choose your wallpaper </h2>
+
+
+    <div class="card">
+        <div class="item item--1" onclick="selectTemplate('argon Template')">
+            <img class="template-img" src="https://themewagon.com/wp-content/uploads/2020/02/argon-dashboard-1.jpg" alt="Icons Template">
+            <span class="template-name">argon Template</span>
+        </div>
+        <div class="item item--2" onclick="selectTemplate('nimo Template')">
+            <img class="template-img" src="https://themewagon.com/wp-content/uploads/2023/03/nimo.png" alt="Illustrations Template">
+            <span class="template-name">nimo Template</span>
+        </div>
+        <div class="item item--3" onclick="selectTemplate('chakra ui Template')">
+            <img class="template-img" src="https://res.cloudinary.com/practicaldev/image/fetch/s--ghDBDufn--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ciliw7xcxptjn63pcd5c.jpg" alt="Components Template">
+            <span class="template-name">chakra ui Template</span>
+        </div>
+        <div class="item item--4" onclick="selectTemplate('argon 2 Template')">
+            <img class="template-img" src="https://149841302.v2.pressablecdn.com/wp-content/uploads/2021/06/laravel-templates.jpg" alt="Animations Template">
+            <span class="template-name">argon 2 Template</span>
+        </div>
+    </div>
+
+    <div class="text-center" style="margin-top: 60px;">
+        <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
+        <button id="nextButton" type="button" class="btn btn-white-text mx-2 float-right" onclick="showSelectedTemplate()">NEXT</button>
+    </div>
+
+    <input type="hidden" id="selectedTemplateNameInput">
+
+    <script>
+        function selectTemplate(templateName) {
+            var items = document.getElementsByClassName('item');
+            for (var i = 0; i < items.length; i++) {
+                items[i].classList.remove('selected');
+            }
+
+            var selectedItem = event.currentTarget;
+            selectedItem.classList.add('selected');
+
+            console.log("Selected template:", templateName);
+
+            var selectedTemplateNameInput = document.getElementById('selectedTemplateNameInput');
+            selectedTemplateNameInput.value = templateName;
+        }
+
+        function showSelectedTemplate() {
+            var selectedTemplateNameInput = document.getElementById('selectedTemplateNameInput');
+            var selectedTemplate = selectedTemplateNameInput.value;
+
+            console.log("Selected template:", selectedTemplate);
+
+            localStorage.setItem('selectedTemplate', selectedTemplate);
+            window.location.href = 'project-theme';
+        }
+
+        const cancelButtonTech = document.getElementById('cancelButtonTech');
+    cancelButtonTech.addEventListener('click', goBack);
+  
+    function goBack() {
+      history.back(); // Go back to the previous page
+    }
+    </script>
+</body>
+</html>

@@ -1,45 +1,113 @@
-<!--
-=========================================================
-* Argon Dashboard 2 - v2.0.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
+  <style>
+ .bookmarkBtn {
+  width: 220px;
+  height: 40px; 
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.349);
+  background-color:   rgb(36, 141, 228);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: .3s;
+  overflow: hidden;
+}
+
+.IconContainer {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(to bottom, rgb(237, 232, 232),rgb(255, 255, 255));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+  transition-duration: .3s;
+}
+
+.icon {
+  border-radius: 1px;
+}
+
+.text {
+  height: 100%;
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  color: rgb(252, 250, 250);
+  z-index: 1;
+  transition-duration: .3s;
+  font-size: 1.04em;
+  font-weight: bold;
+}
+
+.bookmarkBtn:hover .IconContainer {
+  width: 90px;
+  border-radius: 40px;
+  transition-duration: .3s;
+}
+
+.bookmarkBtn:hover .text {
+  transform: translate(10px);
+  width: 0;
+  font-size: 0;
+  transition-duration: .3s;
+}
+
+.bookmarkBtn:active {
+  transform: scale(0.95);
+  transition-duration: .3s;
+}
+.text-xxl {
+  font-size: 13px; /* Adjust the font size as needed */
+}
+.typing {
+  width: 400px;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 1.5s steps(12, end), cursor .2s steps(12, end) infinite;
+      color: white;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+    }
+
+    @keyframes cursor {
+      50% { border-color: transparent; }
+    }
+
+
+
+
+
+  </style>
+  <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>
-The Hive Hub  </title>
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <title>The Hive Hub</title>
+  <!-- Fonts and icons -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
   <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet"/>
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet"/>
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet"/>
 </head>
-
 <body class="">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
     <div class="container">
-      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="/">
-The Hive Hub      </a>
+      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="/">The Hive Hub</a>
       <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon mt-2">
           <span class="navbar-toggler-bar bar1"></span>
@@ -51,47 +119,48 @@ The Hive Hub      </a>
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/admin">
-              <i class="fa fa-chart-pie opacity-6  me-1"></i>
+              <i class="fa fa-chart-pie opacity-6 me-1"></i>
               home
             </a>
           </li>
-          
           <li class="nav-item">
             <a class="nav-link me-2" href="/register">
-              <i class="fas fa-user-circle opacity-6  me-1"></i>
+              <i class="fas fa-user-circle opacity-6 me-1"></i>
               Sign Up
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link me-2" href="/login">
-              <i class="fas fa-key opacity-6  me-1"></i>
+              <i class="fas fa-key opacity-6 me-1"></i>
               Sign In
             </a>
           </li>
         </ul>
-        <ul class="navbar-nav d-lg-block d-none">
-            <label  class="nav-link me-2"  for="status-filter">Status:</label>
-            <select class="form-control" id="status-filter" onchange="filterProjects()">
-              <option value="all">All</option>
-              <option value="pending">Pending</option>
-              <option value="approved">approved</option>
-              <option value="in-progress">In Progress</option>
-              <option value="completed">Completed</option>
-              <option value="rejected">Rejected</option>
-
-            </select>
+        <div class="d-flex align-items-center">
+          <h5 class="text-white mb-0 me-2">Filter</h5>
+          <select class="form-control" id="status-filter" onchange="filterProjects()">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="in-progress">In Progress</option>
+            <option value="completed">Completed</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+      
         </ul>
       </div>
     </div>
   </nav>
   <!-- End Navbar -->
-  <main class="main-content  mt-0">
+  <main class="main-content mt-0">
     <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signup-cover.jpg'); background-position: top;">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">All Projects</h1>
+          <div class="col-lg-5 text-center mx-auto"><br><br><br><br>
+            <h2 class="cssanimation typing" style="margin-left: 45px;">All Projects</h2>
           </div>
         </div>
       </div>
@@ -99,101 +168,104 @@ The Hive Hub      </a>
     <div class="container">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
         <div class="card mb-4">
-         
           <!-- Add the filter dropdown -->
-        
           <div class="card-body px-3 pt-3 pb-2">
             <div class="table-responsive p-0">
               <% if (projects.length > 0) { %>
-           <table class="table align-items-center mb-0">
-  <thead>
-    <tr>
-      <th class="font-weight-bold">project Name</th>
-      <th class="font-weight-bold">Backend</th>
-      <th class="font-weight-bold">Frontend</th>
-      <th class="font-weight-bold">Database</th>
-      <th class="font-weight-bold">Category</th>
-      <th class="font-weight-bold">Project Type</th>
-      <th class="font-weight-bold">Status</th>
-      <th class="font-weight-bold">Start Date</th>
-      <th class="font-weight-bold">End Date</th>
-      <th class="font-weight-bold">Estimated Price</th>
-      <th class="font-weight-bold">Max Budget</th>
-      <th class="font-weight-bold">Pack</th>
-      <th class="font-weight-bold">created by</th>
-      <th class="font-weight-bold">Change Status</th>
-    </tr>
-  </thead>
-  <tbody id="project-table-body">
-    <% projects.forEach(project => { %>
-    <tr class="project">
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.projectName %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.backend %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.frontend %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.database %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.category %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.projectType %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.status %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15">
-        <%= project.startDate.toLocaleDateString(undefined, {
-          weekday: 'short',
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
-        }) %>
-      </td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15">
-        <%= project.endDate.toLocaleDateString(undefined, {
-          weekday: 'short',
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric'
-        }) %>
-      </td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.Estimated_price %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.maxBudget %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.pack.join(', ') %></td>
-      <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-15"><%= project.createdBy %></td>
-      <td>
-        <form action="/projects/<%= project._id %>/status" method="POST">
-          <button class="btn btn-link text-dark px-3 mb-0" type="submit">
-            <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Change Status
-          </button>
-          <select class="form-control"  name="status">
-            <option value="pending" <% if (project.status === 'pending') { %>selected<% } %>>Pending</option>
-            <option value="approved" <% if (project.status === 'approved') { %>selected<% } %>>approved</option>
-            <option value="in-progress" <% if (project.status === 'in-progress') { %>selected<% } %>>In Progress</option>
-            <option value="rejected" <% if (project.status === 'rejected') { %>selected<% } %>>Rejected</option>
-            <option value="completed" <% if (project.status === 'completed') { %>selected<% } %>>Completed</option>
-          </select>
-       
-        </form>
-      </td>
-    </tr>
-    <% }); %>
-  </tbody>
-</table>
+                <table class="table animated-table">
+                  <thead>
+                    <tr>
+                      <th class="font-weight-bold">project Name</th>
+                      <th class="font-weight-bold">Backend</th>
+                      <th class="font-weight-bold">Frontend</th>
+                      <th class="font-weight-bold">Database</th>
+                      <th class="font-weight-bold">Category</th>
+                      <th class="font-weight-bold">Project Type</th>
+                      <th class="font-weight-bold">Status</th>
+                      <th class="font-weight-bold">Start Date</th>
+                      <th class="font-weight-bold">End Date</th>
+                      <th class="font-weight-bold">Estimated Price</th>
+                      <th class="font-weight-bold">Max Budget</th>
+                      <th class="font-weight-bold">Pack</th>
+                      <th class="font-weight-bold">created by</th>
+                      <th class="font-weight-bold">Change Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="project-table-body">
+                    <% projects.forEach(project => { %>
+                      <tr class="project">
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.projectName %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.backend %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.frontend %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.database %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.category %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.projectType %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.status %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15">
+                          <%= project.startDate.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %>
+                        </td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15">
+                          <%= project.endDate.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %>
+                        </td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.Estimated_price %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.maxBudget %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.pack.join(', ') %></td>
+                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.createdBy %></td>
+                        <td>
+                          <form action="/projects/<%= project._id %>/status" method="POST">
 
 
-              <script>
-                function filterProjects() {
-                  const filterValue = document.getElementById('status-filter').value;
-                  const projects = document.getElementsByClassName('project');
+                             
 
-                  for (let i = 0; i < projects.length; i++) {
-                    const project = projects[i];
-                    const status = project.querySelector('td:nth-child(7)').innerText;
 
-                    if (filterValue === 'all' || status === filterValue) {
-                      project.style.display = 'table-row';
-                    } else {
-                      project.style.display = 'none';
+
+
+                            <div style="display: flex; align-items: center;">
+                              <select class="form-control" name="status">
+                                <option value="pending" <% if (project.status === 'pending') { %>selected<% } %>>Pending</option>
+                                <option value="approved" <% if (project.status === 'approved') { %>selected<% } %>>approved</option>
+                                <option value="in-progress" <% if (project.status === 'in-progress') { %>selected<% } %>>In Progress</option>
+                                <option value="rejected" <% if (project.status === 'rejected') { %>selected<% } %>>Rejected</option>
+                                <option value="completed" <% if (project.status === 'completed') { %>selected<% } %>>Completed</option>
+                              </select>
+                              <button class="bookmarkBtn" type="submit" style="margin-left: 10px;">
+                                <span class="IconContainer"> 
+                                  <svg viewBox="0 0 384 512" height="0.9em" class="icon">
+                                    <path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" fill="rgb(0, 0, 128)"></path>
+                                  </svg>
+                                  
+                                  
+                                  
+                                </span>
+                                <p class="text" style="font-weight: bold;">Save</p>
+                              </button>
+                            </div>
+                            
+                          </form>
+                        </td>
+                      </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+                <script>
+                  function filterProjects() {
+                    const filterValue = document.getElementById('status-filter').value;
+                    const projects = document.getElementsByClassName('project');
+
+                    for (let i = 0; i < projects.length; i++) {
+                      const project = projects[i];
+                      const status = project.querySelector('td:nth-child(7)').innerText;
+
+                      if (filterValue === 'all' || status === filterValue) {
+                        project.style.display = 'table-row';
+                      } else {
+                        project.style.display = 'none';
+                      }
                     }
                   }
-                }
-              </script>
+                </script>
               <% } else { %>
-              <p>No projects found.</p>
+                <p>No projects found.</p>
               <% } %>
             </div>
           </div>
@@ -201,10 +273,7 @@ The Hive Hub      </a>
       </div>
     </div>
   </main>
-  <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
- 
-  <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-  <!--   Core JS Files   -->
+  <!-- Core JS Files -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
@@ -214,14 +283,15 @@ The Hive Hub      </a>
     if (win && document.querySelector('#sidenav-scrollbar')) {
       var options = {
         damping: '0.5'
-      }
+      };
       Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
   </script>
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages, etc -->
   <script src="../assets/js/argon-dashboard.min.js?v=2.0.4"></script>
+  <!--  Notifications Plugin    -->
+  <script src="../assets/js/plugins/notify.min.js"></script>
 </body>
-
 </html>

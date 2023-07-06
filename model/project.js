@@ -6,6 +6,8 @@ const projectSchema = new mongoose.Schema({
   database: String,
   category: String,
   projectName: String,
+  selectedTemplate : String, // Array of checked pack
+
 
   projectType: String,
   status: {
@@ -28,7 +30,7 @@ const projectSchema = new mongoose.Schema({
   pack: [String],
   createdBy: {
     type: String
-  }, // Array of checked pack
+  },
 
 },
 

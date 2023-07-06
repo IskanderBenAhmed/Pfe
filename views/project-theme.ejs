@@ -193,21 +193,24 @@ The Hive Hub  </title>
       </div>
       <div style="margin-top: 150px;">
 
-      <input type="hidden" name="category" value="<%= category %>">
+      <input type="hidden" name="category" value="<%= category %>"> 
       <input type="hidden" name="projectName" value="<%= projectName %>">
 
 
+<!-- Hidden input to store project's chosen template -->
   
       <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>      
       <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
 
-      <button href="'/project-type" type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
+      <button href="/project-type" type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
     </div>
   </form>
   
   <script>
       const category = '<%= category %>'; // Retrieve the category value from the server-side rendering
+  // Retrieve the selected item name from localStorage
 
+ 
 
    
     
@@ -258,6 +261,10 @@ The Hive Hub  </title>
     function goBack() {
       history.back(); // Go back to the previous page
     }
+
+
+
+
   </script>
   
          

@@ -56,7 +56,7 @@
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/admin">
+            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/suggestion">
               <i class="fa fa-chart-pie opacity-6  me-1"></i>
               Home
             </a>
@@ -103,7 +103,8 @@
                     <thead>
                       <tr>
                         <th>projectName</th>
-                        <th>Freelancer Username</th>
+                        <th>Freelancer</th>
+                        <th>budget proposed</th>
                         <th>Status</th>
                         <th>Select</th>
                         <!-- Add other table headers as needed -->
@@ -114,6 +115,8 @@
                         <tr data-status="<%= proposition.status %>">
                           <td><%= proposition.projectName %></td>
                           <td><%= proposition.freelancerUsername %></td>
+                          <td><%= proposition.price %></td>
+
                           <td><%= proposition.status %></td>
                           <td>
                             <% if (proposition.selected) { %>

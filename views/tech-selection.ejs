@@ -66,8 +66,8 @@ The Hive Hub  </title>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">Welcome!</h1>
-            <p class="text-lead text-white">We will help you Create your project.</p>
+            <h1 class="text-white mb-2 mt-5">great!</h1>
+            <p class="text-lead text-white">now fill in with your desired technologies !</p>
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@ The Hive Hub  </title>
             
             <div class="row px-xl-5 px-sm-4 px-3">
               
-              
+             
               
               <div class="mt-2 position-relative text-center">
                 
@@ -109,16 +109,22 @@ The Hive Hub  </title>
                 <input type="hidden" name="projectName" value="<%= projectName %>">
 
                 <input type="hidden" name="projectType" value="<%= projectType %>">
-              
+
+
+
+               
                 <div class="text-center" style="margin-top: 40px;">
                   <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
                   <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
-                  <button type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
+                  <button href="/payment" type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>
                 </div>
               
               </form> 
               
               <script>
+                 
+
+
                 // Reset the form to its initial state
                 const resetButton = document.getElementById('resetButton');
                 resetButton.addEventListener('click', function() {
@@ -150,6 +156,9 @@ The Hive Hub  </title>
                 function goBack() {
                   history.back(); // Go back to the previous page
                 }
+
+
+              
               </script>
               
               

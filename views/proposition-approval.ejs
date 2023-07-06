@@ -20,6 +20,70 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
   <style>
+     .bookmarkBtn {
+  width: 120px;
+  height: 40px; 
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.349);
+  background-color:   rgb(36, 141, 228);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: .3s;
+  overflow: hidden;
+}
+
+.IconContainer {
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(to bottom, rgb(237, 232, 232),rgb(255, 255, 255));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+  transition-duration: .3s;
+}
+
+.icon {
+  border-radius: 1px;
+}
+
+.text {
+  height: 100%;
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  color: rgb(252, 250, 250);
+  z-index: 1;
+  transition-duration: .3s;
+  font-size: 1.04em;
+  font-weight: bold;
+}
+
+
+
+.bookmarkBtn:hover .IconContainer {
+  width: 90px;
+  border-radius: 40px;
+  transition-duration: .3s;
+}
+
+.bookmarkBtn:hover .text {
+  transform: translate(10px);
+  width: 0;
+  font-size: 0;
+  transition-duration: .3s;
+}
+
+.bookmarkBtn:active {
+  transform: scale(0.95);
+  transition-duration: .3s;
+}
     .filter-wrapper {
       position: absolute;
       top: 15px;
@@ -31,12 +95,32 @@
     .filter-wrapper select {
       width: 200px;
     }
+    .typing {
+      width: 400px;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 1.5s steps(12, end), cursor .2s steps(12, end) infinite;
+      color: white;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+    }
+
+    @keyframes cursor {
+      50% { border-color: transparent; }
+    }
+
+    .small-select {
+  height: 50px;
+  width: 150px;
+}
+
+.form-td {
+  width: 150px; /* Adjust the width value as per your requirement */
+}
+
   </style>
-
-
-
-
-
 </head>
 
 <body class="">
@@ -101,8 +185,9 @@
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">Requests</h1>
+          <div class="col-lg-5 text-center mx-auto"><br><br><br>  
+            <h2 class="cssanimation typing" style="margin-left: 50px;">List of propositions</h2>
+
           </div>
         </div>
       </div>
@@ -118,26 +203,40 @@
                   <thead>
                     <tr>
                       <th>projectName</th>
-                      <th>Freelancer Username</th>
+                      <th>Freelancer </th>
+                      <th>budget proposed</th>  
                       <th>Status</th>
-                      <!-- Add other table headers as needed -->
+
                     </tr>
                   </thead>
                   <tbody>
                     <% propositions.forEach(proposition => { %>
                       <tr data-status="<%= proposition.status %>">
-                        <td><%= proposition.projectName %></td>
-                        <td><%= proposition.freelancerUsername %></td>
-                        <td>
+                        <td class="form-td"><%= proposition.projectName %></td>
+                        <td class="form-td"><%= proposition.freelancerUsername %></td>
+                        <td class="form-td"><%= proposition.price %></td>
+
+                        <td  class="form-td">
                           <form action="/propositions/<%= proposition._id %>/status" method="POST">
-                            <button class="btn btn-link text-dark px-3 mb-0" type="submit">
-                              <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Change Status
+                            <div style="display: flex; align-items: center;">
+                              <select class="form-control small-select" name="status">
+                                <option value="pending" <% if (proposition.status === 'pending') { %>selected<% } %>>Pending</option>
+                                <option value="approved" <% if (proposition.status === 'approved') { %>selected<% } %>>Approved</option>
+                                <option value="rejected" <% if (proposition.status === 'rejected') { %>selected<% } %>>Rejected</option>
+                              </select>
+                              
+                            <button class="bookmarkBtn" type="submit" style="margin-left: 10px;">
+                              <span class="IconContainer"> 
+                                <svg viewBox="0 0 384 512" height="0.9em" class="icon">
+                                  <path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" fill="rgb(0, 0, 128)"></path>
+                                </svg>
+                                
+                                
+                                
+                              </span>
+                              <p class="text" style="font-weight: bold;">Save</p>
                             </button>
-                            <select class="form-control" name="status">
-                              <option value="pending" <% if (proposition.status === 'pending') { %>selected<% } %>>Pending</option>
-                              <option value="approved" <% if (proposition.status === 'approved') { %>selected<% } %>>Approved</option>
-                              <option value="rejected" <% if (proposition.status === 'rejected') { %>selected<% } %>>Rejected</option>
-                            </select>
+                            </div>
                           </form>
                         </td>
                       </tr>

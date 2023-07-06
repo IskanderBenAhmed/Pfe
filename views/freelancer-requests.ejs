@@ -16,6 +16,21 @@
 <html lang="en">
 
 <head>
+  <style>
+     .typing {
+    width: 550px;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 1.5s steps(12, end), cursor .2s steps(12, end) infinite;
+    color: #ffffff;
+}
+@keyframes typing {
+    from { width: 0 }
+}
+@keyframes cursor {
+    50% { border-color: transparent }
+}
+  </style>
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -104,8 +119,9 @@ The Hive Hub      </a>
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">Requests </h1>
+          <div class="col-lg-5 text-center mx-auto"><br><br><br><br>
+            <h2 class="cssanimation typing">Your propositions</h2>
+
           </div>
         </div>
       </div>
@@ -123,8 +139,10 @@ The Hive Hub      </a>
             <thead>
               <tr>
                 <th>projectName</th>
-                <th>Freelancer Username</th>
+                <th>Freelancer</th>
                 <th>Status</th>
+                <th>selected</th>
+
 
                 <!-- Add other table headers as needed -->
               </tr>
@@ -135,6 +153,8 @@ The Hive Hub      </a>
                   <td><%= proposition.projectName %></td>
                   <td><%= proposition.freelancerUsername %></td>
                   <td><%= proposition.status %></td>
+                  <td><%= proposition.selected %></td>
+
 
                   <!-- Add other table cells as needed -->
                 </tr>

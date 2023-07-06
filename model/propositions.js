@@ -17,6 +17,10 @@ const propositionSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
   // Add any additional fields as needed
 });
 

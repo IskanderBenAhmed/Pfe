@@ -7,7 +7,7 @@ const session = require('express-session');
 const propositions = require('./model/propositions');
 const flash = require('connect-flash');
 
-
+const profile= require("./model/profile")
 
 
 const multer = require('multer');
@@ -52,6 +52,8 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 const bodyParser = require('body-parser');
 const path = require("path");
 app.use(express.static('public/main-template'));
+app.use(express.static('public/assets'));
+
 
 const cookieParser = require("cookie-parser");
 const { adminAuth, userAuth } = require("./middleware/auth.js");
@@ -153,101 +155,100 @@ process.on("unhandledRejection", (err) => {
 
 
 
-app.post('/project-theme', (req, res) => {
-  // Process the submitted form data
-  const projectType = req.body.projectType;
-  // ...
+  
 
-  // Store the project type in the session
-  req.session.projectType = projectType;
-
-  // Redirect to the "tech-selection" page
-  res.redirect('/tech-selection');
-});
-
+// Handle GET request for the "project-type" page
 // Handle GET request for the "project-type" page
 app.get('/project-type', (req, res) => {
   const category = req.query.category;
-  const projectName = req.query.projectName; // Retrieve the category from the query parameters
+  const projectName = req.query.projectName;
 
-  if (!category ||!projectName) {
-    // If the category is missing, redirect back to the "project-theme" page
+  if (!category || !projectName) {
     return res.redirect('/project-theme');
   }
 
-  res.render('project-type', { category, projectName , projectType: req.query.projectType });
+  const projectType = req.session.projectType;
+  const selectedTemplate = req.session.selectedTemplate;
+
+  res.render('project-type', { category, projectName, projectType, selectedTemplate });
 });
-
-
 
 // Handle POST request for the "project-type" page
 app.post('/project-type', (req, res) => {
   const category = req.body.category;
   const projectType = req.body.projectType;
   const projectName = req.body.projectName;
+  const selectedTemplate = req.body.selectedTemplate;
+  req.session.selectedTemplate = selectedTemplate;
 
+  // Store the project type and selected template in the session
+  req.session.projectType = projectType;
 
-  // Render the project-type page with the category and projectType values
-  res.render('project-type', { category,projectName, projectType });
+  // Render the project-type page with the category, projectName, projectType, and selectedTemplate values
+  res.render('project-type', { category, projectName, projectType, selectedTemplate });
 });
 
 
+app.get('/project-theme', (req, res) => {
+  const category = req.session.category;
+  const projectName = req.session.projectName;
+  var selectedTemplate = 'Template Name'; // Replace 'Template Name' with the actual selected template name
+  // Retrieve the category from the session
+  
+  res.render('project-theme', { category,projectName,selectedTemplate: selectedTemplate });
+});
 
 app.post('/project-theme', (req, res) => {
   // Process the submitted form data
   const projectType = req.body.projectType;
+  const selectedTemplate = req.body.selectedTemplateNameInput;
+
+  
   // ...
 
   // Store the project type in the session
   req.session.projectType = projectType;
 
+
   // Redirect to the "tech-selection" page
   res.redirect('/project-type');
 });
 
-app.get('/project-theme', (req, res) => {
-  const category = req.session.category;
-  const projectName = req.session.projectName; // Retrieve the category from the session
-  
-  res.render('project-theme', { category,projectName });
-});
+
 
 
 
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/tech-selection', (req, res) => {
+  const category = req.session.category;
+  const projectName = req.session.projectName;
+  const projectType = req.session.projectType;
+
+  res.render('tech-selection', { category, projectName, projectType });
+});
+
+
 app.post('/tech-selection', (req, res) => {
-  // Retrieve the values from the request body
-  const  backend = req.body.backend;
-  const  frontend = req.body.frontend;
-  const  database = req.body.database;
-  const  category = req.body.category;
-  const  projectName = req.body.projectName;
-
-  const  projectType = req.body.projectType;
-
-  // Render the payment.ejs view
+  const backend = req.body.backend;
+  const frontend = req.body.frontend;
+  const database = req.body.database;
+  const category = req.body.category;
+  const projectName = req.body.projectName;
+  const projectType = req.body.projectType;
   res.render('tech-selection', {
     backend,
     frontend,
     database,
     category,
-    projectName ,
+    projectName,
     projectType,
-    
   });
 });
 
 
 
 
-app.get('/tech-selection', (req, res) => {
-  const category = req.session.category;
-  const projectName = req.session.projectName; // Retrieve the category from the session
-  const projectType = req.session.projectType;
-
-  res.render('tech-selection', { category,projectName, projectType });
-});
 
 
 
@@ -314,21 +315,21 @@ app.post('/saved-project',  userAuth, async(req, res) => {
 
 
 app.get('/payment', (req, res) => {
-  const { backend, frontend, database, category,projectName, projectType } = req.query;
+  const { backend, frontend, database, category, projectName, projectType } = req.query;
 
   res.render('payment', {
     backend,
     frontend,
     database,
     category,
-    projectName ,
-    projectType
+    projectName,
+    projectType,
   });
 });
 
 
 app.post('/payment', (req, res) => {
-  const { backend, frontend, database, category,projectName, projectType,status, paymentMethod } = req.body;
+  const { backend, frontend, database, category, projectName, projectType, status, paymentMethod } = req.body;
 
   // Update the payment method in the project document using your preferred method
   res.render('payment', {
@@ -336,15 +337,13 @@ app.post('/payment', (req, res) => {
     frontend,
     database,
     category,
-    projectName ,
+    projectName,
     projectType,
     status,
-    paymentMethod
+    paymentMethod,
   });
-
-
-
 });
+
 
 app.get('/duration', (req, res) => {
   // Retrieve the values passed from the previous route (payment)
@@ -387,7 +386,6 @@ app.post('/duration', (req, res) => {
 
   app.get('/project-pack', (req, res) => {
     const { backend, frontend, database, category,projectName, projectType, paymentMethod,startDate, endDate } = req.query;
-
     res.render('project-pack', {
       backend,
       frontend,
@@ -398,6 +396,7 @@ app.post('/duration', (req, res) => {
       paymentMethod,
       startDate,
       endDate,
+       
 
       
     });
@@ -405,7 +404,7 @@ app.post('/duration', (req, res) => {
 
 app.post('/project-pack', (req, res) => {
   // Retrieve the values from the request body
-  const { backend, frontend, database, category,projectName, projectType, paymentMethod ,startDate,endDate,Estimated_price,maxBudget,...pack} = req.body;
+  const { backend, frontend, database, category,projectName, projectType, paymentMethod ,startDate,endDate ,Estimated_price,maxBudget,...pack} = req.body;
 
   // Perform any necessary processing or validation with the values
 
@@ -420,6 +419,7 @@ app.post('/project-pack', (req, res) => {
     paymentMethod,
     startDate,
     endDate,
+   
     Estimated_price,
     maxBudget,
     ...pack
@@ -459,12 +459,11 @@ app.get('/freelancer-home', (req, res) => {
 });
 
 
-
 app.post('/save-proposition', (req, res) => {
-  const { projectName, username } = req.body;
+  const { projectName, username, price } = req.body;
 
   // Validate the required fields
-  if (!projectName || !username) {
+  if (!projectName || !username || !price) {
     return res.status(400).json({ error: 'Missing required fields.' });
   }
 
@@ -472,6 +471,7 @@ app.post('/save-proposition', (req, res) => {
   const proposition = new propositions({
     projectName,
     freelancerUsername: username,
+    price,
   });
 
   proposition.save()
@@ -485,28 +485,48 @@ app.post('/save-proposition', (req, res) => {
 });
 
 
+
 app.get('/get-username', userAuth, (req, res) => {
   // Assuming the authenticated user's username is available in the req.user object
   const username = req.user.username;
   res.json({ username });
 });
+app.get('/get-role', userAuth, (req, res) => {
+  const role = req.user.role;
+  res.json({ role });
+});
   
-
+  
 app.get('/client-profile', userAuth, async (req, res) => {
   const username = req.user.username;
+  const role = req.user.role;
 
-  // Perform any necessary logic or data retrieval here
-  // Render the freelancer-profile.ejs template and pass the 'username' variable
-  res.render('client-profile', { username: username });
+  console.log('Username:', username); // Add this line
+
+  try {
+    // Retrieve the user profile data from the database
+    const userProfile = await profile.findOne({ username: username });
+
+      // Render the client-profile.ejs template and pass the userProfile, username, and role variables
+      res.render('client-profile', { userProfile: userProfile, username: username, role: role });
+      // Handle the case when the user profile is not found
+  } catch (error) {
+    // Handle any errors that occur during profile retrieval
+    res.status(500).json({ error: 'Failed to retrieve user profile' });
+  }
 });
+
+
 
 
 app.get('/freelancer-profile', userAuth, async (req, res) => {
   const username = req.user.username;
+  const role = req.user.role;
+
 
   // Perform any necessary logic or data retrieval here
   // Render the freelancer-profile.ejs template and pass the 'username' variable
-  res.render('freelancer-profile', { username: username });
+  res.render('freelancer-profile', { username: username, role: role });
 });
 
 app.get('/freelancer-requests', userAuth, async (req, res) => {
@@ -612,4 +632,106 @@ app.post('/select-proposition', userAuth, async (req, res) => {
     console.error('Error updating proposition selection:', error);
     res.status(500).send('Internal Server Error');
   }
+});
+
+app.post('/upload-template', upload.single('template'), (req, res) => {
+  // Access the uploaded file using req.file
+  const templateFile = req.file;
+
+  // Process the uploaded file as needed
+
+  // Retrieve the list of uploaded templates
+  // You can fetch this from a database or an array in memory
+  const templates = [
+    { name: 'Template 1' },
+    { name: 'Template 2' },
+    { name: 'Template 3' }
+  ];
+
+  // Render the upload-template view and pass the templates data
+  res.render('upload-template', { templates: templates });
+});
+
+app.get('/upload-template', (req, res) => {
+  // Render the upload-template view without any uploaded templates initially
+  res.render('upload-template', { templates: [] });
+});
+app.put('/api/projects/:projectId', userAuth, async (req, res) => {
+  const projectId = req.params.projectId;
+  const { projectName, backend, frontend, database, category, projectType, status, paymentMethod, startDate, endDate, Estimated_price, maxBudget, ...pack } = req.body;
+
+  const coding = req.body.coding === 'on';
+  const Testing = req.body.Testing === 'on';
+  const deployment = req.body.deployment === 'on';
+
+  let totalPrice = 0;
+  if (coding) {
+    totalPrice += 2000;
+  }
+  if (Testing) {
+    totalPrice += 1700;
+  }
+  if (deployment) {
+    totalPrice += 1200;
+  }
+
+  // Find the project document by ID and update the fields
+  project.findByIdAndUpdate(projectId, {
+    projectName,
+    backend,
+    frontend,
+    database,
+    category,
+    projectType,
+    status,
+    paymentMethod,
+    startDate,
+    endDate,
+    Estimated_price: totalPrice,
+    maxBudget,
+    pack: Object.keys(pack).filter(key => pack[key] === 'on')
+  })
+    .then(updatedProject => {
+      console.log('Project updated:', updatedProject);
+      res.json(updatedProject);
+    })
+    .catch(error => {
+      console.error('Error updating project:', error);
+      res.status(500).json({ error: 'An error occurred while updating the project.' });
+    });
+});
+app.delete('/api/projects/:projectId', userAuth, async (req, res) => {
+  const projectId = req.params.projectId;
+
+  try {
+    // Find the project document by ID and delete it
+    const deletedProject = await project.findByIdAndDelete(projectId);
+    if (!deletedProject) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    console.log('Project deleted:', deletedProject);
+    res.json(deletedProject);
+  } catch (error) {
+    console.error('Error deleting project:', error);
+    res.status(500).json({ error: 'An error occurred while deleting the project.' });
+  }
+});
+app.post('/save-profile', (req, res) => {
+  const profileData = req.body;
+
+  console.log('Profile Data:', profileData);
+
+  // Create a new profile document using the profile model
+  const newProfile = new profile(profileData);
+
+  newProfile.save()
+    .then(savedProfile => {
+      console.log('Saved Profile:', savedProfile);
+      res.status(200).json(savedProfile);
+    })
+    .catch(error => {
+      console.error('Failed to save profile:', error);
+      res.status(500).json({ error: 'Failed to save profile' });
+    });
 });
