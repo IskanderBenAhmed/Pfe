@@ -159,8 +159,62 @@ svg path{
 <body class="g-sidenav-show bg-gray-100">
   <div class="position-absolute w-100 min-height-300 top-0" style="background-image: url('https://images6.alphacoders.com/987/987870.jpg'); background-position-y: 25%; background-size: cover;"></div>
   <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
-    <!-- Sidenav content here -->
-  </aside>
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0"   >
+        <span class="ms-1 font-weight-bold">The Hive Hub</span>
+      </a>
+    </div>
+    <hr class="horizontal dark mt-0">
+    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link " href="/suggestion">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Home page</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/my-projects">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">My projects</span>
+          </a>
+        </li>
+     
+  
+        
+        <li class="nav-item">
+          <a class="nav-link active" href="/freelancer-profile">
+
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/login">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-single-copy-04 text-warning text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Sign In</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/register">
+            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="ni ni-collection text-info text-sm opacity-10"></i>
+            </div>
+            <span class="nav-link-text ms-1">Sign Up</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    </aside>
   <div class="main-content position-relative max-height-vh-100 h-100">
     <!-- Navbar -->
     <!-- End Navbar -->
@@ -304,35 +358,54 @@ svg path{
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
   <script>
-    const editButton = document.getElementById('editButton');
-    const saveButton = document.getElementById('saveButton');
-    const formInputs = document.querySelectorAll('.form-control');
+   const editButton = document.getElementById('editButton');
+  const saveButton = document.getElementById('saveButton');
+  const formInputs = document.querySelectorAll('.form-control');
 
-    // Add event listener to the Edit button
-    editButton.addEventListener('click', () => {
-      formInputs.forEach(input => {
-        input.removeAttribute('disabled'); // Remove the disabled attribute from all form inputs
+  // Add event listener to the Edit button
+  editButton.addEventListener('click', () => {
+    formInputs.forEach(input => {
+      input.removeAttribute('disabled'); // Remove the disabled attribute from all form inputs
+    });
+  });
+
+  // Add event listener to the Save button
+  saveButton.addEventListener('click', () => {
+
+    const profileData = {
+      username: document.getElementById('username').value,
+      email: document.getElementById('email').value,
+      Firstname: document.getElementById('firstname').value,
+      Lastname: document.getElementById('lastname').value,
+      city: document.getElementById('city').value,
+      country: document.getElementById('country').value,
+      postal_code: document.getElementById('postal_code').value,
+      About_me: document.getElementById('about_me').value
+    };
+
+    fetch('/save-profile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(profileData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Profile saved:', data);
+        // Optionally, you can display a success message or redirect the user to another page
+      })
+      .catch(error => {
+        console.error('Failed to save profile:', error);
+        // Display an error message to the user
       });
-    });
-
-    // Add event listener to the Save button
-    saveButton.addEventListener('click', () => {
-      const profileForm = document.getElementById('profileForm');
-      const btnText = document.getElementById('btnText');
-
-      if (btnText.innerText === 'Submit') {
-        profileForm.submit();
-      } else {
-        formInputs.forEach(input => {
-          input.setAttribute('disabled', 'disabled'); // Add the disabled attribute to all form inputs
-        });
-      }
-
-      // Toggle the button text and checkbox state
-      btnText.innerText = (btnText.innerText === 'Submit') ? 'Edit' : 'Submit';
-      const checkBox = document.querySelector('.check-box');
-      checkBox.classList.toggle('checked');
-    });
+  });
+          const btnText = document.querySelector("#btnText");
+  
+          saveButton.onclick = () => {
+              btnText.innerHTML = "Saved !";
+              saveButton.classList.add("active");
+          };
   </script>
 </body>
 
