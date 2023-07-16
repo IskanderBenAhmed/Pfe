@@ -257,7 +257,7 @@ app.post('/tech-selection', (req, res) => {
 
 
 app.post('/saved-project',  userAuth, async(req, res) => {
-  const { projectName , backend , frontend , database , category , projectType , status , paymentMethod , startDate , endDate ,Estimated_price,maxBudget,...pack } = req.body;
+  const { projectName , backend , frontend , database , category , projectType , status , paymentMethod , startDate , endDate , Estimated_price , maxBudget ,...pack } = req.body;
 
  
   const coding = req.body.coding === 'on';
@@ -301,7 +301,7 @@ app.post('/saved-project',  userAuth, async(req, res) => {
     .save()
     .then(savedProject => {
       console.log('Project saved:', savedProject);
-      res.redirect('/attached-file');
+      res.redirect('/project-pack');
     })
     .catch(error => {
       console.error('Error saving project:', error);
@@ -329,7 +329,7 @@ app.get('/payment', (req, res) => {
 
 
 app.post('/payment', (req, res) => {
-  const { backend, frontend, database, category, projectName, projectType, status, paymentMethod } = req.body;
+  const { backend , frontend , database , category , projectName , projectType , status , paymentMethod } = req.body;
 
   // Update the payment method in the project document using your preferred method
   res.render('payment', {
@@ -363,7 +363,7 @@ app.get('/duration', (req, res) => {
 
 app.post('/duration', (req, res) => {
   // Retrieve the values from the request body
-  const { backend, frontend, database, category,projectName, projectType, paymentMethod ,startDate,endDate} = req.body;
+  const { backend , frontend , database , category ,projectName , projectType , paymentMethod , startDate , endDate} = req.body;
 
   // Perform any necessary processing or validation with the values
 
@@ -404,7 +404,7 @@ app.post('/duration', (req, res) => {
 
 app.post('/project-pack', (req, res) => {
   // Retrieve the values from the request body
-  const { backend, frontend, database, category,projectName, projectType, paymentMethod ,startDate,endDate ,Estimated_price,maxBudget,...pack} = req.body;
+  const { backend , frontend , database , category ,projectName , projectType , paymentMethod , startDate , endDate , Estimated_price , maxBudget ,...pack} = req.body;
 
   // Perform any necessary processing or validation with the values
 
@@ -460,7 +460,7 @@ app.get('/freelancer-home', (req, res) => {
 
 
 app.post('/save-proposition', (req, res) => {
-  const { projectName, username, price } = req.body;
+  const { projectName , username , price } = req.body;
 
   // Validate the required fields
   if (!projectName || !username || !price) {
@@ -501,7 +501,6 @@ app.get('/client-profile', userAuth, async (req, res) => {
   const username = req.user.username;
   const role = req.user.role;
 
-  console.log('Username:', username); // Add this line
 
   try {
     // Retrieve the user profile data from the database
@@ -524,11 +523,18 @@ app.get('/freelancer-profile', userAuth, async (req, res) => {
   const role = req.user.role;
 
 
-  // Perform any necessary logic or data retrieval here
-  // Render the freelancer-profile.ejs template and pass the 'username' variable
-  res.render('freelancer-profile', { username: username, role: role });
-});
+  try {
+    // Retrieve the user profile data from the database
+    const userProfile = await profile.findOne({ username: username });
 
+      // Render the freelancer-profile.ejs template and pass the userProfile, username, and role variables
+      res.render('freelancer-profile', { userProfile: userProfile, username: username, role: role });
+      // Handle the case when the user profile is not found
+  } catch (error) {
+    // Handle any errors that occur during profile retrieval
+    res.status(500).json({ error: 'Failed to retrieve user profile' });
+  }
+});
 app.get('/freelancer-requests', userAuth, async (req, res) => {
   try {
     // Get the logged-in user's ID from the session or token
@@ -658,7 +664,7 @@ app.get('/upload-template', (req, res) => {
 });
 app.put('/api/projects/:projectId', userAuth, async (req, res) => {
   const projectId = req.params.projectId;
-  const { projectName, backend, frontend, database, category, projectType, status, paymentMethod, startDate, endDate, Estimated_price, maxBudget, ...pack } = req.body;
+  const { projectName , backend , frontend , database , category , projectType , status , paymentMethod , startDate , endDate , Estimated_price , maxBudget , ...pack } = req.body;
 
   const coding = req.body.coding === 'on';
   const Testing = req.body.Testing === 'on';
@@ -722,10 +728,26 @@ app.post('/save-profile', (req, res) => {
 
   console.log('Profile Data:', profileData);
 
-  // Create a new profile document using the profile model
-  const newProfile = new profile(profileData);
+  // Check if a profile with the same username already exists
+  profile.findOne({ username: profileData.username })
+    .then(existingProfile => {
+      if (existingProfile) {
+        // Profile already exists, update the existing profile
+        existingProfile.email = profileData.email;
+        existingProfile.Firstname = profileData.Firstname;
+        existingProfile.Lastname = profileData.Lastname;
+        existingProfile.city = profileData.city;
+        existingProfile.country = profileData.country;
+        existingProfile.postal_code = profileData.postal_code;
+        existingProfile.About_me = profileData.About_me;
 
-  newProfile.save()
+        return existingProfile.save();
+      } else {
+        // Profile doesn't exist, create a new profile
+        const newProfile = new profile(profileData);
+        return newProfile.save();
+      }
+    })
     .then(savedProfile => {
       console.log('Saved Profile:', savedProfile);
       res.status(200).json(savedProfile);
@@ -735,3 +757,4 @@ app.post('/save-profile', (req, res) => {
       res.status(500).json({ error: 'Failed to save profile' });
     });
 });
+

@@ -36,6 +36,74 @@
   .project-tech-input {
     font-size: 20px; /* Adjust the font size as desired */
   }
+  .animation-fade-in {
+      animation: fade-in 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .container {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  position: relative;
+  color: white;
+}
+
+.container .label {
+  font-size: 15px;
+  padding-left: 10px;
+  position: absolute;
+  top: 13px;
+  transition: 0.3s;
+  pointer-events: none;
+}
+
+.input {
+  width: 200px;
+  height: 45px;
+  border: none;
+  outline: none;
+  padding: 0px 7px;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 15px;
+  background-color: transparent;
+  box-shadow: 3px 3px 10px rgba(0,0,0,1),
+  -1px -1px 6px rgba(255, 255, 255, 0.4);
+}
+
+.input:focus {
+  border: 2px solid transparent;
+  color: #fff;
+  box-shadow: 3px 3px 10px rgba(0,0,0,1),
+  -1px -1px 6px rgba(255, 255, 255, 0.4),
+  inset 3px 3px 10px rgba(0,0,0,1),
+  inset -1px -1px 6px rgba(255, 255, 255, 0.4);
+}
+
+.container .input:valid ~ .label,
+.container .input:focus ~ .label {
+  transition: 0.3s;
+  padding-left: 2px;
+  transform: translateY(-35px);
+}
+
+.container .input:valid,
+.container .input:focus {
+  box-shadow: 3px 3px 10px rgba(0,0,0,1),
+  -1px -1px 6px rgba(255, 255, 255, 0.4),
+  inset 3px 3px 10px rgba(0,0,0,1),
+  inset -1px -1px 6px rgba(255, 255, 255, 0.4);
+}
+
   </style>
  
   <meta charset="utf-8" />
@@ -61,13 +129,13 @@ The Hive Hub  </title>
 
   <!-- End Navbar -->
   <main class="main-content  mt-0">
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signup-cover.jpg'); background-position: top;">
-      <span class="mask bg-gradient-dark opacity-6"></span>
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" >
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">great!</h1>
-            <p class="text-lead text-white">now fill in with your desired technologies !</p>
+          <div class="col-lg-8 text-center mx-auto">
+            <h2 class="bigger-label animation-fade-in">great! now fill in with your desired technologies</h2>
+
+            
           </div>
         </div>
       </div>
@@ -90,15 +158,18 @@ The Hive Hub  </title>
               
               <form id="techProjectForm" action="/payment" method="POST">
                 <div class="form-group">
-                  <label for="backend">Backend:</label>
+
+                  <label   for="backend" style="font-size: 20px;">Backend:</label>
                   <input type="text" class="form-control project-tech-input" name="backend" id="backend" required>
                 </div>
+
+
                 <div class="form-group">
-                  <label for="frontend">Frontend:</label>
+                  <label for="frontend" style="font-size: 20px;">Frontend:</label>
                   <input type="text" class="form-control project-tech-input" name="frontend" id="frontend" required>
                 </div>
                 <div class="form-group">
-                  <label for="database">Database:</label>
+                  <label for="database" style="font-size: 20px;">Database:</label>
                   <input type="text" class="form-control project-tech-input" name="database" id="database" required>
                 </div>
                 <!-- Add hidden input fields for category and projectType -->
@@ -113,7 +184,7 @@ The Hive Hub  </title>
 
 
                
-                <div class="text-center" style="margin-top: 40px;">
+                <div class="text-center" style="margin-top: 80px;">
                   <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
                   <button id="resetButton" type="button" class="btn btn-white-text mx-2 float-right">Reset</button>
                   <button href="/payment" type="submit" class="btn btn-white-text mx-2 float-right">NEXT</button>

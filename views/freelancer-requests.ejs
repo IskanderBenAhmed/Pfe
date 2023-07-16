@@ -30,6 +30,19 @@
 @keyframes cursor {
     50% { border-color: transparent }
 }
+.animation-fade-in {
+      animation: fade-in 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   </style>
   
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
@@ -120,7 +133,7 @@ The Hive Hub      </a>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto"><br><br><br><br>
-            <h2 class="cssanimation typing">Your propositions</h2>
+            <h2 style="color: #ffffff;" class="bigger-label animation-fade-in">Your propositions</h2>
 
           </div>
         </div>

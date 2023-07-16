@@ -87,19 +87,19 @@
   color: #fff; /* Set the desired color for the text */
 
 }
-.typing {
-    width: 550px;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 1.5s steps(12, end), cursor .2s steps(12, end) infinite;
-    color: #ffffff;
-}
-@keyframes typing {
-    from { width: 0 }
-}
-@keyframes cursor {
-    50% { border-color: transparent }
-}
+.animation-fade-in {
+      animation: fade-in 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   </style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -142,8 +142,8 @@ The Hive Hub      </a>
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">  
-            <h2 class="cssanimation typing">Welcome to Admin Dashboard!</h2>
+          <div class="col-lg-8   text-center mx-auto">  
+            <h2 style="color: #fff;" class="bigger-label animation-fade-in">Welcome to Admin Dashboard!</h2>
 
 
           </div>

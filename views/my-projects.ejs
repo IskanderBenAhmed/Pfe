@@ -329,7 +329,7 @@ The Hive Hub      </a>
                         data-project-id="<%= project.id %>" data-field-name="category"><%= project.category %></td>
                       <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15 other-field-cell"
                         data-project-id="<%= project.id %>" data-field-name="projectType"><%= project.projectType %></td>
-                      <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15 other-field-cell"
+                      <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15 editable-field"
                         data-project-id="<%= project.id %>" data-field-name="status"><%= project.status %></td>
                         <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15 editable-field">
                           <%= project.startDate.toLocaleDateString(undefined, {
@@ -356,7 +356,7 @@ The Hive Hub      </a>
                         data-project-id="<%= project.id %>" data-field-name="pack"><%= project.pack.join(', ') %></td>
                       <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15 other-field-cell"
                         data-project-id="<%= project.id %>" data-field-name="paymentMethod"><%= project.paymentMethod %></td>
-                      <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15 other-field-cell"
+                      <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15 editable-field"
                         data-project-id="<%= project.id %>" data-field-name="createdBy"><%= project.createdBy %></td>
                       <td>
                         <input type="text" class="form-control edit-project-name" data-project-id="<%= project.id %>"

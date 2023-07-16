@@ -32,6 +32,359 @@
     .project-name-input {
     font-size: 17px; /* Adjust the font size as desired */
   }
+  .checkbox-wrapper-44 input[type="checkbox"] {
+  display: none;
+  visibility: hidden;
+}
+
+.checkbox-wrapper-44 *,
+  .checkbox-wrapper-44 *::before,
+  .checkbox-wrapper-44 *::after {
+  box-sizing: border-box;
+}
+
+.checkbox-wrapper-44 .toggleButton {
+  cursor: pointer;
+  display: block;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  transition: transform 0.14s ease;
+}
+
+.checkbox-wrapper-44 .toggleButton:active {
+  transform: rotateX(30deg);
+}
+
+.checkbox-wrapper-44 .toggleButton input + div {
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  position: relative;
+  width: 44px;
+  height: 44px;
+}
+
+.checkbox-wrapper-44 .toggleButton input + div svg {
+  fill: none;
+  stroke-width: 3.6;
+  stroke: #000;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  width: 44px;
+  height: 44px;
+  display: block;
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  right: -3px;
+  bottom: -3px;
+  z-index: 1;
+  stroke-dashoffset: 124.6;
+  stroke-dasharray: 0 162.6 133 29.6;
+  transition: all 0.4s ease 0s;
+}
+
+.checkbox-wrapper-44 .toggleButton input + div:before,
+  .checkbox-wrapper-44 .toggleButton input + div:after {
+  content: "";
+  width: 3px;
+  height: 16px;
+  background: #000;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 5px;
+}
+
+.checkbox-wrapper-44 .toggleButton input + div:before {
+  opacity: 0;
+  transform: scale(0.3) translate(-50%, -50%) rotate(45deg);
+  -webkit-animation: bounceInBefore-44 0.3s linear forwards 0.3s;
+  animation: bounceInBefore-44 0.3s linear forwards 0.3s;
+}
+
+.checkbox-wrapper-44 .toggleButton input + div:after {
+  opacity: 0;
+  transform: scale(0.3) translate(-50%, -50%) rotate(-45deg);
+  -webkit-animation: bounceInAfter-44 0.3s linear forwards 0.3s;
+  animation: bounceInAfter-44 0.3s linear forwards 0.3s;
+}
+
+.checkbox-wrapper-44 .toggleButton input:checked + div svg {
+  stroke-dashoffset: 162.6;
+  stroke-dasharray: 0 162.6 28 134.6;
+  transition: all 0.4s ease 0.2s;
+}
+
+.checkbox-wrapper-44 .toggleButton input:checked + div:before {
+  opacity: 0;
+  transform: scale(0.3) translate(-50%, -50%) rotate(45deg);
+  -webkit-animation: bounceInBeforeDont-44 0.3s linear forwards 0s;
+  animation: bounceInBeforeDont-44 0.3s linear forwards 0s;
+}
+
+.checkbox-wrapper-44 .toggleButton input:checked + div:after {
+  opacity: 0;
+  transform: scale(0.3) translate(-50%, -50%) rotate(-45deg);
+  -webkit-animation: bounceInAfterDont-44 0.3s linear forwards 0s;
+  animation: bounceInAfterDont-44 0.3s linear forwards 0s;
+}
+
+@-webkit-keyframes bounceInBefore-44 {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%) rotate(45deg);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1) translate(-50%, -50%) rotate(45deg);
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(0.89) translate(-50%, -50%) rotate(45deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%) rotate(45deg);
+  }
+}
+
+@keyframes bounceInBefore-44 {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%) rotate(45deg);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1) translate(-50%, -50%) rotate(45deg);
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(0.89) translate(-50%, -50%) rotate(45deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%) rotate(45deg);
+  }
+}
+
+@-webkit-keyframes bounceInAfter-44 {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%) rotate(-45deg);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1) translate(-50%, -50%) rotate(-45deg);
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(0.89) translate(-50%, -50%) rotate(-45deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+@keyframes bounceInAfter-44 {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%) rotate(-45deg);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1) translate(-50%, -50%) rotate(-45deg);
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(0.89) translate(-50%, -50%) rotate(-45deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+@-webkit-keyframes bounceInBeforeDont-44 {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%) rotate(45deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%) rotate(45deg);
+  }
+}
+
+@keyframes bounceInBeforeDont-44 {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%) rotate(45deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%) rotate(45deg);
+  }
+}
+
+@-webkit-keyframes bounceInAfterDont-44 {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%) rotate(-45deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+@keyframes bounceInAfterDont-44 {
+  0% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%) rotate(-45deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%) rotate(-45deg);
+  }
+}
+.checkbox-wrapper-44 {
+  display: flex;
+  align-items: center;
+  width: 200px; /* Adjust the width as desired */
+}
+
+.text {
+  font-size: large;
+  margin-right: 15px;
+  font-weight: bold;
+}
+.input-container {
+  position: relative;
+  margin: 50px auto;
+  width: 190px;
+}
+
+.input-container input[type="text"] {
+  font-size: 20px;
+  color: black;
+  border: none;
+  border-bottom: 2px solid #a5a2a2;
+  outline: none;
+  width: 100%;
+  background-color: transparent;
+}
+
+.label {
+  transition: all 0.3s ease;
+  color: #d3d2d2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.input-container input[type="text"]:focus~.label,
+.input-container input[type="text"]:valid~.label {
+  top: -20px;
+  transition: 0.3s;
+  color: rgb(0, 0, 0);
+}
+
+.input-container .underline {
+  position: absolute;
+  bottom: 4px;
+  left: -7px;
+  height: 2px;
+  width: 110%;
+  background-color: rgb(0, 0, 0);
+  transform: scaleX(0);
+}
+
+.input-container .sideline {
+  position: relative;
+  bottom: 15px;
+  right: 18px;
+  height: 2px;
+  width: 18%;
+  background-color: rgb(0, 0, 0);
+  transform: scaleX(0);
+  rotate: 90deg;
+}
+
+.input-container .upperline {
+  position: absolute;
+  bottom: 30px;
+  left: -8px;
+  height: 2px;
+  width: 110%;
+  background-color: rgb(0, 0, 0);
+  transform: scaleX(0);
+}
+
+.input-container .line {
+  position: relative;
+  bottom: 17px;
+  left: 178px;
+  height: 2px;
+  width: 18%;
+  background-color: rgb(0, 0, 0);
+  transform: scaleX(0);
+  rotate: 90deg;
+}
+
+.input-container input[type="text"]:focus~.underline,
+.input-container input[type="text"]:valid~.underline {
+  transform: scaleX(1);
+  transition: 1s;
+}
+
+.input-container input[type="text"]:focus~.sideline,
+.input-container input[type="text"]:valid~.sideline {
+  transform: scaleX(1);
+  transition: 1s;
+}
+
+.input-container input[type="text"]:focus~.upperline,
+.input-container input[type="text"]:valid~.upperline {
+  transform: scaleX(1);
+  transition: 1s;
+}
+
+.input-container input[type="text"]:focus~.line,
+.input-container input[type="text"]:valid~.line {
+  transform: scaleX(1);
+  transition: 1s;
+}
+.animation-fade-in {
+      animation: fade-in 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   </style>
  
   <meta charset="utf-8" />
@@ -54,58 +407,16 @@ The Hive Hub  </title>
 
 <body class="">
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
-    <div class="container">
-      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="/">
-The Hive Hub      </a>
-      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon mt-2">
-          <span class="navbar-toggler-bar bar1"></span>
-          <span class="navbar-toggler-bar bar2"></span>
-          <span class="navbar-toggler-bar bar3"></span>
-        </span>
-      </button>
-      <div class="collapse navbar-collapse" id="navigation">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item">
-            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/suggestion">
-              <i class="fa fa-chart-pie opacity-6  me-1"></i>
-              home
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link me-2" href="/client-profile">
-              <i class="fa fa-user opacity-6  me-1"></i>
-              Profile
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link me-2" href="/register">
-              <i class="fas fa-user-circle opacity-6  me-1"></i>
-              Sign Up
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link me-2" href="/login">
-              <i class="fas fa-key opacity-6  me-1"></i>
-              Sign In
-            </a>
-          </li>
-        </ul>
-        x
-      </div>
-    </div>
-  </nav>
+ 
   <!-- End Navbar -->
   <main class="main-content  mt-0">
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signup-cover.jpg'); background-position: top;">
-      <span class="mask bg-gradient-dark opacity-6"></span>
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" >
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
            
 
-            <h4 class="text-white mb-2 mt-5">To proceed, please indicate your project Pack.</h4>
+            <h4 class="bigger-label animation-fade-in">To proceed, please indicate your project Pack.</h4>
           </div>
         </div>
       </div>
@@ -114,8 +425,9 @@ The Hive Hub      </a>
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
         <div class="card-body custom-form-width"  >
           <div class="card z-index-0">
-            
+           
             <div class="row px-xl-5 px-sm-4 px-3">
+              
               
               
               
@@ -124,30 +436,89 @@ The Hive Hub      </a>
               </div>
             </div>
             <div class="card-body custom-form-width">
+              
 
-<!-- Display other user information as needed -->
               <form id="createProjectForm" action="/saved-project" method="POST">
                 
                
                 <div>
+                   
+                  <div for="firstcoding" class="checkbox-wrapper-44">
+                    <label class="toggleButton" >
+                      <input type="checkbox" name="coding" id="coding" data-price="100"  >
+ 
+                      <div>
+                        <svg viewBox="0 0 44 44">
+                          <path transform="translate(-2.000000, -2.000000)" d="M14,24 L21,31 L39.7428882,11.5937758 C35.2809627,6.53125861 30.0333333,4 24,4 C12.95,4 4,12.95 4,24 C4,35.05 12.95,44 24,44 C35.05,44 44,35.05 44,24 C44,19.3 42.5809627,15.1645919 39.7428882,11.5937758"></path>
+                        </svg>
+                      </div>
+
+                    </label>
+                    <span style="margin-left: 100px;" class="text">coding</span>
+
+                  </div>
+
+                  <div for="Testing" class="checkbox-wrapper-44">
+
+                    <label  class="toggleButton">
+                      <input name="Testing" id="Testing" data-price="120" type="checkbox">
+                      <div>
+                        <svg viewBox="0 0 44 44">
+                          <path transform="translate(-2.000000, -2.000000)" d="M14,24 L21,31 L39.7428882,11.5937758 C35.2809627,6.53125861 30.0333333,4 24,4 C12.95,4 4,12.95 4,24 C4,35.05 12.95,44 24,44 C35.05,44 44,35.05 44,24 C44,19.3 42.5809627,15.1645919 39.7428882,11.5937758"></path>
+                        </svg>
+                      </div>
+                    </label>
+                    <span  style="margin-left: 100px;" class="text">testing</span>
+                    <p  style="margin-left: 150px; width: 50px;" id="priceLabel"> price : $0</p>
+
+
+                  </div>
                   
-                  <label style="margin-top: 20px; margin-left: 50px;" for="firstcoding" class="form-check">
-                    <input class="form-check-input" type="checkbox" name="coding" id="coding" data-price="100">
-                    <span style="font-size: 15px; margin-top: 5px;">coding</span>
-                  </label>
-                  <label style="margin-top: 20px;" for="Testing" class="form-check">
-                    <input class="form-check-input" type="checkbox" name="Testing" id="Testing" data-price="120">
-                    <span style="font-size: 15px; margin-top: 5px;">Testing</span>
-                  </label>
-                  <label style="margin-top: 20px;" for="deployment" class="form-check">
-                    <input class="form-check-input" type="checkbox" name="deployment" id="deployment" data-price="50">
-                    <span style="font-size: 15px; margin-top: 5px;"> deployment</span>
-                  </label>
+                   
+
+
+
+
+
+                 
+
+
+                  <div for="deployment" class="checkbox-wrapper-44">
+
+                    <label  class="toggleButton">
+                      <input name="deployment" id="deployment" data-price="50" type="checkbox">
+                      <div>
+                        <svg viewBox="0 0 44 44">
+                          <path transform="translate(-2.000000, -2.000000)" d="M14,24 L21,31 L39.7428882,11.5937758 C35.2809627,6.53125861 30.0333333,4 24,4 C12.95,4 4,12.95 4,24 C4,35.05 12.95,44 24,44 C35.05,44 44,35.05 44,24 C44,19.3 42.5809627,15.1645919 39.7428882,11.5937758"></path>
+                        </svg>
+                      </div>
+                    </label>
+                    <span style="margin-left: 100px;" class="text">deployment</span>
+
+                    </div>
+                    <div style="text-align: center; margin-left: 220px;">
+        
+        
+                     
+                    
+                      <div  style="margin-top: 60px;" class="input-container">
+                        <input required="" id="maxBudget" name="maxBudget" type="text">
+                        <label style="font-size: large;" class="label" for="maxBudget" for="input">Enter your budget</label>
+                        <div class="underline"></div>
+                        <div class="sideline"></div>
+                        <div class="upperline"></div>
+                        <div class="line"></div>
+                    </div>
+                    
+                    
+                    
+                    
+                    </div>
+                   
                 </div>
-                <div style="text-align: center; margin-top: 20px;">
-                  <h4>Prix</h4>
-                  <p id="priceLabel">Prix : $0</p>
-                </div>
+                
+                
+
                 <input type="hidden" name="backend" value="<%= backend %>">
                 <input type="hidden" name="frontend" value="<%= frontend %>">
                 <input type="hidden" name="database" value="<%= database %>">
@@ -161,12 +532,10 @@ The Hive Hub      </a>
 
 
 
-                <div style="text-align: center; margin-top: 40px;">
-                    <label for="maxBudget">Maximum Budget:</label>
-                    <input type="number" id="maxBudget" name="maxBudget" placeholder="Enter your max budget">
-                  </div>
+            
+                  
                 
-                  <div style="margin-top: 45px;">
+                  <div style="margin-top: 85px;">
               
                 
                     <button id="cancelButtonTech" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>      
@@ -178,6 +547,12 @@ The Hive Hub      </a>
               </form>
               
               <script>
+      // Validate input to accept only numbers
+const inputElement = document.getElementById('maxBudget');
+inputElement.addEventListener('input', function(event) {
+  const value = event.target.value;
+  event.target.value = value.replace(/\D/g, '');
+}); 
                
                 function updatePrice() {
                   // Get the project details and calculate the total price
@@ -198,7 +573,7 @@ The Hive Hub      </a>
               
                   // Update the price label
                   const priceLabel = document.getElementById('priceLabel');
-                  priceLabel.textContent = `Prix : $${totalPrice}`;
+                  priceLabel.textContent = ` price : $${totalPrice}`;
                 }
               
                 // Attach event listeners to the checkboxes

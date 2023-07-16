@@ -2,36 +2,7 @@
 <html lang="en">
 <head>
   <style>
- .bookmarkBtn {
-  width: 220px;
-  height: 40px; 
-  border-radius: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.349);
-  background-color:   rgb(36, 141, 228);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition-duration: .3s;
-  overflow: hidden;
-}
-
-.IconContainer {
-  width: 30px;
-  height: 30px;
-  background: linear-gradient(to bottom, rgb(237, 232, 232),rgb(255, 255, 255));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  z-index: 2;
-  transition-duration: .3s;
-}
-
-.icon {
-  border-radius: 1px;
-}
+ 
 
 .text {
   height: 100%;
@@ -47,23 +18,7 @@
   font-weight: bold;
 }
 
-.bookmarkBtn:hover .IconContainer {
-  width: 90px;
-  border-radius: 40px;
-  transition-duration: .3s;
-}
 
-.bookmarkBtn:hover .text {
-  transform: translate(10px);
-  width: 0;
-  font-size: 0;
-  transition-duration: .3s;
-}
-
-.bookmarkBtn:active {
-  transform: scale(0.95);
-  transition-duration: .3s;
-}
 .text-xxl {
   font-size: 13px; /* Adjust the font size as needed */
 }
@@ -83,7 +38,132 @@
       50% { border-color: transparent; }
     }
 
+    button {
+  --color: #000000;
+  font-family: inherit;
+  display: inline-block;
+  width: 6em;
+  height: 2.6em;
+  line-height: 2.5em;
+  overflow: hidden;
+  margin: 20px;
+  font-size: 17px;
+  z-index: 1;
+  color: var(--color);
+  border: 2px solid var(--color);
+  border-radius: 6px;
+  position: relative;
+}
 
+button::before {
+  position: absolute;
+  content: "";
+  background: var(--color);
+  width: 150px;
+  height: 200px;
+  z-index: -1;
+  border-radius: 50%;
+}
+
+button:hover {
+  color: white;
+}
+
+button:before {
+  top: 100%;
+  left: 100%;
+  transition: .3s all;
+}
+
+button:hover::before {
+  top: -30px;
+  left: -30px;
+}
+
+.animation-fade-in {
+      animation: fade-in 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 200px; /* Adjust the width as needed */
+}
+
+.custom-select-wrapper select {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.custom-select-icon {
+  position: absolute;
+  top: 50%;
+  right:100px;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border: solid #000000;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 2px;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-dropdown select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+  transition: background-color 0.3s ease;
+}
+
+.custom-dropdown:hover select {
+  background-color: #e6e6e6;
+}
+
+.custom-dropdown select:focus {
+  outline: none;
+  background-color: #e6e6e6;
+}
+
+.dropdown-arrow {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #999999;
+  transition: transform 0.3s ease;
+}
+
+.custom-dropdown:hover .dropdown-arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
 
 
 
@@ -160,14 +240,14 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto"><br><br><br><br>
-            <h2 class="cssanimation typing" style="margin-left: 45px;">All Projects</h2>
+            <h2 style="color: #ffffff;" class="bigger-label animation-fade-in" style="margin-left: 45px;">All Projects</h2>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-        <div class="card mb-4">
+        <div class="card mb-4 ">
           <!-- Add the filter dropdown -->
           <div class="card-body px-3 pt-3 pb-2">
             <div class="table-responsive p-0">
@@ -213,36 +293,25 @@
                         <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.createdBy %></td>
                         <td>
                           <form action="/projects/<%= project._id %>/status" method="POST">
-
-
-                             
-
-
-
-
-                            <div style="display: flex; align-items: center;">
+                            <div class="custom-dropdown">
                               <select class="form-control" name="status">
+                                <option value="" disabled selected>Select status</option>
                                 <option value="pending" <% if (project.status === 'pending') { %>selected<% } %>>Pending</option>
-                                <option value="approved" <% if (project.status === 'approved') { %>selected<% } %>>approved</option>
+                                <option value="approved" <% if (project.status === 'approved') { %>selected<% } %>>Approved</option>
                                 <option value="in-progress" <% if (project.status === 'in-progress') { %>selected<% } %>>In Progress</option>
                                 <option value="rejected" <% if (project.status === 'rejected') { %>selected<% } %>>Rejected</option>
                                 <option value="completed" <% if (project.status === 'completed') { %>selected<% } %>>Completed</option>
                               </select>
-                              <button class="bookmarkBtn" type="submit" style="margin-left: 10px;">
-                                <span class="IconContainer"> 
-                                  <svg viewBox="0 0 384 512" height="0.9em" class="icon">
-                                    <path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" fill="rgb(0, 0, 128)"></path>
-                                  </svg>
-                                  
-                                  
-                                  
-                                </span>
-                                <p class="text" style="font-weight: bold;">Save</p>
-                              </button>
+                              <span class="dropdown-arrow"></span>
                             </div>
-                            
+                            <button type="submit" style="font-size: large; border-radius: 13%;  margin-left: 20px;">
+                              Save
+                            </button>
                           </form>
                         </td>
+                        
+                        
+                        
                       </tr>
                     <% }); %>
                   </tbody>

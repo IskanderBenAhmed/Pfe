@@ -2,8 +2,14 @@
 <html lang="en">
 
 <head>
+ 
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
@@ -20,6 +26,22 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
   <style>
+  
+  /* Hide the Google Translate banner */
+  #goog-gt-tt {
+      display: none !important;
+    }
+    
+    /* Overlay to cover the banner */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background-color: white; /* Replace with your desired background color */
+    }
      .bookmarkBtn {
   width: 120px;
   height: 40px; 
@@ -119,12 +141,134 @@
 .form-td {
   width: 150px; /* Adjust the width value as per your requirement */
 }
+button {
+  --color: #000000;
+  font-family: inherit;
+  display: inline-block;
+  width: 6em;
+  height: 2.6em;
+  line-height: 2.5em;
+  overflow: hidden;
+  margin: 20px;
+  font-size: 17px;
+  z-index: 1;
+  color: var(--color);
+  border: 2px solid var(--color);
+  border-radius: 6px;
+  position: relative;
+}
+
+button::before {
+  position: absolute;
+  content: "";
+  background: var(--color);
+  width: 150px;
+  height: 200px;
+  z-index: -1;
+  border-radius: 50%;
+}
+
+button:hover {
+  color: white;
+}
+
+button:before {
+  top: 100%;
+  left: 100%;
+  transition: .3s all;
+}
+
+button:hover::before {
+  top: -30px;
+  left: -30px;
+}
+.animation-fade-in {
+      animation: fade-in 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-dropdown select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+  transition: background-color 0.3s ease;
+}
+
+.custom-dropdown:hover select {
+  background-color: #e6e6e6;
+}
+
+.custom-dropdown select:focus {
+  outline: none;
+  background-color: #e6e6e6;
+}
+
+.dropdown-arrow {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #999999;
+  transition: transform 0.3s ease;
+}
+
+.custom-dropdown:hover .dropdown-arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
 
   </style>
 </head>
 
 <body class="">
+
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        {
+          pageLanguage: 'en'
+        },
+        'google_translate_element'
+      );
+    }
+    
+    function hideTranslateBanner() {
+      var overlay = document.querySelector('.overlay');
+      overlay.style.display = 'none';
+      
+      // Check if banner reappears and hide it again after a delay
+      setTimeout(hideTranslateBanner, 1000);
+    }
+
+    window.onload = function() {
+      googleTranslateElementInit();
+      hideTranslateBanner();
+    };
+  </script>
+  
   <!-- Navbar -->
+
   <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
     <div class="container">
       <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="/">
@@ -158,10 +302,16 @@
               Sign In
             </a>
           </li>
+
+          <li class="nav-item">
+            <div id="google_translate_element"></div>
+          </li>
+
+
         </ul>
 
-         <!-- Add the filter dropdown -->
-         <div class="filter-wrapper">
+    
+        <div class="filter-wrapper">
           <div class="row align-items-center">
             <div class="col">
               <h5 class="text-white mb-5 mt-5">Filter</h5>
@@ -186,12 +336,13 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto"><br><br><br>  
-            <h2 class="cssanimation typing" style="margin-left: 50px;">List of propositions</h2>
+            <h2 style="color: #ffffff;" class="bigger-label animation-fade-in" style="margin-left: 50px;">List of propositions</h2>
 
           </div>
         </div>
       </div>
     </div>
+    
     <div class="container">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
         <div class="card mb-4">
@@ -216,29 +367,25 @@
                         <td class="form-td"><%= proposition.freelancerUsername %></td>
                         <td class="form-td"><%= proposition.price %></td>
 
-                        <td  class="form-td">
+                        <td class="form-td">
                           <form action="/propositions/<%= proposition._id %>/status" method="POST">
                             <div style="display: flex; align-items: center;">
-                              <select class="form-control small-select" name="status">
-                                <option value="pending" <% if (proposition.status === 'pending') { %>selected<% } %>>Pending</option>
-                                <option value="approved" <% if (proposition.status === 'approved') { %>selected<% } %>>Approved</option>
-                                <option value="rejected" <% if (proposition.status === 'rejected') { %>selected<% } %>>Rejected</option>
-                              </select>
-                              
-                            <button class="bookmarkBtn" type="submit" style="margin-left: 10px;">
-                              <span class="IconContainer"> 
-                                <svg viewBox="0 0 384 512" height="0.9em" class="icon">
-                                  <path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" fill="rgb(0, 0, 128)"></path>
-                                </svg>
-                                
-                                
-                                
-                              </span>
+                              <div class="custom-dropdown">
+                                <select class="form-control small-select" name="status">
+                                  <option value="pending" <% if (proposition.status === 'pending') { %>selected<% } %>>Pending</option>
+                                  <option value="approved" <% if (proposition.status === 'approved') { %>selected<% } %>>Approved</option>
+                                  <option value="rejected" <% if (proposition.status === 'rejected') { %>selected<% } %>>Rejected</option>
+                                </select>
+                                <span class="dropdown-arrow"></span>
+                              </div>
                               <p class="text" style="font-weight: bold;">Save</p>
-                            </button>
+                              <button type="submit" style="margin-left: 10px; font-size: large;">
+                                Save
+                              </button>
                             </div>
                           </form>
                         </td>
+                        
                       </tr>
                     <% }); %>
                   </tbody>
@@ -252,6 +399,7 @@
       </div>
     </div>
   </main>
+  
   <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <!--   Core JS Files   -->
@@ -279,7 +427,9 @@
         }
       });
     }
+    
   </script>
+  
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
