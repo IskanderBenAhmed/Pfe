@@ -10,7 +10,10 @@ const path = require("path");
 const app = express();
 
 const publicFolderPath = path.join(__dirname);
+const webbuilderFolderPath = path.join(__dirname, 'webbuilder');
 
+// Serve static files from the "webbuilder" folder
+app.use(express.static(webbuilderFolderPath));
 app.use(express.static('public/main-template'));
 
 const cookieParser = require("cookie-parser");
