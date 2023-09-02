@@ -21,6 +21,9 @@ const propositionSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  rejection_reason: {
+    type: String,
+  },
   // Add any additional fields as needed
 });
 

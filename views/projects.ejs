@@ -168,10 +168,12 @@ button:hover::before {
 
 
   </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <title>The Hive Hub</title>
   <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
@@ -216,17 +218,7 @@ button:hover::before {
             </a>
           </li>
         </ul>
-        <div class="d-flex align-items-center">
-          <h5 class="text-white mb-0 me-2">Filter</h5>
-          <select class="form-control" id="status-filter" onchange="filterProjects()">
-            <option value="all">All</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="in-progress">In Progress</option>
-            <option value="completed">Completed</option>
-            <option value="rejected">Rejected</option>
-          </select>
-        </div>
+       
       </div>
       
         </ul>
@@ -247,101 +239,146 @@ button:hover::before {
     </div>
     <div class="container">
       <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-        <div class="card mb-4 ">
+        <div class="card mb-4">
           <!-- Add the filter dropdown -->
-          <div class="card-body px-3 pt-3 pb-2">
-            <div class="table-responsive p-0">
-              <% if (projects.length > 0) { %>
-                <table class="table animated-table">
-                  <thead>
-                    <tr>
-                      <th class="font-weight-bold">project Name</th>
-                      <th class="font-weight-bold">Backend</th>
-                      <th class="font-weight-bold">Frontend</th>
-                      <th class="font-weight-bold">Database</th>
-                      <th class="font-weight-bold">Category</th>
-                      <th class="font-weight-bold">Project Type</th>
-                      <th class="font-weight-bold">Status</th>
-                      <th class="font-weight-bold">Start Date</th>
-                      <th class="font-weight-bold">End Date</th>
-                      <th class="font-weight-bold">Estimated Price</th>
-                      <th class="font-weight-bold">Max Budget</th>
-                      <th class="font-weight-bold">Pack</th>
-                      <th class="font-weight-bold">created by</th>
-                      <th class="font-weight-bold">Change Status</th>
-                    </tr>
-                  </thead>
-                  <tbody id="project-table-body">
-                    <% projects.forEach(project => { %>
-                      <tr class="project">
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.projectName %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.backend %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.frontend %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.database %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.category %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.projectType %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.status %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15">
-                          <%= project.startDate.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %>
-                        </td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15">
-                          <%= project.endDate.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %>
-                        </td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.Estimated_price %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.maxBudget %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.pack.join(', ') %></td>
-                        <td class="text-uppercase text-secondary text-xxl font-weight-bolder opacity-15"><%= project.createdBy %></td>
-                        <td>
-                          <form action="/projects/<%= project._id %>/status" method="POST">
-                            <div class="custom-dropdown">
-                              <select class="form-control" name="status">
-                                <option value="" disabled selected>Select status</option>
-                                <option value="pending" <% if (project.status === 'pending') { %>selected<% } %>>Pending</option>
-                                <option value="approved" <% if (project.status === 'approved') { %>selected<% } %>>Approved</option>
-                                <option value="in-progress" <% if (project.status === 'in-progress') { %>selected<% } %>>In Progress</option>
-                                <option value="rejected" <% if (project.status === 'rejected') { %>selected<% } %>>Rejected</option>
-                                <option value="completed" <% if (project.status === 'completed') { %>selected<% } %>>Completed</option>
-                              </select>
-                              <span class="dropdown-arrow"></span>
-                            </div>
-                            <button type="submit" style="font-size: large; border-radius: 13%;  margin-left: 20px;">
-                              Save
-                            </button>
-                          </form>
-                        </td>
-                        
-                        
-                        
-                      </tr>
-                    <% }); %>
-                  </tbody>
-                </table>
-                <script>
-                  function filterProjects() {
-                    const filterValue = document.getElementById('status-filter').value;
-                    const projects = document.getElementsByClassName('project');
-
-                    for (let i = 0; i < projects.length; i++) {
-                      const project = projects[i];
-                      const status = project.querySelector('td:nth-child(7)').innerText;
-
-                      if (filterValue === 'all' || status === filterValue) {
-                        project.style.display = 'table-row';
-                      } else {
-                        project.style.display = 'none';
-                      }
-                    }
-                  }
-                </script>
-              <% } else { %>
-                <p>No projects found.</p>
-              <% } %>
-            </div>
+          <div class="card-body pt-4 p-3">
+            <ul class="list-group">
+              <% projects.forEach(project => { %>
+              <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
+                <div class="d-flex flex-column">
+                  <h6 class="mb-3 text-sm"><%= project.projectName %></h6>
+                  <span class="mb-2 text-xs">Backend: <span class="text-dark font-weight-bold ms-sm-2"><%= project.backend %></span></span>
+                  <span class="mb-2 text-xs">Frontend: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.frontend %></span></span>
+                  <span class="mb-2 text-xs">Database: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.database %></span></span>
+                  <span class="mb-2 text-xs">Category: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.category %></span></span>
+                  <span class="mb-2 text-xs">Project Type: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.projectType %></span></span>
+                  <span class="mb-2 text-xs">Status: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.status %></span></span>
+                  <span class="mb-2 text-xs">Start Date: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.startDate.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %></span></span>
+                  <span class="mb-2 text-xs">End Date: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.endDate.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %></span></span>
+                  <span class="mb-2 text-xs">Estimated Price: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.estimatedPrice %></span></span>
+                  <span class="mb-2 text-xs">Max Budget: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.maxBudget %></span></span>
+                  <span class="mb-2 text-xs">Pack: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.pack.join(', ') %></span></span>
+                  <span class="mb-2 text-xs">Created By: <span class="text-dark ms-sm-2 font-weight-bold"><%= project.createdBy %></span></span>
+                </div>
+                <div class="ms-auto text-end">
+                  <form data-project-id="<%= project._id %>" class="project-form">
+                    <div class="custom-dropdown">
+                      <select class="form-control" name="status">
+                        <option value="" disabled selected>Select status</option>
+                        <option value="pending" <% if (project.status === 'pending') { %>selected<% } %>>Pending</option>
+                        <option value="approved" <% if (project.status === 'approved') { %>selected<% } %>>Approved</option>
+                        <option value="in-progress" <% if (project.status === 'in-progress') { %>selected<% } %>>In Progress</option>
+                        <option value="rejected" <% if (project.status === 'rejected') { %>selected<% } %>>Rejected</option>
+                        <option value="completed" <% if (project.status === 'completed') { %>selected<% } %>>Completed</option>
+                      </select>
+                      <span class="dropdown-arrow"></span>
+                    </div>
+                    <button type="submit" class="btn btn-secondary mt-3">Save</button>
+                  </form>
+                </div>
+              </li>
+              <% }); %>
+            </ul>
           </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+        <script>
+          
+          // Add event listener to status dropdowns
+          const projectForms = document.querySelectorAll('.project-form');
+          projectForms.forEach(form => {
+            form.addEventListener('submit', function(event) {
+              event.preventDefault(); // Prevent the default form submission
+        
+              const project_id = this.getAttribute('data-project-id');
+              const selectedStatus = this.querySelector('select').value;
+        
+              // If the selected status is "Rejected," show the SweetAlert2 popup
+              if (selectedStatus === 'rejected') {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'warning',
+                  title: 'Rejection Reason',
+                  text: 'Please enter the reason for rejection:',
+                  input: 'text',
+                  inputAttributes: {
+                    required: true,
+                  },
+                  showCancelButton: true,
+                  confirmButtonText: 'Save',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    const rejectionReason = result.value;
+                    // Send AJAX request to update status and rejection reason
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST', `/projects/${project_id}/status`, true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onreadystatechange = function() {
+                      if (xhr.readyState === 4) {
+                        if (xhr.status === 200) {
+                          // Status and rejection reason updated successfully
+                          console.log('Status and rejection reason updated');
+                          // Show the success alert
+                          Swal.fire({
+                            icon: 'success',
+                            title: 'Status Updated!',
+                            text: 'The project status has been successfully updated.',
+                            timer: 3000, // Auto close after 3 seconds
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                          }).then(() => {
+                            // Reload the page to reflect the changes
+                            location.reload();
+                          });
+                        } else {
+                          // Error handling if the request fails
+                          console.error('Error updating project status:', xhr.responseText);
+                        }
+                      }
+                    };
+                    xhr.send(JSON.stringify({ status: selectedStatus, rejection_reason: rejectionReason }));
+                  }
+                });
+              } else {
+                // If status is not "Rejected," update status only without rejection reason
+                // Send AJAX request to update status
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', `/projects/${project_id}/status`, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function() {
+                  if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                      // Status updated successfully
+                      console.log('Status updated');
+                      // Show the success alert
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Status Updated!',
+                        text: 'The project status has been successfully updated.',
+                        timer: 3000, // Auto close after 3 seconds
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                      }).then(() => {
+                        // Reload the page to reflect the changes
+                        location.reload();
+                      });
+                    } else {
+                      // Error handling if the request fails
+                      console.error('Error updating project status:', xhr.responseText);
+                    }
+                  }
+                };
+                xhr.send(JSON.stringify({ status: selectedStatus }));
+              }
+            });
+          });
+        </script>
+        
+
       </div>
     </div>
   </main>
+  
   <!-- Core JS Files -->
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap.min.js"></script>

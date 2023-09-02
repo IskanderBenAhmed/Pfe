@@ -200,10 +200,12 @@
 }
 
   </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
@@ -298,48 +300,82 @@
                     <button type="submit"> <span>Login</span><br></button>
                   </form>
                   <a href="/login"></a>
+<!-- Include the SweetAlert2 library -->
+<!-- Add the SweetAlert2 library in your HTML file -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                  <script>
-                    // Get the animated text element
-const animatedText = document.getElementById('animated-text');
+<script>
+  // Get the animated text element
+  const animatedText = document.getElementById('animated-text');
 
-// Set the data-text attribute to the text content
-animatedText.setAttribute('data-text', animatedText.textContent);
+  // Set the data-text attribute to the text content
+  animatedText.setAttribute('data-text', animatedText.textContent);
 
-                 const form = document.querySelector('form')
-                    const username = document.querySelector('#username')
-                    const email = document.querySelector('#email')
-                    const password = document.querySelector('#password')
-                    const display = document.querySelector('.error')
-                
-                   form.addEventListener('submit', async (e) => {
-                      e.preventDefault()
-                      display.textContent = ''
-                      try {
-                        const res = await fetch('/api/auth/login', {
-                          method: 'POST',
-                          body: JSON.stringify({username: username.value, email: email.value, password: password.value }),
-                          headers: { 'Content-Type': 'application/json' }
-                        })
-                        const data = await res.json()
-                        if (res.status === 400 || res.status === 401) {
-                          return display.textContent = `${data.message}. ${data.error ? data.error : ''}`
-                        }
-                        if (data.role === 'admin') {
-        location.assign('/admin');
-      } else if (data.role === 'freelancer') {
-        location.assign('/freelancer-home');
+  const form = document.querySelector('form');
+  const username = document.querySelector('#username');
+  const email = document.querySelector('#email');
+  const password = document.querySelector('#password');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ username: username.value, email: email.value, password: password.value }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const data = await res.json();
+
+      if (res.status === 400 || res.status === 401) {
+        // Display SweetAlert2 popup for unsuccessful login
+        Swal.fire({
+          icon: 'error',
+          title: 'Login Failed',
+          text: `${data.message}. ${data.error ? data.error : ''}`,
+        });
       } else {
-        location.assign('/suggestion');
+        // Login was successful, show role-specific welcome message
+        let roleSpecificMessage = '';
+        if (data.role === 'admin') {
+          roleSpecificMessage = 'Welcome, Admin!';
+        } else if (data.role === 'freelancer') {
+          roleSpecificMessage = 'Welcome, Freelancer!';
+        } else if (data.role === 'client') {
+          roleSpecificMessage = 'Welcome, Client!';
+        } else {
+          roleSpecificMessage = 'Welcome!';
+        }
+
+        // Display SweetAlert2 popup with the role-specific message
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successful',
+          text: roleSpecificMessage,
+          timer: 3000, // Auto close after 3 seconds
+          timerProgressBar: true,
+          showConfirmButton: false,
+        }).then(() => {
+          // Redirect the user based on their role after the popup is closed
+          if (data.role === 'admin') {
+            location.assign('/admin');
+          } else if (data.role === 'freelancer') {
+            location.assign('/freelancer-home');
+          } else if (data.role === 'client') {
+            location.assign('/suggestion');
+          } else {
+            location.assign('/company-home');
+          }
+        });
       }
     } catch (err) {
-      console.log(err.message);
+      console.error('Error during login:', err.message);
     }
-                
-                    })
+  });
+</script>
 
-                    
-                  </script>
+
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-4 text-sm mx-auto">

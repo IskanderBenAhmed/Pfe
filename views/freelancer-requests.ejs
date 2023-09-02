@@ -44,14 +44,18 @@
       }
     }
   </style>
-  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <!-- Font Awesome link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <title>
 Freelancer Requests </title>
   <!--     Fonts and icons     -->
@@ -167,14 +171,21 @@ The Hive Hub      </a>
                   <td><%= proposition.freelancerUsername %></td>
                   <td><%= proposition.status %></td>
                   <td><%= proposition.selected %></td>
-
+                  <td>
+                    <% if (proposition.status === 'approved' && proposition.selected === true) { %>
+                      <button class="btn btn-primary showDataButton" data-freelancer-username="<%= proposition.freelancerUsername %>">Show message</button>
+                      <div class="dataContainer"></div>
+                    <% } %>
+                  </td>
 
                   <!-- Add other table cells as needed -->
                 </tr>
               <% }); %>
             </tbody>
  
+
             </table>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script> <!-- Include SweetAlert2 library -->
 
 
             <script>     
@@ -193,6 +204,44 @@ The Hive Hub      </a>
                     }
                   }
                 }
+                document.querySelectorAll(".showDataButton").forEach(button => {
+    button.addEventListener("click", () => {
+      const freelancerUsername = button.getAttribute("data-freelancer-username");
+
+      // Make an AJAX request to your backend to fetch the data for the specific freelancerUsername
+      fetch(`/getFreelancerContactData?freelancerUsername=${encodeURIComponent(freelancerUsername)}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Use SweetAlert2 to display the fetched data in a popup
+          const formattedTimestamp = new Date(data.timestamp).toLocaleString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: true
+          });
+
+          Swal.fire({
+            title: "Freelancer Contact message",
+            html: `
+              <p>Freelancer Email: ${data.freelancerEmail}</p>
+              <p>Message: ${data.message}</p>
+              <p>Freelancer username: ${data.freelancerUsername}</p>
+              <p>Timestamp: ${formattedTimestamp}</p>
+            `,
+            icon: "info",
+            iconHtml: '<i class="fa fa-envelope"></i>',
+
+            confirmButtonText: "Close",
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    });
+  });
             </script>
             
             

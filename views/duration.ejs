@@ -22,8 +22,8 @@
   
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <title>
 The Hive Hub  </title>
   <!--     Fonts and icons     -->
@@ -75,11 +75,11 @@ The Hive Hub  </title>
               
                   <!-- Display the calendar inputs -->
                   <div>
-                    <label style="font-size: 20px;" for="startDate">Start Date:</label>
+                    <label for="startDate">Start Date:</label>
                     <input type="text" id="startDate" name="startDate" placeholder="Select start date">
                   </div>
                   <div>
-                    <label style="font-size: 20px;" for="endDate">End Date:</label>
+                    <label for="endDate">End Date:</label>
                     <input type="text" id="endDate" name="endDate" placeholder="Select end date">
                   </div>
               
@@ -109,63 +109,63 @@ The Hive Hub  </title>
 
               <script>
                 document.addEventListener('DOMContentLoaded', function() {
-      var startDateInput = document.getElementById('startDate');
-      var endDateInput = document.getElementById('endDate');
+                var startDateInput = document.getElementById('startDate');
+                var endDateInput = document.getElementById('endDate');
 
-      // Initialize Flatpickr on the date inputs
-      var startDatePicker = flatpickr(startDateInput, {
-        dateFormat: 'Y-m-d',
-        // Additional configuration options
-      });
+                    // Initialize Flatpickr on the date inputs
+                    var startDatePicker = flatpickr(startDateInput, {
+                      dateFormat: 'Y-m-d',
+                       // Additional configuration options
+                    });
 
-      var endDatePicker = flatpickr(endDateInput, {
-        dateFormat: 'Y-m-d',
-        // Additional configuration options
-      });
+                        var endDatePicker = flatpickr(endDateInput, {
+                         dateFormat: 'Y-m-d',
+                         // Additional configuration options
+                          });
 
-      // Handle form submission
-      document.getElementById('durationForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+                               // Handle form submission
+                         document.getElementById('durationForm').addEventListener('submit', function(event) {
+                            event.preventDefault();
 
-        var startDate = startDatePicker.selectedDates[0];
-        var endDate = endDatePicker.selectedDates[0];
+                                var startDate = startDatePicker.selectedDates[0];
+                            var endDate = endDatePicker.selectedDates[0];
 
-        // Get the current date
-        var currentDate = new Date();
+                                 // Get the current date
+                           var currentDate = new Date();
 
-        // Perform validation
-        if (startDate < currentDate || endDate < currentDate) {
-          alert('Please select a date in the future.');
-          return;
-        }
+                                // Perform validation
+                             if (startDate < currentDate || endDate < currentDate) {
+                                  alert('Please select a date in the future.');
+                               return;
+                                 }
 
-        if (startDate > endDate) {
-          alert('End date should be greater than start date.');
-          return;
-        }
+                                 if (startDate > endDate) {
+                                        alert('End date should be greater than start date.');
+                                      return;
+                                         }
 
-        this.submit(); // Submit the form with the id "durationForm"
-      });
-    });
+                                         this.submit(); // Submit the form with the id "durationForm"
+                                        });
+                                         });
           
-    const resetButton = document.getElementById('resetButton');
-  resetButton.addEventListener('click', function() {
-    const form = document.querySelector('form');
-    form.reset(); 
-  });
-  const cancelButtonTech = document.getElementById('cancelButtonTech');
-    cancelButtonTech.addEventListener('click', goBack);
-  
-    function goBack() {
-      history.back(); // Go back to the previous page
-    }
+                                         const resetButton = document.getElementById('resetButton');
+                                        resetButton.addEventListener('click', function() {
+                                         const form = document.querySelector('form');
+                                          form.reset(); 
+                                      });
+                                                  const cancelButtonTech = document.getElementById('cancelButtonTech');
+                                         cancelButtonTech.addEventListener('click', goBack);
+                                      
+                                                 function goBack() {
+                                                  history.back(); // Go back to the previous page
+                                                               }
           
           
-              document.getElementById("cancelButtonTech").addEventListener("click", function() {
-                window.history.back(); // Go back to the previous page
-              });
-              </script>
-              </div>
+                                             document.getElementById("cancelButtonTech").addEventListener("click", function() {
+                                                  window.history.back(); // Go back to the previous page
+                                                });
+                                            </script>
+                                      </div>
               
     
             </div>

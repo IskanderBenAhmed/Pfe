@@ -10,8 +10,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <title>
     Freelancer Requests
   </title>
@@ -26,7 +26,9 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
   <style>
-  
+    
+   .contact-freelancer-btn {
+    width: 75%;}
   /* Hide the Google Translate banner */
   #goog-gt-tt {
       display: none !important;
@@ -142,46 +144,64 @@
   width: 150px; /* Adjust the width value as per your requirement */
 }
 button {
-  --color: #000000;
   font-family: inherit;
-  display: inline-block;
-  width: 6em;
-  height: 2.6em;
-  line-height: 2.5em;
-  overflow: hidden;
-  margin: 20px;
-  font-size: 17px;
-  z-index: 1;
-  color: var(--color);
-  border: 2px solid var(--color);
-  border-radius: 6px;
-  position: relative;
-}
-
-button::before {
-  position: absolute;
-  content: "";
-  background: var(--color);
-  width: 150px;
-  height: 200px;
-  z-index: -1;
-  border-radius: 50%;
+  font-size: 18px;
+  background: linear-gradient(to bottom, #4dc7d9 0%,#66a6ff 100%);
+  color: white;
+  padding: 0.8em 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 25px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
 }
 
 button:hover {
-  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-button:before {
-  top: 100%;
-  left: 100%;
-  transition: .3s all;
+button:active {
+  transform: scale(0.95);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-button:hover::before {
-  top: -30px;
-  left: -30px;
+button span {
+  display: block;
+  margin-left: 0.4em;
+  transition: all 0.3s;
 }
+
+button svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+  transition: all 0.3s;
+}
+
+button .svg-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-right: 0.5em;
+  transition: all 0.3s;
+}
+
+button:hover .svg-wrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+button:hover svg {
+  transform: rotate(45deg);
+}
+
+
 .animation-fade-in {
       animation: fade-in 1s ease-in-out forwards;
       opacity: 0;
@@ -303,15 +323,14 @@ button:hover::before {
             </a>
           </li>
 
-          <li class="nav-item">
-            <div id="google_translate_element"></div>
-          </li>
 
 
         </ul>
 
     
         <div class="filter-wrapper">
+          <div id="google_translate_element"></div>
+
           <div class="row align-items-center">
             <div class="col">
               <h5 class="text-white mb-5 mt-5">Filter</h5>
@@ -323,6 +342,7 @@ button:hover::before {
                 <option value="approved">Approved</option>
                 <option value="rejected">Rejected</option>
               </select>
+              
             </div>
           </div>
         </div>
@@ -356,6 +376,8 @@ button:hover::before {
                       <th>projectName</th>
                       <th>Freelancer </th>
                       <th>budget proposed</th>  
+                      <th>selected</th>  
+
                       <th>Status</th>
 
                     </tr>
@@ -366,25 +388,39 @@ button:hover::before {
                         <td class="form-td"><%= proposition.projectName %></td>
                         <td class="form-td"><%= proposition.freelancerUsername %></td>
                         <td class="form-td"><%= proposition.price %></td>
+                        <td class="form-td"><%= proposition.selected %></td>
+
 
                         <td class="form-td">
-                          <form action="/propositions/<%= proposition._id %>/status" method="POST">
+                          <form id="proposition-form-<%= proposition._id %>" action="/propositions/<%= proposition._id %>/status" method="POST">
                             <div style="display: flex; align-items: center;">
                               <div class="custom-dropdown">
-                                <select class="form-control small-select" name="status">
+                                <select class="form-control small-select status-dropdown" data-proposition-id="<%= proposition._id %>">
                                   <option value="pending" <% if (proposition.status === 'pending') { %>selected<% } %>>Pending</option>
                                   <option value="approved" <% if (proposition.status === 'approved') { %>selected<% } %>>Approved</option>
                                   <option value="rejected" <% if (proposition.status === 'rejected') { %>selected<% } %>>Rejected</option>
                                 </select>
                                 <span class="dropdown-arrow"></span>
                               </div>
-                              <p class="text" style="font-weight: bold;">Save</p>
-                              <button type="submit" style="margin-left: 10px; font-size: large;">
-                                Save
-                              </button>
+                               
                             </div>
                           </form>
                         </td>
+                        <td class="form-td">
+                          <% if (proposition.status === 'approved' && proposition.selected === true) { %>
+                            <button class="contact-freelancer-btn" data-freelancer-email="<%= proposition.freelancerEmail %>">
+                              <div class="svg-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                                  <path fill="none" d="M0 0h24v24H0z"></path>
+                                  <path fill="currentColor" d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"></path>
+                                </svg>
+                              </div>
+                              <span>Contact</span>
+                            </button>
+                          <% } %>
+                        </td>
+                        
+                        
                         
                       </tr>
                     <% }); %>
@@ -396,6 +432,35 @@ button:hover::before {
             </div>
           </div>
         </div>
+
+        <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="contactModalLabel">Contact Freelancer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="contactForm">
+                  <div class="mb-3">
+                    <label for="recipientEmail" class="form-label">Recipient Email</label>
+                    <input type="email" class="form-control" id="recipientEmail" >
+                  </div>
+                  <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" rows="4" required></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </main>
@@ -407,27 +472,160 @@ button:hover::before {
   <script src="../assets/js/core/bootstrap.min.js"></script>
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
 
-    function applyFilter(filterValue) {
-      var tableRows = document.querySelectorAll("tbody > tr");
-      tableRows.forEach(function(row) {
-        var status = row.getAttribute("data-status");
-        if (filterValue === "all" || filterValue === status) {
-          row.style.display = "";
-        } else {
-          row.style.display = "none";
-        }
-      });
-    }
-    
+  <script>
+     // Function to filter propositions based on the selected status
+  function applyFilter(selectedStatus) {
+    const rows = document.querySelectorAll('tr[data-status]');
+    rows.forEach(row => {
+      const status = row.getAttribute('data-status');
+      if (selectedStatus === 'all' || status === selectedStatus) {
+        row.style.display = 'table-row';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  }
+
+  // Add event listener to status dropdowns
+  const statusDropdowns = document.querySelectorAll('.status-dropdown');
+  statusDropdowns.forEach(dropdown => {
+    dropdown.addEventListener('change', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      const propositionId = this.getAttribute('data-proposition-id');
+      const selectedStatus = this.value;
+
+      // If the selected status is "Rejected," show the SweetAlert2 popup
+      if (selectedStatus === 'rejected') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Rejection Reason',
+          text: 'Please enter the reason for rejection:',
+          input: 'text',
+          inputAttributes: {
+            required: true,
+          },
+          showCancelButton: true,
+          confirmButtonText: 'Save',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const rejectionReason = result.value;
+            // Send AJAX request to update status and rejection reason
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', `/propositions/${propositionId}/status`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = function() {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                // Status and rejection reason updated successfully
+                console.log('Status and rejection reason updated');
+                // Reload the page to reflect the changes
+                location.reload();
+              }
+            };
+            xhr.send(JSON.stringify({ status: selectedStatus, rejection_reason: rejectionReason }));
+          }
+        });
+      } else {
+        // If status is not "Rejected," update status only without rejection reason
+        // Send AJAX request to update status
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `/propositions/${propositionId}/status`, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            // Status updated successfully
+            console.log('Status updated');
+          }
+        };
+        xhr.send(JSON.stringify({ status: selectedStatus }));
+
+        // Show the success alert
+        Swal.fire({
+          icon: 'success',
+          title: 'Status Updated!',
+          text: 'The project status has been successfully updated to Approved.',
+          timer: 3000, // Auto close after 3 seconds
+          timerProgressBar: true,
+          showConfirmButton: false
+        }).then(() => {
+          // Reload the page to reflect the changes
+          location.reload();
+        });
+      }
+    });
+  });
+
+const contactButtons = document.querySelectorAll('.contact-freelancer-btn');
+const contactModal = new bootstrap.Modal(document.getElementById('contactModal'));
+const recipientEmailInput = document.getElementById('recipientEmail');
+const contactForm = document.getElementById('contactForm');
+
+contactButtons.forEach(button => {
+  button.addEventListener('click', function(event) {
+    event.preventDefault();
+    const freelancerEmail = this.getAttribute('data-freelancer-email');
+    const freelancerUsername = this.closest('tr').querySelector('.form-td:nth-child(2)').textContent; // Get the freelancerUsername from the second column in the row
+    recipientEmailInput.value = freelancerEmail;
+    // Set the value of a hidden input field in the contact form to hold the freelancerUsername
+    const usernameInput = document.createElement('input');
+    usernameInput.type = 'hidden';
+    usernameInput.name = 'freelancerUsername';
+    usernameInput.value = freelancerUsername;
+    contactForm.appendChild(usernameInput);
+    contactModal.show();
+  });
+});
+
+// Add event listener to the contact form submission
+contactForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  // Implement your logic here to send the message to the freelancer's email
+  const recipientEmail = recipientEmailInput.value;
+  const freelancerUsername = document.querySelector('input[name="freelancerUsername"]').value; // Get the freelancerUsername from the hidden input field
+  const message = document.getElementById('message').value;
+
+  // Send AJAX request to save the data in the database
+  fetch('/send-contact', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      recipientEmail,
+      message,
+      freelancerUsername, // Pass the freelancerUsername to the server
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Data successfully saved in the database
+    console.log('Contact details saved:', data);
+    // Clear the form and close the modal
+    contactForm.reset();
+    contactModal.hide();
+    // Show a success message or take any other action if needed
+    // For example, you can show a success alert using SweetAlert2
+    Swal.fire({
+      icon: 'success',
+      title: 'Message sent',
+      text: 'Your message has been sent to the freelancer.',
+    });
+  })
+  .catch(error => {
+    // Error occurred while saving the data
+    console.error('Error saving contact details:', error);
+    // Show an error message or take any other action if needed
+    // For example, you can show an error alert using SweetAlert2
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'An error occurred while sending the message.',
+    });
+  });
+});
+
   </script>
   
   <!-- Github buttons -->

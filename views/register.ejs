@@ -216,10 +216,12 @@
 
 
   </style>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <title>
 Register </title>
   <!--     Fonts and icons     -->
@@ -310,6 +312,8 @@ The Hive Hub      </a>
                   <select style="margin-top: -5px;" id="role" class="form-control" required>
                     <option value="client">Client</option>
                     <option value="freelancer">Freelancer</option>
+                    <option value="company">company</option>
+
                   </select>
                 </div>
                 
@@ -327,40 +331,49 @@ The Hive Hub      </a>
                 </p>
               </form>
               
-              <script>
+          <!-- Add SweetAlert2 library -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-                  const animatedText = document.getElementById('animated-text');
+<script>
+  const animatedText = document.getElementById('animated-text');
 
-                  // Set the data-text attribute to the text content
-                  animatedText.setAttribute('data-text', animatedText.textContent);
+  // Set the data-text attribute to the text content
+  animatedText.setAttribute('data-text', animatedText.textContent);
 
+  const form = document.querySelector('form');
+  const username = document.querySelector('#username');
+  const email = document.querySelector('#email');
+  const password = document.querySelector('#password');
+  const role = document.querySelector('#role');
+  const display = document.querySelector('.error');
 
-                const form = document.querySelector('form');
-                const username = document.querySelector('#username');
-                const email = document.querySelector('#email');
-                const password = document.querySelector('#password');
-                const role = document.querySelector('#role');
-                const display = document.querySelector('.error');
-              
-                form.addEventListener('submit', async (e) => {
-                  e.preventDefault();
-                  display.textContent = '';
-                  try {
-                    const res = await fetch('/api/auth/register', {
-                      method: 'POST',
-                      body: JSON.stringify({username: username.value, email: email.value, password: password.value ,role: role.value}),
-                      headers: { 'Content-Type': 'application/json' }
-                    });
-                    const data = await res.json();
-                    if (res.status === 400 || res.status === 401) {
-                      return display.textContent = `${data.message}. ${data.error ? data.error : ''}`;
-                    }
-                    data.role === "admin" ? location.assign('/admin') : location.assign('/');
-                  } catch (err) {
-                    console.log(err.message);
-                  }
-                });
-              </script>
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    display.textContent = '';
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({ username: username.value, email: email.value, password: password.value, role: role.value }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await res.json();
+      if (res.status === 400 || res.status === 401) {
+        // Display SweetAlert2 popup for email or username already registered
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: `${data.message}`,
+        });
+        return;
+      }
+      // Registration successful, redirect based on role
+      data.role === 'admin' ? location.assign('/admin') : location.assign('/');
+    } catch (err) {
+      console.log(err.message);
+    }
+  });
+</script>
+
               
             </div>
           </div>

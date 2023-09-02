@@ -87,24 +87,25 @@
   color: #fff; /* Set the desired color for the text */
 
 }
-    .typing {
-    width: 550px;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 1.5s steps(12, end), cursor .2s steps(12, end) infinite;
-    color: #ffffff;
-}
-@keyframes typing {
-    from { width: 0 }
-}
-@keyframes cursor {
-    50% { border-color: transparent }
-}
+.animation-fade-in {
+      animation: fade-in 1s ease-in-out forwards;
+      opacity: 0;
+      color: #fff;
+    }
+
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   </style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <title>
 The Hive Hub  </title>
   <!--     Fonts and icons     -->
@@ -144,7 +145,7 @@ The Hive Hub      </a>
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">  
             <h2 class="text-white mb-2 mt-5"></h2>
-            <h2 class="cssanimation typing">Welcome dear freelancer!</h2>
+            <h2 class="bigger-label animation-fade-in">Welcome dear freelancer!</h2>
 
           </div>
           <div class="container-fluid py-4" style="margin-top: 100px;">

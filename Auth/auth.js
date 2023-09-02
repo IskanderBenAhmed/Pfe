@@ -14,66 +14,70 @@ const jwtSecret = "4715aed3c946f7b0a38e6b534a9583628d84e96d10fbc04700770d572af3d
 
 
 exports.register = async (req, res, next) => {
-  const { username,email, password, role } = req.body;
+  const { username, email, password, role } = req.body;
 
   // Check if the user already exists
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "Email ID already registered" });
+    const existingUserEmail = await User.findOne({ email });
+    const existingUsername = await User.findOne({ username });
+
+    if (existingUserEmail) {
+      return res.status(400).json({ message: 'Email ID already registered' });
     }
+
+    if (existingUsername) {
+      return res.status(400).json({ message: 'Username already registered' });
+    }
+
+    // Proceed with user registration
+    if (password.length < 6) {
+      return res.status(400).json({ message: 'Password is less than 6 characters' });
+    }
+
+    bcrypt.hash(password, 10).then(async (hash) => {
+      try {
+        const user = await User.create({
+          username,
+          email,
+          password: hash,
+          role: role || 'Basic',
+          isVerified: false, // Add a new field to track email verification status
+        });
+
+        const maxAge = 3 * 60 * 60;
+        const token = jwt.sign(
+          { id: user._id, username, email, role: user.role },
+          jwtSecret,
+          {
+            expiresIn: maxAge,
+          }
+        );
+
+        // Send verification email
+        const verificationLink = `http://localhost:3000/verify/${token}`;
+        const mailOptions = {
+          from: 'nodejsa@gmail.com',
+          to: email,
+          subject: 'Email Verification',
+          text: `Click on the link to verify your email: ${verificationLink}`,
+          html: `<p>Click <a href="${verificationLink}">here</a> to verify your email.</p>`,
+        };
+
+        res.status(201).json({
+          message: 'Verification email sent. Please check your email to complete the registration.',
+          user: user._id,
+          role: user.role,
+        });
+      } catch (error) {
+        res.status(400).json({
+          message: 'User not successfully created',
+          error: error.message,
+        });
+      }
+    });
   } catch (error) {
-    return res.status(500).json({ message: "An error occurred", error: error.message });
+    res.status(500).json({ message: 'An error occurred', error: error.message });
   }
-
-  // Proceed with user registration
-  if (password.length < 6) {
-    return res.status(400).json({ message: "Password is less than 6 characters" });
-  }
-
-  bcrypt.hash(password, 10).then(async (hash) => {
-    try {
-      const user = await User.create({
-        username,
-        email,
-        password: hash,
-        role: role || "Basic",
-        isVerified: false, // Add a new field to track email verification status
-      });
-
-      const maxAge = 3 * 60 * 60;
-      const token = jwt.sign(
-        { id: user._id,username, email, role: user.role },
-        jwtSecret,
-        {
-          expiresIn: maxAge,
-        }
-      );
-
-      // Send verification email
-      const verificationLink = `http://localhost:3000/verify/${token}`;
-      const mailOptions = {
-        from: "nodejsa@gmail.com",
-        to: email,
-        subject: "Email Verification",
-        text: `Click on the link to verify your email: ${verificationLink}`,
-        html: `<p>Click <a href="${verificationLink}">here</a> to verify your email.</p>`,
-      };
-
-      
-
-      res.status(201).json({
-        message: "Verification email sent. Please check your email to complete the registration.",
-        user: user._id,
-        role: user.role,
-      });
-    } catch (error) {
-      res.status(400).json({
-        message: "User not successfully created",
-        error: error.message,
-      });
-    }
-  });
 };
 
 exports.login = async (req, res, next) => {
@@ -87,39 +91,45 @@ exports.login = async (req, res, next) => {
   }
 
   try {
-    const user = await User.findOne({ email }); // Ensure email is defined here
-
-    if (!user) {
+    const userByEmail = await User.findOne({ email });
+    const userByUsername = await User.findOne({ username });
+    if (!userByEmail || !userByUsername) {
       return res.status(400).json({
         message: "Login not successful",
         error: "User not found",
       });
-    } else {
-      // Compare given password with hashed password
-      bcrypt.compare(password, user.password).then(function (result) {
-        if (result) {
-          const maxAge = 3 * 60 * 60;
-          const token = jwt.sign(
-            { id: user._id,username, email, role: user.role },
-            jwtSecret,
-            {
-              expiresIn: maxAge,
-            }
-          );
-          res.cookie("jwt", token, {
-            httpOnly: true,
-            maxAge: maxAge * 1000,
-          });
-          res.status(201).json({
-            message: "User successfully logged in",
-            user: user._id,
-            role: user.role,
-          });
-        } else {
-          res.status(400).json({ message: "Login not successful" });
-        }
+    }
+
+    if (userByEmail._id.toString() !== userByUsername._id.toString()) {
+      return res.status(400).json({
+        message: "Username and Email do not belong to the same user",
       });
     }
+
+    // Compare given password with hashed password
+    bcrypt.compare(password, userByEmail.password).then(function (result) {
+      if (result) {
+        const maxAge = 3 * 60 * 60;
+        const token = jwt.sign(
+          { id: userByEmail._id, username, email, role: userByEmail.role },
+          jwtSecret,
+          {
+            expiresIn: maxAge,
+          }
+        );
+        res.cookie("jwt", token, {
+          httpOnly: true,
+          maxAge: maxAge * 1000,
+        });
+        res.status(201).json({
+          message: "User successfully logged in",
+          user: userByEmail._id,
+          role: userByEmail.role,
+        });
+      } else {
+        res.status(400).json({ message: "Login not successful ! incorrect password" });
+      }
+    });
   } catch (error) {
     res.status(400).json({
       message: "An error occurred",
@@ -136,7 +146,7 @@ exports.verifyEmail = async (req, res) => {
     const user = await User.findById(decodedToken.id);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "email not found" });
     }
 
     if (user.isVerified) {

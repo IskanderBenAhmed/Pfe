@@ -46,13 +46,37 @@
     .project-name-input {
     font-size: 17px; /* Adjust the font size as desired */
   }
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+
+  .notification.show {
+    display: block;
+    animation: fade-in 0.5s ease;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   </style>
  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
 The Hive Hub  </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -68,6 +92,43 @@ The Hive Hub  </title>
 
 <body class="">
   <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
+    <div class="container">
+      <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="/">
+        The Hive Hub
+      </a>
+      <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon mt-2">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </span>
+      </button>
+      <div class="collapse navbar-collapse" id="navigation">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/admin">
+              <i class="fa fa-chart-pie opacity-6  me-1"></i>
+              Home
+            </a>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link me-2" href="/my-projects">
+              <i class="fas fa-folder-open opacity-6  me-1"></i>
+              My projects
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link me-2" href="/client-profile">
+              <i class="fas fa-user-circle opacity-6  me-1"></i>
+              My profile
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <!-- End Navbar -->
   <main class="main-content  mt-0">
     <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signup-cover.jpg'); background-position: top;">
@@ -108,8 +169,38 @@ The Hive Hub  </title>
                   <button id="cancelButton" type="button" class="btn btn-white-text mx-2 float-right">Go Back</button>
                 </div>
               </form>  
-            </div>              
+            </div> 
+            <div id="notification" class="notification">
+              <span id="notification-message"></span>
+              <button id="notification-close" class="btn btn-sm btn-link"><i class="fas fa-times"></i></button>
+            </div>
+                          
             <script>
+           window.addEventListener('DOMContentLoaded', () => {
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notification-message');
+    const notificationClose = document.getElementById('notification-close');
+
+    // Show the notification with the provided message
+    function showNotification(message) {
+      notificationMessage.textContent = message;
+      notification.classList.add('show');
+
+      // Hide the notification after 5 seconds
+      setTimeout(hideNotification, 5000);
+    }
+
+    // Hide the notification
+    function hideNotification() {
+      notification.classList.remove('show');
+    }
+
+    // Add an event listener to the close button
+    notificationClose.addEventListener('click', hideNotification);
+
+    // Trigger the notification with the success message
+    showNotification('Project created successfully');
+  });
               // Add an event listener to the "Save" button
               const saveButton = document.getElementById('saveButton');
               saveButton.addEventListener('click', saveAttachment);
@@ -150,6 +241,7 @@ The Hive Hub  </title>
               function goBack() {
                 history.back(); // Go back to the previous page
               }
+              
             </script>
               
             </div>

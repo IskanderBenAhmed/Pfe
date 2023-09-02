@@ -101,10 +101,11 @@
       }
     }
   </style>
+    <link href="main-template/img/icon.png"  rel="icon">
+    <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  
   <title>
 The Hive Hub  </title>
   <!--     Fonts and icons     -->
@@ -148,39 +149,46 @@ The Hive Hub      </a>
 
           </div>
           <div class="container-fluid py-4" style="margin-top: 100px;">
-            <div class="row" style="margin-left: 120px;">
-              <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-                  <div class="card " onclick="handleCardClick2()">
-                    <div class="card-details ni ni-circle-08">
-                      <p class="text-title">Users list</p>
-                      <p class="text-body">here u can find all the users</p>
-
-                    </div>
-                    <a class="card-button" >click to go</a>
+            <div class="row d-flex flex-wrap justify-content-center" style="margin-left: 120px;">
+              <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card " onclick="handleCardClick2()">
+                  <div class="card-details ni ni-circle-08">
+                    <p class="text-title">Users list</p>
+                    <p class="text-body">here u can find all the users</p>
+                  </div>
+                  <a class="card-button">click to go</a>
                 </div>
               </div>
-              <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+              <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card " onclick="handleCardClick()">
                   <div class="card-details ni ni-folder-17">
                     <p class="text-title">projects list</p>
                     <p class="text-body">here u can find the list of all the projects</p>
-
                   </div>
-                  <a class="card-button" >click to go</a>
+                  <a class="card-button">click to go</a>
+                </div>
               </div>
-              </div>
-              <div class="col-xl-4 col-md-6 offset-xl-0 offset-md-3" >
+              <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card " onclick="handleCardClick3()">
                   <div class="card-details fas fa-list">
                     <p class="text-title">propositions list</p>
                     <p class="text-body">here u can find the propositions of the workforce</p>
-
                   </div>
-                  <a class="card-button" >click to go</a>
+                  <a class="card-button">click to go</a>
+                </div>
               </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card " onclick="handleCardClick4()">
+                  <div class="card-details fas fa-envelope">
+                    <p class="text-title">Messages list</p>
+                    <p class="text-body">here u can find the messages sent from the visitors </p>
+                  </div>
+                  <a class="card-button">click to go</a>
+                </div>
               </div>
             </div>
           </div>
+          
           
         </div>
       </div>
@@ -259,6 +267,11 @@ The Hive Hub      </a>
       // Perform the desired action when the card body is clicked
       // For example, you can navigate to another page or trigger some functionality
       window.location.href = "/proposition-approval";
+    }
+    function handleCardClick4() {
+      // Perform the desired action when the card body is clicked
+      // For example, you can navigate to another page or trigger some functionality
+      window.location.href = "/messages";
     }
   </script>
   

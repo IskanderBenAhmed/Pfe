@@ -8,6 +8,9 @@ const propositions = require('./model/propositions');
 const flash = require('connect-flash');
 
 const profile= require("./model/profile")
+const message= require("./model/message")
+
+const FreelancerContact = require('./model/freelancer_contact'); // Replace with the correct path
 
 
 const multer = require('multer');
@@ -122,6 +125,9 @@ app.post('/save-attachment', upload.single('attachment'), (req, res) => {
 app.use('/uploads', express.static('uploads'));
 
 app.get("/suggestion", (req, res) => res.render("suggestion"));
+app.get("/company-home", (req, res) => res.render("company-home"));
+
+
 
 app.get("/attached-file", userAuth, (req, res) => {
   res.render("attached-file", { currentUser: req.user });
@@ -301,7 +307,7 @@ app.post('/saved-project',  userAuth, async(req, res) => {
     .save()
     .then(savedProject => {
       console.log('Project saved:', savedProject);
-      res.redirect('/project-pack');
+      res.render('attached-file', { projectCreated: true, currentUser: req.user });
     })
     .catch(error => {
       console.error('Error saving project:', error);
@@ -439,19 +445,52 @@ app.get('/my-projects', userAuth, async (req, res) => {
 });
 // Assuming you have the necessary imports and setup
 
-// Update the status of a project
-app.post('/projects/:projectId/status', adminAuth, async (req, res) => {
-  const { projectId } = req.params;
-  const { status } = req.body;
+const ProjectModel = require('./model/project'); // Update the path to your project model file
+
+// ...
+
+app.post('/projects/:id/status', async (req, res) => {
+  const projectId = req.params.id;
+  const { status, rejection_reason } = req.body;
+
+  if (!projectId) {
+    return res.status(400).json({ error: 'Invalid projectId. Please provide a valid project ID.' });
+  }
 
   try {
-    const updatedProject = await project.findByIdAndUpdate(projectId, { status }, { new: true });
-    res.redirect('/all-projects');
+    // Find the project by ID
+    const project = await ProjectModel.findById(projectId);
+
+    if (!project) {
+      // If project not found, return an error response
+      return res.status(404).json({ error: 'Project not found.' });
+    }
+
+    // Update the project status
+    project.status = status;
+
+    // If status is 'Rejected', update the rejection reason
+    if (status === 'rejected') {
+      project.rejection_reason = rejection_reason;
+    }
+    else if (status === 'approved' || status === 'completed'
+    ) {
+      project.rejection_reason = ''; // Set the rejection reason to an empty string for 'approved' or 'completed' status
+    }
+
+    // Save the updated project
+    await project.save();
+
+    // Return a success response
+    return res.status(200).json({ message: 'Project status updated successfully.' });
   } catch (error) {
-    console.error(error);
-    res.sendStatus(500);
+    console.error('Error updating project status:', error);
+    return res.status(500).json({ error: 'Error updating project status.' });
   }
 });
+
+
+
 app.get('/freelancer-home', (req, res) => {
   // Perform any necessary logic or data retrieval here
   // Render the freelancer-home.ejs template
@@ -495,20 +534,73 @@ app.get('/get-role', userAuth, (req, res) => {
   const role = req.user.role;
   res.json({ role });
 });
+
+
+
+// Assuming you have imported necessary modules and set up your Express app
+app.get('/create-profile', userAuth, (req, res) => {
+  // Get the user's username and role from the authenticated user
+  const username = req.user.username;
+  const role = req.user.role;
+
+  // Render the create-profile.ejs template and pass the username and role variables
+  res.render('create-profile', { username: username, role: role });
+});
+
+app.post("/submit-profile", async (req, res) => {
+  const { username, email, Firstname, Lastname, city, country, postal_code, About_me } = req.body;
+
+  try {
+    // Check if a profile with the given username already exists in the database
+    const existingProfile = await profile.findOne({ username });
+
+    if (existingProfile) {
+      // If a profile with the given username already exists, send an error response to the client
+      return res.status(400).json({ success: false, error: "Username already exists. Please choose a different username." });
+    }
+
+    // Create a new profile document using the profile model
+    const newProfile = new profile({
+      username,
+      email,
+      Firstname,
+      Lastname,
+      city,
+      country,
+      postal_code,
+      About_me,
+    });
+
+    // Save the profile data to the database
+    await newProfile.save();
+
+    // Send a success response to the client
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error saving profile:", error);
+    // Send an error response to the client
+    res.status(500).json({ success: false, error: "Failed to save profile" });
+  }
+});
+
+
   
   
 app.get('/client-profile', userAuth, async (req, res) => {
   const username = req.user.username;
   const role = req.user.role;
 
-
   try {
     // Retrieve the user profile data from the database
     const userProfile = await profile.findOne({ username: username });
 
-      // Render the client-profile.ejs template and pass the userProfile, username, and role variables
-      res.render('client-profile', { userProfile: userProfile, username: username, role: role });
-      // Handle the case when the user profile is not found
+    // If the userProfile is not found, redirect the user to the create-profile page
+    if (!userProfile) {
+      return res.redirect('/create-profile');
+    }
+
+    // Render the client-profile.ejs template and pass the userProfile, username, and role variables
+    res.render('client-profile', { userProfile: userProfile, username: username, role: role });
   } catch (error) {
     // Handle any errors that occur during profile retrieval
     res.status(500).json({ error: 'Failed to retrieve user profile' });
@@ -518,23 +610,30 @@ app.get('/client-profile', userAuth, async (req, res) => {
 
 
 
+
+// Assuming you have imported necessary modules and set up your Express app
 app.get('/freelancer-profile', userAuth, async (req, res) => {
+  // Get the user's username and role from the authenticated user
   const username = req.user.username;
   const role = req.user.role;
 
-
   try {
     // Retrieve the user profile data from the database
     const userProfile = await profile.findOne({ username: username });
 
-      // Render the freelancer-profile.ejs template and pass the userProfile, username, and role variables
-      res.render('freelancer-profile', { userProfile: userProfile, username: username, role: role });
-      // Handle the case when the user profile is not found
+    // If the user profile is not found, redirect the user to the create-profile page
+    if (!userProfile) {
+      return res.redirect('/create-profile');
+    }
+
+    // Render the freelancer-profile.ejs template and pass the userProfile, username, and role variables
+    res.render('freelancer-profile', { userProfile: userProfile, username: username, role: role });
   } catch (error) {
     // Handle any errors that occur during profile retrieval
     res.status(500).json({ error: 'Failed to retrieve user profile' });
   }
 });
+
 app.get('/freelancer-requests', userAuth, async (req, res) => {
   try {
     // Get the logged-in user's ID from the session or token
@@ -573,19 +672,35 @@ app.get('/proposition-approval', userAuth, async (req, res) => {
 
 app.use(flash());
 
-app.post('/propositions/:propositionId/status', userAuth, async (req, res) => {
+app.post('/propositions/:id/status', async (req, res) => {
+  const propositionId = req.params.id;
+  const { status, rejection_reason } = req.body;
+
   try {
-    const propositionId = req.params.propositionId;
-    const { status } = req.body;
+    // Find the proposition by ID
+    const proposition = await propositions.findById(propositionId);
 
-    // Update the proposition status in the database
-    await propositions.findByIdAndUpdate(propositionId, { status });
-    req.flash('success', 'Proposition status changed successfully.');
+    if (!proposition) {
+      // If proposition not found, return an error response
+      return res.status(404).json({ error: 'Proposition not found.' });
+    }
 
-    res.redirect('/proposition-approval'); // Redirect to the proposition approval page after updating the status
+    // Update the proposition status
+    proposition.status = status;
+
+    // If status is 'Rejected', update the rejection reason
+    if (status === 'rejected') {
+      proposition.rejection_reason = rejection_reason;
+    }
+
+    // Save the updated proposition
+    await proposition.save();
+
+    // Return a success response
+    return res.status(200).json({ message: 'Proposition status updated successfully.' });
   } catch (error) {
     console.error('Error updating proposition status:', error);
-    res.status(500).send('Internal Server Error');
+    return res.status(500).json({ error: 'Error updating proposition status.' });
   }
 });
 
@@ -750,11 +865,86 @@ app.post('/save-profile', (req, res) => {
     })
     .then(savedProfile => {
       console.log('Saved Profile:', savedProfile);
-      res.status(200).json(savedProfile);
+      // Send back the response with the success field set to true and the saved profile object
+      res.status(200).json({ success: true, savedProfile });
     })
     .catch(error => {
       console.error('Failed to save profile:', error);
-      res.status(500).json({ error: 'Failed to save profile' });
+      // Send back the response with the success field set to false and an error message
+      res.status(500).json({ success: false, error: 'Failed to save profile' });
     });
 });
 
+app.post('/send-message', async (req, res) => {
+  // Process the form data and store it in the database
+  const formData = {
+    name: req.body.name,
+    email: req.body.email,
+    subject: req.body.subject,
+    message: req.body.message,
+    // You can add more fields here based on your form structure and model
+  };
+  try {
+    // Create a new document in the messages collection
+    const newMessage = new message(formData);
+    await newMessage.save();
+    console.log('Message saved to database:', newMessage);
+    res.redirect(req.originalUrl); // Redirect to the same page
+  } catch (error) {
+    console.error('Error saving message to database:', error);
+    res.status(500).json({ error: 'Error saving message to database.' }); // Send a JSON response with the error message
+  }
+});
+
+
+
+// Modify your existing route to render the messages on a page
+app.get('/messages', async (req, res) => {
+  try {
+    const messages = await message.find({});
+    res.render('messages', { messages });
+  } catch (error) {
+    console.error('Error retrieving messages from database:', error);
+    res.render('messages', { messages: [] }); // Empty messages array if an error occurs
+  }
+});
+
+app.post('/send-contact', async (req, res) => {
+  const { recipientEmail, message, freelancerUsername } = req.body; // Extract the freelancerUsername from the request body
+
+  try {
+    // Save the contact details to the database
+    const contact = new FreelancerContact({
+      freelancerEmail: recipientEmail,
+      message,
+      freelancerUsername, // Save the freelancerUsername to the database
+    });
+    await contact.save();
+
+    // Return a success response
+    res.status(200).json({ message: 'Contact details saved successfully' });
+  } catch (error) {
+    console.error('Error saving contact details:', error);
+    // Return an error response
+    res.status(500).json({ error: 'An error occurred while saving contact details' });
+  }
+});
+
+
+app.get("/getFreelancerContactData", async (req, res) => {
+  try {
+    const freelancerUsername = req.query.freelancerUsername;
+
+    // Find the entry that corresponds to the provided freelancerUsername
+    const freelancerContact = await FreelancerContact.findOne({ freelancerUsername }).sort({ timestamp: -1 });
+
+    if (!freelancerContact) {
+      return res.status(404).json({ error: "No data found" });
+    }
+
+    res.status(200).json(freelancerContact);
+  } catch (err) {
+    console.error("Error fetching data:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});

@@ -209,10 +209,12 @@
 
 
   </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <title>
 The Hive Hub  </title>
   <!--     Fonts and icons     -->
@@ -289,7 +291,7 @@ The Hive Hub      </a>
         <div class="card mb-4">
           <!-- Add the filter dropdown -->
           <div class="card-body px-3 pt-3 pb-2">
-            <div class="table-responsive p-0">
+            <div class="table-responsive" style="overflow-x: auto;">
               <% if (projects.length > 0) { %>
                 <table class="table align-items-center mb-0">
                   <thead>
@@ -398,36 +400,45 @@ The Hive Hub      </a>
                     <% }); %>
                   </tbody>
                 </table>
-                
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+
+
                 <script>
+   
                   document.addEventListener('DOMContentLoaded', function() {
                     attachEditEventListeners();
                   });
-                
                   function deleteProject(projectId) {
-  // Show confirmation prompt
-  var confirmed = window.confirm("Are you sure you want to delete this project?");
-
-  // Proceed with deletion if the user confirms
-  if (confirmed) {
-    // Send a DELETE request to the server
-    fetch(`/api/projects/${projectId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(deletedProject => {
-        console.log('Project deleted:', deletedProject);
-        // Handle any UI updates or notifications after successful deletion
-      })
-      .catch(error => {
-        console.error('Error deleting project:', error);
-        // Handle any error notifications or fallback logic
-      });
+    // Show SweetAlert2 popup
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Once deleted, the project cannot be recovered!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Delete",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Proceed with deletion if the user confirms
+        fetch(`/api/projects/${projectId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+          .then(response => response.json())
+          .then(deletedProject => {
+            console.log('Project deleted:', deletedProject);
+            // Handle any UI updates or notifications after successful deletion
+          })
+          .catch(error => {
+            console.error('Error deleting project:', error);
+            // Handle any error notifications or fallback logic
+          });
+      }
+    });
   }
-}
 
 
                   function attachEditEventListeners() {
@@ -499,15 +510,30 @@ The Hive Hub      </a>
                               otherFieldCells.forEach(cell => {
                                 cell.contentEditable = false;
                               });
-                
+                              Swal.fire({
+          title: "Success!",
+          text: "Project data has been updated successfully.",
+          icon: "success",
+        });
                               // Hide the save button and show the edit button
                               saveButton.style.display = 'none';
                               editButton.style.display = 'inline-block';
                             } else {
                               console.log('Error updating project');
+                              Swal.fire({
+          title: "Error!",
+          text: "Failed to update project data.",
+          icon: "error",
+        });
                             }
                           })
                           .catch(error => {
+                            Swal.fire({
+        title: "Error!",
+        text: "An error occurred while updating project data.",
+        icon: "error",
+      });
+
                             console.log('Error updating project:', error);
                           });
                       });

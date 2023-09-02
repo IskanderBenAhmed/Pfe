@@ -31,6 +31,9 @@ const projectSchema = new mongoose.Schema({
   createdBy: {
     type: String
   },
+   rejection_reason: {
+    type: String,
+  },
 
 },
 

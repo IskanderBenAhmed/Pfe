@@ -67,10 +67,11 @@
 }
 
   </style>
+  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link href="main-template/img/icon.png"  rel="icon">
+  <link href="main-template/img/apple-touch-icon.png" rel="apple-touch-icon">
   <title>The Hive Hub</title>
   <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -82,6 +83,8 @@
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+
 </head>
 
 <body class="">
@@ -221,33 +224,43 @@
       </div>
     </div>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
 
   <script>
    document.addEventListener('DOMContentLoaded', function() {
   var viewProjectButtons = document.querySelectorAll('.btn');
 
   viewProjectButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
+    button.addEventListener('click',async function() {
       var projectName = this.getAttribute('data-project');
       var username = this.getAttribute('data-username');
       var price = parseInt(prompt('Enter the price for your proposition:'));
 
       // Check if the price is a valid number
       if (isNaN(price)) {
-        alert('Invalid price. Please enter a valid number.');
-        return;
+        await Swal.fire({
+            icon: 'error',
+            title: 'Invalid Price',
+            text: 'Please enter a valid number for the price.',
+          });
       }
 
       // Send AJAX request to save the proposition
       var xhr = new XMLHttpRequest();
       xhr.open('POST', '/save-proposition');
       xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = function() {
+      xhr.onload =async function() {
         if (xhr.status === 200) {
-          alert('Proposition saved successfully!');
-        } else {
-          alert('Failed to save proposition.');
-        }
+          await Swal.fire({
+              icon: 'success',
+              title: 'Proposition Saved!',
+              text: 'Your proposition has been saved successfully!',
+            });        } else {
+              await Swal.fire({
+              icon: 'error',
+              title: 'Failed to Save Proposition',
+              text: 'There was an error while saving your proposition. Please try again later.',
+            });        }
       };
       xhr.send(JSON.stringify({ projectName, username, price }));
     });
